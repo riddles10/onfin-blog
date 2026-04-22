@@ -1,0 +1,55 @@
+Engineering constraints for this project:
+
+Build this project so it can be deployed in a self-hosted production environment without relying on any specific hosting platform.
+
+Deployment assumptions:
+- The app must run in Docker containers on Linux servers.
+- The app must be startable with docker compose.
+- The app must not require Vercel-specific runtime features or managed Vercel services.
+- The app must listen on a standard HTTP port inside the container.
+- The container port will be published only on 127.0.0.1 on the host.
+- Public exposure, TLS termination, domain routing, DNS, and reverse proxying will be handled manually by Nginx outside the app and outside CI/CD.
+- Do not automate DNS, domain, certificate, or Nginx configuration inside the application repository.
+
+Implementation requirements:
+- Keep the application self-hostable and platform-agnostic.
+- Use environment variables for all runtime configuration, secrets, base URLs, callback URLs, database connections, and API keys.
+- If the project needs a database, cache, object storage, or background worker, make those dependencies explicit and suitable for docker compose.
+- Do not assume any hidden platform services.
+- Provide a production-ready Dockerfile.
+- Provide a docker-compose example for local/self-hosted deployment.
+- Provide a healthcheck endpoint unless there is a clear reason not to.
+- Make sure authentication works in a standard self-hosted reverse-proxy setup and does not depend on Vercel-specific features.
+- Make cookie, session, and callback URL settings configurable through environment variables.
+- Keep static asset handling compatible with ordinary container deployment.
+
+Avoid these assumptions:
+- no dependency on any specific hosting platform (such as Vercel);
+- no dependency on any specific CDN, edge network, or traffic proxy service (such as Cloudflare);
+- no dependency on hosting-provider-specific serverless runtime or invocation model;
+- no dependency on edge-only runtime APIs or execution model;
+- no hidden or hosting-platform-managed database, storage, queue, cache, or auth dependencies;
+- no hardcoded external domain names, origins, callback URLs, or cookie domains;
+- no build-time dependency on production secrets;
+- no requirement for direct public exposure from the app container;
+- no application-managed TLS requirement.
+
+CI/CD scope:
+- Prepare the repository so Docker image build can be implemented as a separate GitLab CI job.
+- Do not assume CI/CD is responsible for publishing the app directly to the internet.
+- Do not include infrastructure automation for DNS, domains, public certificates, or Nginx virtual host management.
+
+Documentation requirements:
+- Create a short deployment README for engineers.
+- Include:
+  - how to build the image;
+  - how to run with docker compose;
+  - required environment variables;
+  - exposed internal port;
+  - expected reverse proxy upstream;
+  - healthcheck details;
+  - authentication-related callback/base URL requirements;
+  - any required persistent volumes;
+  - any external dependencies such as PostgreSQL, Redis, S3-compatible storage, email SMTP, etc.
+
+When making architecture choices, prefer solutions that are easy to run in a plain Docker + docker compose + Nginx environment on Linux.
