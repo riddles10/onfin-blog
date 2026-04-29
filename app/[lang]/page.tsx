@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { isPostCategory, categoryLabel, categoryTagline } from '@/lib/categories'
+import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
 import BlogHero from '@/components/blog/BlogHero'
 import CategoryChips from '@/components/blog/CategoryChips'
 import PostCard from '@/components/blog/PostCard'
@@ -30,6 +31,18 @@ async function fetchPosts(opts: {
   category: string | null
   page: number
 }): Promise<{ posts: IndexPost[]; total: number }> {
+  // Local-dev path: render the design with fixture data when no real
+  // Supabase is configured. Removed automatically once env vars point at
+  // a live instance.
+  if (isDemoMode()) {
+    const all = opts.category
+      ? DEMO_POSTS.filter((p) => p.category === opts.category)
+      : DEMO_POSTS
+    const from = (opts.page - 1) * POSTS_PER_PAGE
+    const slice = all.slice(from, from + POSTS_PER_PAGE)
+    return { posts: slice as unknown as IndexPost[], total: all.length }
+  }
+
   const supabase = getServiceClient()
   const from = (opts.page - 1) * POSTS_PER_PAGE
   const to = from + POSTS_PER_PAGE - 1

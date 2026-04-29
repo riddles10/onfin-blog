@@ -4,6 +4,7 @@ import { getServiceClient } from '@/lib/supabase'
 import { categoryGradient, categoryLabel } from '@/lib/categories'
 import { htmlToExcerpt } from '@/lib/format'
 import { annotateH2s } from '@/lib/toc'
+import { DEMO_POSTS, DEMO_AUTHOR_BY_ID, isDemoMode } from '@/lib/demo-data'
 import Breadcrumbs from '@/components/blog/Breadcrumbs'
 import AuthorByline from '@/components/blog/AuthorByline'
 import TableOfContents from '@/components/blog/TableOfContents'
@@ -37,6 +38,16 @@ async function fetchPost(slug: string): Promise<{
   post: PostFull
   author: AuthorRef | null
 } | null> {
+  if (isDemoMode()) {
+    const p = DEMO_POSTS.find((x) => x.slug === slug)
+    if (!p) return null
+    const a = DEMO_AUTHOR_BY_ID[p.blog_author_id]
+    return {
+      post: p as unknown as PostFull,
+      author: a ?? null,
+    }
+  }
+
   const supabase = getServiceClient()
   const { data, error } = await supabase
     .from('posts')
@@ -70,6 +81,12 @@ async function fetchRelated(
   excludeSlug: string,
   limit = 3
 ): Promise<PostCardData[]> {
+  if (isDemoMode()) {
+    const same = DEMO_POSTS.filter((p) => p.category === category && p.slug !== excludeSlug)
+    const fill = DEMO_POSTS.filter((p) => p.slug !== excludeSlug && !same.find((s) => s.id === p.id))
+    return [...same, ...fill].slice(0, limit).map(toCardData)
+  }
+
   const supabase = getServiceClient()
   // Same-category first; pad with newest from any category if there
   // aren't enough siblings yet.

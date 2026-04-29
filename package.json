@@ -8,7 +8,8 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "import:tilda": "tsx scripts/import-tilda.ts",
+    "import:tilda": "tsx --env-file=.env.local scripts/import-tilda.ts",
+    "build:fixture": "tsx --env-file=.env.local scripts/build-fixture.ts",
     "cron:worker": "node scripts/cron-worker.js"
   },
   "dependencies": {
@@ -21,10 +22,10 @@
     "@tiptap/react": "^2.6.0",
     "@tiptap/starter-kit": "^2.6.0",
     "fast-xml-parser": "^4.5.0",
-    "next": "15.0.3",
+    "next": "^15.1.6",
     "node-cron": "^3.0.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.7.0",
