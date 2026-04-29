@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Design tokens (extracted from Tilda export)
+ *
+ * Colors:
+ *   - brand-lime  #9fce10  (primary accent, CTAs)
+ *   - brand-coral #fa876b  (secondary accent)
+ *   - brand-blue  #2015ff  (tertiary accent)
+ *   - brand-black #000000  (primary surface / text)
+ *
+ * Fonts:
+ *   - Unbounded   (display / headings)
+ *   - Montserrat  (body)
+ *
+ * Container: 1200px max
+ * -------------------------------------------------------------------------- */
+
+@theme {
+  --color-brand-black: #000000;
+  --color-brand-lime: #9fce10;
+  --color-brand-coral: #fa876b;
+  --color-brand-blue: #2015ff;
+
+  --color-ink-50: #f7f7f7;
+  --color-ink-100: #eeeeee;
+  --color-ink-200: #cccccc;
+  --color-ink-300: #999999;
+  --color-ink-400: #666666;
+  --color-ink-500: #444444;
+  --color-ink-600: #222222;
+  --color-ink-700: #111111;
+
+  --font-sans: "Montserrat", "Arial", "sans-serif";
+  --font-display: "Unbounded", "Arial", "sans-serif";
+
+  --radius-pill: 100px;
+
+  --container-site: 1200px;
+}
+
+/* Base typography + layout primitives */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-brand-black);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Utility: site-width container */
+.container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Blog article body (`.prose-blog`)
+ *
+ * Applied to the container that holds `set:html={post.bodyHtml}` on article
+ * detail pages. The imported Tilda HTML only uses a narrow tag subset
+ * (p, strong, em, br, ul/ol/li, a, h2-h4, blockquote) so the rules below
+ * only need to cover those. Deliberately scoped with `.prose-blog > ...`
+ * rather than pulling in the full @tailwindcss/typography plugin — a few
+ * dozen lines here is lighter and we control every selector.
+ * -------------------------------------------------------------------------- */
+.prose-blog {
+  color: var(--color-ink-600);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+.prose-blog > p,
+.prose-blog > ul,
+.prose-blog > ol,
+.prose-blog > blockquote {
+  margin-block: 1.1em;
+}
+.prose-blog > p:first-child,
+.prose-blog > ul:first-child,
+.prose-blog > ol:first-child {
+  margin-top: 0;
+}
+.prose-blog > p:last-child,
+.prose-blog > ul:last-child,
+.prose-blog > ol:last-child {
+  margin-bottom: 0;
+}
+.prose-blog h2,
+.prose-blog h3,
+.prose-blog h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-brand-black);
+  letter-spacing: -0.01em;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  line-height: 1.25;
+}
+.prose-blog h2 { font-size: 1.625rem; }
+.prose-blog h3 { font-size: 1.325rem; }
+.prose-blog h4 { font-size: 1.125rem; }
+.prose-blog strong,
+.prose-blog b {
+  color: var(--color-brand-black);
+  font-weight: 600;
+}
+.prose-blog em,
+.prose-blog i { font-style: italic; }
+.prose-blog a {
+  color: var(--color-brand-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.prose-blog a:hover {
+  color: var(--color-brand-black);
+}
+.prose-blog ul,
+.prose-blog ol {
+  padding-left: 1.4em;
+}
+.prose-blog ul { list-style: disc; }
+.prose-blog ol { list-style: decimal; }
+.prose-blog li {
+  margin-block: 0.35em;
+}
+.prose-blog li > ul,
+.prose-blog li > ol {
+  margin-block: 0.35em;
+}
+.prose-blog blockquote {
+  border-left: 3px solid var(--color-brand-lime);
+  padding: 0.25em 0 0.25em 1.1em;
+  color: var(--color-ink-500);
+  font-style: italic;
+}

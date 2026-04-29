@@ -1,0 +1,47 @@
+# Self-hosted production-style compose file for blog.onfin.io.
+#
+# Two services from the same image:
+#   app           — the Next.js HTTP server (Nginx upstream)
+#   cron-worker   — a long-running node process that fires the daily
+#                   content pipeline by POSTing to /api/cron/* with $CRON_SECRET
+#
+# The compose file does NOT include Postgres or object storage. Per the
+# repo's engineering constraints, those are deployed separately and the
+# app talks to them via env-driven URLs. For the production setup, point
+# the SUPABASE_* vars at a self-hosted Supabase stack (or a managed one,
+# depending on what DevOps approves).
+#
+# Only 127.0.0.1 is exposed; Nginx on the host terminates TLS and proxies
+# blog.onfin.io traffic to 127.0.0.1:3000.
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: onfin-blog:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  cron-worker:
+    image: onfin-blog:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # The worker calls back into the app over the docker network.
+      CRON_TARGET_BASE_URL: "http://app:3000"
+    command: ["node", "scripts/cron-worker.js"]
+    depends_on:
+      app:
+        condition: service_healthy

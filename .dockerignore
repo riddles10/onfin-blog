@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.gitignore
+.gitattributes
+.ai
+.env
+.env.local
+.env.*.local
+README.md
+docs
+_tilda_export
+*.md
+.vscode
+.idea
+.DS_Store

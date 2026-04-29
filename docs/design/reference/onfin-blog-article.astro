@@ -1,0 +1,145 @@
+---
+/**
+ * Blog article detail page.
+ *
+ * Posts live in Hygraph and are fetched at build time through
+ * `src/lib/cms.ts`. Locale strategy: articles are authored in English;
+ * non-English locales render the English body (isFallback: true) so the
+ * URL `/<locale>/blog/<slug>` always resolves and hreflang alternates
+ * remain valid. Slug == Hygraph-side SEO slug (no `news_DD_MM_YYYY`
+ * legacy shape — those URLs redirect in from blog.onfin.io).
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { listPublishedPosts, type LocalizedPost } from "~/lib/cms";
+import { LOCALES, t, localizedPath, type Locale } from "~/lib/i18n";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const perLocale = await Promise.all(
+    LOCALES.map(async (lang) => {
+      const posts = await listPublishedPosts(lang as Locale, { limit: 500 });
+      return posts.map((post) => ({
+        params: { lang, slug: post.slug },
+        props: { post },
+      }));
+    }),
+  );
+  return perLocale.flat();
+}
+
+const { lang } = Astro.params;
+const locale = lang as Locale;
+const post = Astro.props.post as LocalizedPost;
+
+function formatDate(iso: string | null, loc: Locale): string {
+  if (!iso) return "";
+  const d = iso.length === 10 ? new Date(iso + "T00:00:00Z") : new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const BCP47: Record<Locale, string> = {
+    en: "en-US",
+    ru: "ru-RU",
+    vi: "vi-VN",
+    th: "th-TH",
+    ms: "ms-MY",
+    id: "id-ID",
+    es: "es-419",
+    zh: "zh-Hans",
+  };
+  return new Intl.DateTimeFormat(BCP47[loc], {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(d);
+}
+
+function toExcerpt(html: string, max = 160): string {
+  const plain = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (plain.length <= max) return plain;
+  const clipped = plain.slice(0, max);
+  const lastSpace = clipped.lastIndexOf(" ");
+  return (lastSpace > 60 ? clipped.slice(0, lastSpace) : clipped).trim() + "…";
+}
+
+const description = post.excerpt || toExcerpt(post.body);
+const prettyDate = formatDate(post.publishedAt, locale);
+const blogIndexHref = localizedPath(locale, "/blog");
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  datePublished: post.publishedAt ?? undefined,
+  dateModified: post.publishedAt ?? undefined,
+  description,
+  inLanguage: locale === "en" ? "en-US" : locale,
+  author: post.author
+    ? { "@type": "Person", name: post.author.name }
+    : { "@type": "Organization", name: "OnFin" },
+  publisher: {
+    "@type": "Organization",
+    name: "OnFin",
+    logo: { "@type": "ImageObject", url: "https://onfin.io/logo.svg" },
+  },
+  mainEntityOfPage: `https://onfin.io/${locale}/blog/${post.slug}`,
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${post.title} — OnFin`}
+  description={description}
+  canonicalPath={`/blog/${post.slug}`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </Fragment>
+
+  <article class="bg-white">
+    <header class="relative overflow-hidden bg-[#0b0b0b]">
+      <div
+        class="pointer-events-none absolute -right-40 top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-brand-lime/15 blur-3xl"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="pointer-events-none absolute -left-40 bottom-0 h-80 w-80 rounded-full bg-brand-lime/10 blur-3xl"
+        aria-hidden="true"
+      ></div>
+
+      <div class="container-site relative py-16 sm:py-20">
+        <div class="mx-auto max-w-3xl">
+          <a
+            href={blogIndexHref}
+            class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-lime transition hover:text-brand-lime/80"
+          >
+            <span aria-hidden="true">←</span>
+            {t(locale, "nav.blog")}
+          </a>
+          <h1 class="mt-5 font-display text-3xl font-semibold leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-5xl">
+            {post.title}
+          </h1>
+          {prettyDate && (
+            <p class="mt-5 text-sm text-white/60">
+              <time datetime={post.publishedAt ?? undefined}>{prettyDate}</time>
+            </p>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="container-site py-14 sm:py-16">
+      <div class="prose-blog mx-auto max-w-3xl" set:html={post.body} />
+
+      <div class="mx-auto mt-14 max-w-3xl border-t border-ink-100 pt-8">
+        <a
+          href={blogIndexHref}
+          class="inline-flex items-center gap-2 text-sm font-semibold text-brand-black transition hover:text-brand-black/70"
+        >
+          <span aria-hidden="true">←</span>
+          {t(locale, "nav.blog")}
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

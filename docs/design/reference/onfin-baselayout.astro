@@ -1,0 +1,258 @@
+---
+/**
+ * BaseLayout — the HTML shell every page uses.
+ *
+ * Responsibilities:
+ *   - <html lang> set from the current locale
+ *   - <head> meta, OpenGraph, canonical, hreflang alternates
+ *   - Google Fonts preconnect + load (Montserrat + Unbounded, same as Tilda)
+ *   - Nav + Footer slots
+ *
+ * Page-specific <head> extras go in the <Fragment slot="head"> slot.
+ */
+import "~/styles/global.css";
+import Nav from "~/components/Nav.astro";
+import Footer from "~/components/Footer.astro";
+import MtChooserModal from "~/components/MtChooserModal.astro";
+import {
+  LOCALES,
+  LOCALE_HREFLANG,
+  DEFAULT_LOCALE,
+  switchLocale,
+  type Locale,
+} from "~/lib/i18n";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Path *without* the locale prefix (e.g. "/about"). Defaults to "/" */
+  canonicalPath?: string;
+  /** OpenGraph image URL, absolute or site-relative */
+  ogImage?: string;
+  /**
+   * English-only page (no localized variants exist). Skips hreflang
+   * alternates and hides the language switcher in Nav. Used by short-term
+   * promo landing pages like /become-vip that don't have translations.
+   */
+  englishOnly?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description,
+  canonicalPath = "/",
+  ogImage = "/og-default.jpg",
+  englishOnly = false,
+} = Astro.props;
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, "") ?? "https://onfin.io";
+const canonicalUrl = `${siteOrigin}/${locale}${canonicalPath === "/" ? "" : canonicalPath}`;
+const absoluteOgImage = ogImage.startsWith("http") ? ogImage : `${siteOrigin}${ogImage}`;
+
+// Build hreflang alternates for every supported locale (skipped for english-only pages)
+const alternates = englishOnly
+  ? []
+  : LOCALES.map((loc) => ({
+      hreflang: LOCALE_HREFLANG[loc],
+      href: `${siteOrigin}${switchLocale(`/${locale}${canonicalPath === "/" ? "" : canonicalPath}`, loc)}`,
+    }));
+const xDefaultHref = `${siteOrigin}/${DEFAULT_LOCALE}${canonicalPath === "/" ? "" : canonicalPath}`;
+
+// --- Structured data (JSON-LD) ------------------------------------------
+// Organization + FinancialService: every page gets the brand entity.
+// WebSite + SearchAction: homepage only.
+// BreadcrumbList: inner pages only (canonicalPath !== "/").
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": ["FinancialService", "Organization"],
+  "@id": `${siteOrigin}/#organization`,
+  name: "OnFin",
+  alternateName: "ECN.Broker",
+  legalName: "OnFin Ltd",
+  url: siteOrigin,
+  logo: `${siteOrigin}/logo.svg`,
+  foundingDate: "2015",
+  description: "International forex and CFD broker offering MT4 and MT5 platforms, 800+ tradable instruments, copy trading and prop trading since 2015.",
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "support@onfin.io",
+    contactType: "customer service",
+    availableLanguage: ["English", "Russian", "Vietnamese", "Thai", "Malay", "Indonesian", "Spanish", "Khmer", "Chinese"],
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Bonovo Road, P.B. 1257",
+    addressLocality: "Fomboni",
+    addressCountry: "KM",
+  },
+  sameAs: [
+    "https://www.trustpilot.com/review/onfin.io",
+    "https://www.myfxbook.com/reviews/brokers/onfin/3152542,1",
+    "https://km.linkedin.com/company/onfineng",
+  ],
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "Financial Services License",
+    name: "M.I.S.A. License BFX2024038",
+    recognizedBy: {
+      "@type": "Organization",
+      name: "Mwali International Services Authority",
+    },
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteOrigin}/#website`,
+  name: "OnFin",
+  url: siteOrigin,
+  publisher: { "@id": `${siteOrigin}/#organization` },
+  inLanguage: LOCALES.map((l) => LOCALE_HREFLANG[l]),
+};
+
+// Build BreadcrumbList from canonicalPath
+function buildBreadcrumbs() {
+  if (canonicalPath === "/") return null;
+  const segments = canonicalPath.replace(/^\//, "").split("/").filter(Boolean);
+  const items = [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${siteOrigin}/${locale}` },
+  ];
+  let path = `${siteOrigin}/${locale}`;
+  segments.forEach((seg, i) => {
+    path += `/${seg}`;
+    const name = seg
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    items.push({ "@type": "ListItem", position: i + 2, name, item: path });
+  });
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  };
+}
+const breadcrumbSchema = buildBreadcrumbs();
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NR63B44W');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    {!englishOnly && (
+      <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+    )}
+
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png?v=2" />
+    <link rel="shortcut icon" href="/favicon.png?v=2" />
+
+    {/* Structured data: Organization + FinancialService (every page) */}
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {/* WebSite schema (every page — publisher ref ties to org) */}
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {/* BreadcrumbList (inner pages only) */}
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Unbounded:wght@300;400;500;600;700&display=swap"
+    />
+
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen overflow-x-hidden bg-white text-brand-black antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR63B44W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-brand-lime focus:px-3 focus:py-2 focus:text-brand-black"
+    >
+      Skip to content
+    </a>
+
+    <Nav locale={locale} currentPath={canonicalPath} hideLanguageSwitcher={englishOnly} />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+
+    <MtChooserModal locale={locale} />
+
+    {/* Intercom messenger — restored from legacy Tilda site (app_id ae8mgdp6) */}
+    <script is:inline>
+      window.intercomSettings = { app_id: "ae8mgdp6" };
+      (function () {
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+          ic("reattach_activator");
+          ic("update", w.intercomSettings);
+        } else {
+          var d = document;
+          var i = function () { i.c(arguments); };
+          i.q = [];
+          i.c = function (args) { i.q.push(args); };
+          w.Intercom = i;
+          var l = function () {
+            var s = d.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://widget.intercom.io/widget/ae8mgdp6";
+            var x = d.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(s, x);
+          };
+          if (document.readyState === "complete") {
+            l();
+          } else if (w.attachEvent) {
+            w.attachEvent("onload", l);
+          } else {
+            w.addEventListener("load", l, false);
+          }
+        }
+      })();
+    </script>
+    <style is:global>
+      .intercom-lightweight-app { z-index: 50 !important; }
+    </style>
+  </body>
+</html>

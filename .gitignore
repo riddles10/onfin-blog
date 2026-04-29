@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build artifacts
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# editor
+.vscode/
+.idea/
+.DS_Store
+
+# tilda source export — kept locally for the one-off import only,
+# not meant to live in the repo.
+_tilda_export/

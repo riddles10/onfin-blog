@@ -1,0 +1,303 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// CMS Configuration — single file to customize for blog.onfin.io
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Every site-specific value lives here. Other parts of the CMS read from this
+// module so this is the only file that should change between sites.
+
+// ── Site identity ────────────────────────────────────────────────────────────
+
+export const SITE_NAME = 'OnFin'
+export const SITE_DOMAIN = 'blog.onfin.io'
+export const ADMIN_TITLE = 'OnFin Blog Admin'
+
+/** Session-storage key used by the admin auth gate. */
+export const ADMIN_SESSION_KEY = 'cms_admin_auth'
+
+/** The env var name that holds the admin password. */
+export const ADMIN_PASSWORD_ENV = 'ADMIN_PASSWORD'
+
+// ── Content categories ───────────────────────────────────────────────────────
+//
+// Mirrors the existing onfin.io blog category set so old links and the new
+// CMS share the same taxonomy.
+
+export const POST_CATEGORIES = [
+  'market-analysis',
+  'trading-guides',
+  'platform-updates',
+  'regulation-news',
+  'strategies',
+  'general',
+] as const
+export type PostCategory = (typeof POST_CATEGORIES)[number]
+
+export const EVENT_CATEGORIES = [
+  'webinar',
+  'workshop',
+  'conference',
+  'meetup',
+] as const
+export type EventCategory = (typeof EVENT_CATEGORIES)[number]
+
+// ── AI content generation ────────────────────────────────────────────────────
+
+export const BRAND_VOICE = `${SITE_NAME} — BRAND VOICE & AUDIENCE
+
+WHO WE ARE
+${SITE_NAME} is a multi-asset broker focused on forex and CFD trading. The
+${SITE_NAME} blog is the editorial home for traders who want clear, practical
+analysis — schedule notices, platform updates, regulation explainers, market
+recaps, and how-to guides.
+
+AUDIENCE
+- Active retail forex / CFD traders, mostly in MT4 and MT5
+- Mix of beginners learning the platform and experienced traders looking for
+  edges, schedules, and execution detail
+- Reads quickly, scans for actionable info, distrusts hype
+
+VOICE
+- Direct, confident, concrete.
+- Use real numbers — pip values, spreads, leverage ratios, session times,
+  contract specs — instead of vague qualifiers.
+- Acknowledge tradeoffs honestly. Every strategy has a downside; name it.
+- Never moralize, never use "important to note", "remember", "in conclusion".
+- Never promise guaranteed profits. Trading involves risk, full stop.
+
+WE ARE NOT
+- A finfluencer pushing trade ideas
+- A marketing channel for promo bonuses (those live on onfin.io, not here)
+- A source of investment advice — we explain mechanics and process, the
+  reader decides.
+
+We are an editorial platform — our job is to help traders make confident,
+well-informed decisions about their own positions.`
+
+export const SEO_GUIDELINES = `${SITE_NAME} BLOG — SEO & STRUCTURAL GUIDELINES
+
+ARTICLE LENGTH
+- Target 2200–2800 words for guides and strategy articles
+- Target 1500–2200 words for market-analysis and regulation-news pieces
+- 800–1200 words is acceptable for short platform-updates and schedule notices
+- Below the floor for the type is a failure — Google ranks long-form for
+  guide and strategy queries
+
+HOOK TAXONOMY (pick ONE for the intro, do not stack them)
+1. Specific-Number Promise (e.g. "five spread mistakes that cost a typical
+   EUR/USD scalper $40 a session")
+2. Counter-Intuitive Claim
+3. Money or Time Stake
+4. Direct Question
+5. Stakes / Threat (margin call, slippage, liquidity gap)
+6. Concrete Scenario (a setup or a chart pattern)
+
+INTRO FORMULA — APP (Agree → Promise → Preview)
+- Agree: One sentence acknowledging what the trader already knows or fears
+- Promise: One sentence stating exactly what they will learn
+- Preview: One sentence hinting at the structure
+Total intro length: 2–3 sentences, 50–80 words. No headings inside the intro.
+
+H2 SECTION RULES
+- 6–8 H2 sections per guide (not counting FAQ)
+- Each H2 must be SPECIFIC and BENEFIT-FOCUSED
+- Each H2 should target 250–400 words of body
+- Avoid generic H2s like "What is forex?" — assume reader basics
+
+H3 SUBSECTION RULES
+- Use H3 for sub-points within an H2 section
+- 2–4 H3s per H2 is ideal for scannability
+
+FAQ SECTION (REQUIRED for guides and strategies, last section)
+- Single <h2>FAQ</h2>
+- Exactly 5 question-style H3s
+- Each answer 50–100 words
+
+LINKING & ENTITIES
+- Mention ${SITE_NAME} 1–2 times naturally in the body, never more
+- Link out to authoritative neutral sources for facts (BIS, IOSCO, central
+  bank releases, CFTC, FCA, MAS) — not to competitor brokers
+
+ANTI-PATTERNS (auto-fail)
+- Keyword stuffing — no single keyword appears more than ~1.5% density
+- Excessive bolding — max 2 <strong> per paragraph
+- Generic filler phrases ("in today's fast-paced world")
+- Made-up statistics, fabricated quotes
+- Promises of guaranteed returns / profitability claims
+- Anything that reads like investment advice for a specific instrument
+
+ALLOWED HTML TAGS
+<p>, <h2>, <h3>, <ul>, <ol>, <li>, <strong>, <em>, <blockquote>
+Never <h1>, <h4>, <div>, <span>, <br>, <img>.`
+
+export const CONTENT_RULES = `CONTENT RULES FOR ${SITE_NAME} BLOG
+- Write in English. No Thai or other languages in the body.
+- Never fabricate quotes or attribute statements to named individuals,
+  central bank officials, or regulators.
+- Every claim that could be verified (rates, schedule changes, regulation
+  text, contract specs) must be plausibly accurate. When in doubt, leave
+  it out.
+- Do not state or imply guaranteed profits, "high probability" trades, or
+  any specific buy/sell call on a live instrument.
+- Do not include meta-commentary about the writing process.
+- Avoid jargon without a one-line definition on first use.`
+
+// ── Topic picker fallback seeds ──────────────────────────────────────────────
+//
+// Used when the manual topic queue and the RSS feeds both come up empty.
+// Day-of-year rotation keeps the pipeline fresh across the year.
+
+export const FALLBACK_SEEDS: Array<{
+  seed: string
+  category: PostCategory
+  templates: string[]
+}> = [
+  {
+    seed: 'forex risk management',
+    category: 'trading-guides',
+    templates: [
+      'How to size positions for {seed}',
+      'A practical guide to {seed} for retail traders',
+      '{seed} mistakes that drain accounts',
+    ],
+  },
+  {
+    seed: 'mt4 vs mt5',
+    category: 'platform-updates',
+    templates: [
+      '{seed}: which platform should you actually use',
+      '{seed} compared for active traders',
+    ],
+  },
+  {
+    seed: 'major currency pairs',
+    category: 'market-analysis',
+    templates: [
+      'Trading the {seed}: spreads, sessions, and gotchas',
+      '{seed} explained for new forex traders',
+    ],
+  },
+  {
+    seed: 'forex trading strategies',
+    category: 'strategies',
+    templates: [
+      '{seed} that survive choppy markets',
+      'Five {seed} ranked by win-rate vs drawdown',
+    ],
+  },
+  {
+    seed: 'forex regulation',
+    category: 'regulation-news',
+    templates: [
+      'What changing {seed} means for retail traders',
+      '{seed} explained: licensing tiers and what they actually mean',
+    ],
+  },
+]
+
+// ── RSS feeds for topic seeding ──────────────────────────────────────────────
+//
+// The daily cron pulls headlines from these feeds when the manual topic queue
+// is empty, runs them through the topic picker, and queues a draft. Add or
+// remove feeds here without touching code.
+
+export const TOPIC_RSS_FEEDS: Array<{
+  url: string
+  source: string                  // human label shown in admin / Slack
+  defaultCategory: PostCategory
+}> = [
+  {
+    url: 'https://www.investing.com/rss/news_25.rss',
+    source: 'Investing.com — Forex News',
+    defaultCategory: 'market-analysis',
+  },
+  {
+    url: 'https://www.fxstreet.com/rss/news',
+    source: 'FXStreet — News',
+    defaultCategory: 'market-analysis',
+  },
+  {
+    url: 'https://www.forexlive.com/feed/news',
+    source: 'ForexLive — News',
+    defaultCategory: 'market-analysis',
+  },
+]
+
+// ── Unsplash image search ────────────────────────────────────────────────────
+
+/**
+ * Terms that, if found in a search query, mean it's already specific enough
+ * for Unsplash. If none match, `UNSPLASH_FALLBACK_TERM` is appended.
+ */
+export const UNSPLASH_KNOWN_TERMS: string[] = [
+  'forex',
+  'trading',
+  'chart',
+  'currency',
+  'finance',
+  'market',
+  'stock',
+  'crypto',
+  'screen',
+  'monitor',
+]
+
+/** Appended to Unsplash queries that don't contain any known term. */
+export const UNSPLASH_FALLBACK_TERM = 'finance'
+
+/** Fallback Unsplash query when a specific search returns zero results. */
+export const UNSPLASH_FALLBACK_QUERY = 'trading desk'
+
+// ── QA scoring ───────────────────────────────────────────────────────────────
+
+/**
+ * A regex pattern to count site-name mentions in scored posts.
+ * Set to null to disable the site-mention check entirely.
+ */
+export const SITE_MENTION_PATTERN: RegExp | null = /\bonfin\b/gi
+
+// ── Slack notifications ──────────────────────────────────────────────────────
+
+/** Bot username shown in Slack messages. */
+export const SLACK_BOT_NAME = `${SITE_NAME} Blog Bot`
+
+/** Preview URL pattern. {slug} placeholder. Locale-prefixed for blog.onfin.io. */
+export const PREVIEW_URL_PATTERN = '/en/{slug}?preview=1'
+
+/** Edit URL pattern. {id} placeholder. */
+export const EDIT_URL_PATTERN = '/admin/blog/{id}/edit'
+
+// ── Supabase storage ─────────────────────────────────────────────────────────
+
+/** The Supabase Storage bucket name for uploaded images. */
+export const STORAGE_BUCKET = 'cms-images'
+
+// ── Locale support ───────────────────────────────────────────────────────────
+
+/** The primary language. Content is generated in this language first. */
+export const PRIMARY_LANG = 'en'
+
+/**
+ * Secondary language for translation. Set to null to keep blog English-only.
+ * blog.onfin.io is currently English-only; if/when other locales come online
+ * for the broader site, set this to the appropriate ISO code.
+ */
+export const SECONDARY_LANG: string | null = null
+
+/**
+ * Language-specific translation rules. Only used when SECONDARY_LANG is set.
+ * Kept here in case the secondary locale is later turned on without code edits.
+ */
+export const THAI_TRANSLATION_RULES = `THAI TRANSLATION RULES
+- Write natural, fluent Thai — not transliteration of English.
+- Thai has no spaces between words. Only use spaces after punctuation marks,
+  before opening brackets, and between Thai and English/number tokens.
+- Keep English brand names, ticker symbols, and technical terms in English.
+- Translate headings (H2/H3) fully into Thai.
+- Keep the same HTML structure as the original.
+- The translation should feel like it was written by a native Thai speaker.`
+
+export const ENGLISH_TRANSLATION_RULES = `ENGLISH TRANSLATION RULES
+- Write natural, fluent English.
+- Keep brand names and technical terms consistent.
+- Translate headings (H2/H3) fully.
+- The translation should read natively, not as a word-for-word translation.`
