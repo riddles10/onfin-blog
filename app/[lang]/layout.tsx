@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
+import Header from '@/components/site/Header'
+import Footer from '@/components/site/Footer'
 
-// Locale shell for the public blog. Currently English-only; the array is
-// what the route validates against and what Antigravity's design will key
-// hreflang tags off when more locales come online.
 const SUPPORTED_LOCALES = ['en'] as const
 type Locale = (typeof SUPPORTED_LOCALES)[number]
 
@@ -10,20 +9,34 @@ export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((lang) => ({ lang }))
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { lang: string }
+  params: Promise<{ lang: string }>
 }) {
-  if (!(SUPPORTED_LOCALES as readonly string[]).includes(params.lang)) {
+  const { lang } = await params
+  if (!(SUPPORTED_LOCALES as readonly string[]).includes(lang)) {
     notFound()
   }
-  // The visible header / nav / footer chrome is part of the design pass —
-  // leave the layout transparent until that lands so Antigravity owns those
-  // structural choices.
-  return <>{children}</>
+
+  return (
+    <>
+      {/* Skip-to-content link for keyboard users — visually hidden until
+          focused. The target landmark is the <main> rendered inside each
+          page, which has id="main-content". */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-brand-black focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold focus:text-brand-lime"
+      >
+        Skip to content
+      </a>
+      <Header locale={lang} />
+      {children}
+      <Footer locale={lang} />
+    </>
+  )
 }
 
 export type { Locale }
