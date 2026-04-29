@@ -16,7 +16,7 @@ export default function CategoryChips({
   return (
     <nav
       aria-label="Filter posts by category"
-      className="border-b border-ink-100 bg-white"
+      className="border-b border-ink-100 bg-[#f5f5f8]"
     >
       <div className="container-site">
         {/* Horizontal scroll on small screens, wrap on larger. */}
@@ -52,11 +52,13 @@ function Chip({
   label: string
   active: boolean
 }) {
+  // Onfin's pill pattern: lime-tinted active state, soft white idle.
+  // The 1px border is on both states so chips don't shift on activation.
   const base =
-    'inline-flex items-center rounded-pill px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.14em] transition'
-  const activeCls = 'bg-brand-black text-white'
+    'inline-flex items-center rounded-pill border px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.14em] transition'
+  const activeCls = 'border-brand-lime bg-brand-lime/10 text-brand-black'
   const idleCls =
-    'border border-ink-200 bg-white text-ink-600 hover:border-brand-black hover:text-brand-black'
+    'border-ink-200 bg-white text-ink-600 hover:border-brand-lime hover:bg-brand-lime/5 hover:text-brand-black'
   return (
     <Link
       href={href}

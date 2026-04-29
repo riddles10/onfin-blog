@@ -2,9 +2,9 @@ import Link from 'next/link'
 
 const PARENT_SITE = 'https://onfin.io'
 
-// Public site footer. Same restrained tone as the header — a few essential
-// links to the parent marketing site, copyright, and the legal disclaimer
-// that an editorial site about trading needs.
+// Public site footer. Light surface to match the parent onfin.io footer
+// (`bg-ink-50/50`). The dark slab pattern is reserved for hero cards and
+// the article-page CTA — not for the footer.
 export default function Footer({ locale }: { locale: string }) {
   const year = new Date().getFullYear()
 
@@ -44,13 +44,13 @@ export default function Footer({ locale }: { locale: string }) {
   return (
     <footer
       role="contentinfo"
-      className="mt-24 border-t border-ink-100 bg-[#0b0b0b] text-white/80"
+      className="mt-24 border-t border-ink-100 bg-ink-50/50"
     >
       <div className="container-site py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand block */}
           <div>
-            <a href={PARENT_SITE} aria-label="OnFin home">
+            <a href={PARENT_SITE} aria-label="OnFin home" className="block">
               <img
                 src="/logo-dark.svg"
                 alt=""
@@ -60,7 +60,7 @@ export default function Footer({ locale }: { locale: string }) {
                 className="h-8 w-auto"
               />
             </a>
-            <p className="mt-4 text-sm leading-relaxed text-white/60">
+            <p className="mt-4 text-sm leading-relaxed text-ink-500">
               Editorial coverage for retail forex and CFD traders — guides,
               platform updates, regulation news, and market analysis from
               the OnFin team.
@@ -69,11 +69,8 @@ export default function Footer({ locale }: { locale: string }) {
 
           {/* Link groups */}
           {groups.map((group) => (
-            <nav
-              key={group.heading}
-              aria-label={group.heading}
-            >
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-white">
+            <nav key={group.heading} aria-label={group.heading}>
+              <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-brand-black">
                 {group.heading}
               </p>
               <ul className="mt-4 space-y-2 text-sm">
@@ -82,14 +79,14 @@ export default function Footer({ locale }: { locale: string }) {
                     {link.external ? (
                       <a
                         href={link.href}
-                        className="text-white/70 transition hover:text-brand-lime"
+                        className="text-ink-500 transition hover:text-brand-black"
                       >
                         {link.label}
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-white/70 transition hover:text-brand-lime"
+                        className="text-ink-500 transition hover:text-brand-black"
                       >
                         {link.label}
                       </Link>
@@ -102,22 +99,22 @@ export default function Footer({ locale }: { locale: string }) {
         </div>
 
         {/* Disclaimer + copyright */}
-        <div className="mt-12 border-t border-white/10 pt-8 text-xs leading-relaxed text-white/50">
+        <div className="mt-12 border-t border-ink-100 pt-8 text-xs leading-relaxed text-ink-500">
           <p>
-            <strong className="text-white/70">Risk warning.</strong> Trading
-            forex and CFDs carries a high level of risk and may not be
-            suitable for every investor. Leverage can work against you as
+            <strong className="font-semibold text-brand-black">Risk warning.</strong>{' '}
+            Trading forex and CFDs carries a high level of risk and may not
+            be suitable for every investor. Leverage can work against you as
             well as for you. Before deciding to trade, consider your
             investment objectives, level of experience, and risk appetite.
             Past performance is not indicative of future results. Nothing on
             this blog constitutes investment advice.
           </p>
           <p className="mt-4 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-            <span>© {year} OnFin. All rights reserved.</span>
+            <span className="text-ink-400">© {year} OnFin. All rights reserved.</span>
             <span>
               <a
                 href={`${PARENT_SITE}/en/documents`}
-                className="text-white/70 hover:text-brand-lime"
+                className="text-ink-500 hover:text-brand-black"
               >
                 Legal documents
               </a>

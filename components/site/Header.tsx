@@ -23,8 +23,11 @@ export default function Header({ locale }: { locale: string }) {
             className="flex items-center gap-2"
             aria-label="OnFin home"
           >
+            {/* The dark variant has the FIN wordmark filled black —
+                required on a white header. /logo.svg has white fill,
+                which would disappear here. */}
             <img
-              src="/logo.svg"
+              src="/logo-dark.svg"
               alt=""
               aria-hidden="true"
               width={108}
@@ -46,7 +49,7 @@ export default function Header({ locale }: { locale: string }) {
 
         <a
           href={`${PARENT_SITE}/en/account-types`}
-          className="group inline-flex items-center gap-1.5 rounded-pill bg-brand-black px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-lime transition hover:bg-ink-700"
+          className="group inline-flex items-center gap-1.5 rounded-pill bg-brand-lime px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-black transition hover:bg-brand-lime/90"
         >
           Open account
           <span
