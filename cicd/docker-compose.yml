@@ -1,0 +1,50 @@
+---
+
+version: "2.4"
+
+name: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog
+
+services:
+  app:
+    image: IMAGE_NAME_PLACEHOLDER
+
+    env_file: .env
+    environment:
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+    pids_limit: 1024        # TODO: revisit this limit after launching beta and monitoring actual usage
+    cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
+    mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
+    memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      options:
+        max-size: "32m"
+        max-file: "4"
+
+  cron-worker:
+    depends_on:
+      app:
+        condition: service_healthy
+    image: IMAGE_NAME_PLACEHOLDER
+    env_file: .env
+    environment:
+      CRON_TARGET_BASE_URL: "http://app:3000" # The worker calls back into the app over the docker network
+    command: ["node", "scripts/cron-worker.js"]
+    restart: unless-stopped
+    pids_limit: 1024        # TODO: revisit this limit after launching beta and monitoring actual usage
+    cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
+    mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
+    memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
+    logging:
+      options:
+        max-size: "32m"
+        max-file: "4"

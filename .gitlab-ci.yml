@@ -1,0 +1,191 @@
+variables:
+  HOME: "${CI_PROJECT_DIR}/.custom_home" # isolate shell context
+  GIT_DEPTH: 1
+  GIT_FETCH_EXTRA_FLAGS: "--tags"
+  DEPLOY_PATH: "/opt/marketing-blog"
+  DOCKER_FILES_PATH: "./cicd"
+  # DOCKER_IMAGE_CUSTOM_TAG: "experimental"
+
+stages:
+  - build
+  - deploy
+  - notify
+
+.build-common:
+  timeout: 10 minutes
+  tags: ["builder.shell"]
+  stage: build
+  before_script: |
+    echo "Login to Docker registry..."
+    # login early to skip the rest if login fails (so pipeline dies)
+    echo "${CI_REGISTRY_PASSWORD}" | docker login "${CI_REGISTRY}" --username "${CI_REGISTRY_USER}" --password-stdin
+  script: |
+    set -euo pipefail
+    ERRLOG="./stderr.build"
+
+    echo '===================================================='
+    echo '#                  -START  BUILD-                  #'
+    echo '===================================================='
+
+    [ "${DOCKER_FILES_PATH:-.}" == "." ] && : || rm -f -- ./{docker-compose,docker-compose.override}.{yml,yaml} ./Dockerfile # if using different docker files location, delete default ones
+    IMAGE_NAME="${CI_REGISTRY_IMAGE}:${DOCKER_IMAGE_CUSTOM_TAG:-$CI_COMMIT_REF_SLUG}${SERVICE_NAME:+-$SERVICE_NAME}"
+    IMAGE_SHORT_NAME="${CI_REGISTRY_IMAGE}:${DOCKER_IMAGE_CUSTOM_TAG:-$CI_COMMIT_REF_SLUG}"
+    docker image inspect --format=true "${IMAGE_NAME}" >/dev/null 2>&1 && docker tag "${IMAGE_NAME}" "${IMAGE_NAME}-prev" || true # retag previous image (if exists) to keep it
+    GIT_REVISION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+    GIT_COMMIT_MESSAGE_SANITIZED=$(sed -zE 's/[[:space:]]+/ /g; s/([\x22\x27])/"/g' <<< "${CI_COMMIT_MESSAGE}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+
+    echo "Build docker image '${IMAGE_NAME}' with docker files from '${DOCKER_FILES_PATH:-.}'..."
+    /usr/bin/env time --version >/dev/null 2>&1 && time env NO_COLOR=1 docker build --pull \
+      --build-arg VERSION="${GIT_REVISION}" \
+      --build-arg COMMIT_MESSAGE="${GIT_COMMIT_MESSAGE_SANITIZED}" \
+      --build-arg COMMIT_REF="${CI_COMMIT_REF_NAME}" \
+      --build-arg COMMIT_HASH="${CI_COMMIT_SHA:0:8}" \
+      --build-arg BUILD_DATETIME="$(date -u '+%d.%m.%Y, %T %Z')" \
+      -t "${IMAGE_NAME}" \
+      -f "${DOCKER_FILES_PATH:-.}/${DOCKERFILE_NAME:-Dockerfile}" \
+      . > "${ERRLOG}" 2>&1 \
+      && (echo "docker build finished with exit code $?." && rm -f -v -- "${ERRLOG}") \
+      || (echo "docker build finished with exit code $?." && false)
+
+    docker push --quiet "${IMAGE_NAME}" 2> >(tee -a "${ERRLOG}") || exit 126 # push new image
+    docker image inspect --format=true "${IMAGE_NAME}-prev" >/dev/null 2>&1 && docker push --quiet "${IMAGE_NAME}-prev" || true # push retagged previous image (if exists) as well
+    docker image inspect --format=true --filter "dangling=true" "${CI_REGISTRY_IMAGE}" >/dev/null 2>&1 && docker rmi $(docker images "${CI_REGISTRY_IMAGE}" --filter "dangling=true" --no-trunc -q) || true # remove older untagged
+
+    sed -i "s#IMAGE_NAME_PLACEHOLDER#${IMAGE_SHORT_NAME}#g" "${DOCKER_FILES_PATH:-.}/docker-compose.yml"  2> >(tee -a "${ERRLOG}")
+    tar -czf ./build-project.tgz -C "${DOCKER_FILES_PATH:-.}" -- docker-compose.yml                       2> >(tee -a "${ERRLOG}")
+
+    echo '===================================================='
+    echo '#                 BUILD  FINISHED.                 #'
+    echo '===================================================='
+  after_script: |
+    echo "Logout from Docker registry..."
+    # logout even if login or build failed
+    docker logout -- "${CI_REGISTRY}"
+  retry:
+    max: 2
+    exit_codes: 126
+  artifacts:
+    name: "${CI_PROJECT_NAME}_artifacts_${CI_JOB_NAME}_${CI_COMMIT_REF_SLUG}_${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - build-project.tgz
+      - stderr.*
+    expire_in: 1 day
+    when: always
+
+.deploy-common:
+  timeout: 10 minutes
+  stage: deploy
+  before_script: |
+    echo "Login to Docker registry..."
+    # login early to skip the rest if login fails (so pipeline dies)
+    echo "${CI_REGISTRY_PASSWORD}" | docker login "${CI_REGISTRY}" --username "${CI_REGISTRY_USER}" --password-stdin
+  script: |
+    set -euo pipefail
+    ERRLOG="./stderr.deploy"
+
+    echo '===================================================='
+    echo '#                  -START DEPLOY-                  #'
+    echo '===================================================='
+
+    mkdir -v -p -- "${DEPLOY_PATH:?required}/" 2> >(tee -a "${ERRLOG}")
+    CICD_EVIDENCE="${DEPLOY_PATH}/.cicd.evidence"
+    touch -a -- "${CICD_EVIDENCE}" && test -w "${CICD_EVIDENCE}" \
+        || (echo "ERROR: '${CICD_EVIDENCE}' not writable!"                           | tee -a "${ERRLOG}" && exit 1)
+    echo >> "${CICD_EVIDENCE}" && echo '------------------------------------------------------' >> "${CICD_EVIDENCE}"
+    echo "Autodeploy started: $(date -u '+%Y-%m-%dT%H:%M:%S%:z')" | tee -a "${CICD_EVIDENCE}"
+    echo "├── pipeline ID: ${CI_PIPELINE_ID:-unknown}"            | tee -a "${CICD_EVIDENCE}"
+    echo "├── pipeline URL: ${CI_PIPELINE_URL:-unknown}"          | tee -a "${CICD_EVIDENCE}"
+    echo "├── pipeline source: ${CI_PIPELINE_SOURCE}"             | tee -a "${CICD_EVIDENCE}"
+    echo "├── repository name: ${CI_PROJECT_PATH}"                | tee -a "${CICD_EVIDENCE}"
+    echo "├── repository URL: ${CI_PROJECT_URL}"                  | tee -a "${CICD_EVIDENCE}"
+    echo "├── commit SHA: ${CI_COMMIT_SHA}"                       | tee -a "${CICD_EVIDENCE}"
+    echo "└── git reference: ${CI_COMMIT_REF_NAME}"               | tee -a "${CICD_EVIDENCE}"
+
+    RELEASE_DIR="releases/$(date +%Y%m%d-%H%M%S).${CI_COMMIT_SHORT_SHA}.${CI_COMMIT_REF_SLUG}"
+
+    echo ---;echo "Working in '${DEPLOY_PATH}/${RELEASE_DIR}'..."
+    mkdir -v -p -- "${DEPLOY_PATH}/releases" "${DEPLOY_PATH}/${RELEASE_DIR}"      2> >(tee -a "${ERRLOG}")
+    chmod -v 0750 -- "${DEPLOY_PATH}" "${DEPLOY_PATH}/releases"                   2> >(tee -a "${ERRLOG}")
+    echo "Extract files from project archive..."
+    tar -xzf ./build-project.tgz -C "${DEPLOY_PATH}/${RELEASE_DIR}"               2> >(tee -a "${ERRLOG}")
+
+    CONFIG_FILE="${DEPLOY_PATH}/.env"
+    test -e "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' not found!"           | tee -a "${ERRLOG}" && exit 1)
+    test -r "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' not readable!"        | tee -a "${ERRLOG}" && exit 1)
+    test -s "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' is empty!"            | tee -a "${ERRLOG}" && exit 1)
+    cp -v -- "${CONFIG_FILE}" "${DEPLOY_PATH}/${RELEASE_DIR}/"                    2> >(tee -a "${ERRLOG}")
+
+    # echo ---;echo "Stop and remove old 'current-release' container(s)..."
+    # docker compose --project-directory "${DEPLOY_PATH}/current-release/" down --remove-orphans --rmi all || true
+
+    echo ---;echo "Re-create 'current-release' symlink..."
+    rm -v -rf -- "${DEPLOY_PATH}/current-release"                                 2> >(tee -a "${ERRLOG}")
+    ln -v -s -- "${RELEASE_DIR}" "${DEPLOY_PATH}/current-release"                 2> >(tee -a "${ERRLOG}")
+
+    echo ---;echo "Pull new image(s) from registry..."
+    docker compose --project-directory "${DEPLOY_PATH}/current-release/" pull -q  2> >(tee -a "${ERRLOG}") && echo "done." || exit $?
+
+    echo ---;echo "Run new 'current-release' container(s)..."
+    docker compose --project-directory "${DEPLOY_PATH}/current-release/" up -d --remove-orphans > "${ERRLOG}" 2>&1 \
+      && (echo "'docker compose' finished with exit code $?." && rm -f -v -- "${ERRLOG}") \
+      || (echo "'docker compose' finished with exit code $?." && false)
+
+    echo ---;echo "Clean-up '${DEPLOY_PATH}/releases/'..."
+    find "${DEPLOY_PATH}/releases/" -maxdepth 1 -mindepth 1 -type d -mtime +30 -exec rm -vrf -- "{}" \+
+
+    echo '===================================================='
+    echo '#                 DEPLOY FINISHED.                 #'
+    echo '===================================================='
+    echo "Autodeploy finished: $(date -u '+%Y-%m-%dT%H:%M:%S%:z')" | tee -a "${CICD_EVIDENCE}"
+  after_script: |
+    echo "Logout from Docker registry..."
+    # logout even if login or build failed
+    docker logout -- "${CI_REGISTRY}"
+  artifacts:
+    name: "${CI_PROJECT_NAME}_artifacts_${CI_JOB_NAME}_${CI_COMMIT_REF_SLUG}_${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - stderr.*
+    expire_in: 1 day
+    when: always
+
+build-dev:
+  extends: .build-common
+  environment: dev
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: always
+
+build-prod:
+  extends: .build-common
+  environment: prod
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+
+deploy-dev:
+  extends: .deploy-common
+  needs: ["build-dev"]
+  environment: dev
+  tags: ["marketing.shell"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+      when: on_success
+
+deploy-prod:
+  extends: .deploy-common
+  needs: ["build-prod"]
+  environment: prod
+  tags: ["web.shell"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+
+include:
+  - component: $CI_SERVER_FQDN/ci-components/notification/notify@2
+    inputs: { environment: dev }
+    rules:
+      - if: $CI_COMMIT_BRANCH == "dev"
+  - component: $CI_SERVER_FQDN/ci-components/notification/notify@2
+    inputs: { environment: prod }
+    rules:
+      - if: $CI_COMMIT_BRANCH == "master"
