@@ -118,15 +118,17 @@ stages:
     # echo ---;echo "Stop and remove old 'current-release' container(s)..."
     # docker compose --project-directory "${DEPLOY_PATH}/current-release/" down --remove-orphans --rmi all || true
 
-    echo ---;echo "Re-create 'current-release' symlink..."
-    rm -v -rf -- "${DEPLOY_PATH}/current-release"                                 2> >(tee -a "${ERRLOG}")
-    ln -v -s -- "${RELEASE_DIR}" "${DEPLOY_PATH}/current-release"                 2> >(tee -a "${ERRLOG}")
+    echo ---;echo "Update 'current-release' symlink..."
+    echo "old current-release target was: $(readlink -f -- "${DEPLOY_PATH}/current-release" 2>/dev/null || echo "n/a")"
+    ln -v -sfn -- "${RELEASE_DIR}" "${DEPLOY_PATH}/next-release"                          2> >(tee -a "${ERRLOG}")
+    mv -v -Tf -- "${DEPLOY_PATH}/next-release" "${DEPLOY_PATH}/current-release"           2> >(tee -a "${ERRLOG}")
+    echo "new current-release target is: $(readlink -f -- "${DEPLOY_PATH}/current-release" 2>/dev/null || echo "n/a")"
 
     echo ---;echo "Pull new image(s) from registry..."
     docker compose --project-directory "${DEPLOY_PATH}/current-release/" pull -q  2> >(tee -a "${ERRLOG}") && echo "done." || exit $?
 
     echo ---;echo "Run new 'current-release' container(s)..."
-    docker compose --project-directory "${DEPLOY_PATH}/current-release/" up -d --remove-orphans > "${ERRLOG}" 2>&1 \
+    docker compose --project-directory "${DEPLOY_PATH}/current-release/" up -d --remove-orphans --wait --wait-timeout 120 > "${ERRLOG}" 2>&1 \
       && (echo "'docker compose' finished with exit code $?." && rm -f -v -- "${ERRLOG}") \
       || (echo "'docker compose' finished with exit code $?." && false)
 
