@@ -74,7 +74,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: Props
     if (!editor) return
     const current = editor.getHTML()
     if (content !== current) {
-      editor.commands.setContent(content || '', { emitUpdate: false })
+      editor.commands.setContent(content || '', false)
     }
   }, [content, editor])
 
