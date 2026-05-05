@@ -1,29 +1,29 @@
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { ADMIN_TITLE } from '@/lib/cms-config'
-import { ADMIN_COOKIE_NAME, validateAdminCookie } from '@/lib/admin-auth'
-import LoginForm from './LoginForm'
-import LogoutButton from './LogoutButton'
 
-// Server-component admin shell. Reads the session cookie before
-// rendering anything — if it's missing or invalid, the visitor sees
-// the login form and never receives the admin children in their
-// response. The shared root layout already provides <html><body> +
-// fonts + globals.css, so this nested layout just contributes content.
-export default async function AdminLayout({
+// Admin shell.
+//
+// ⚠ Auth is currently DISABLED — the env-var pipeline isn't reliably
+//   wiring through to the production container, and the team needs the
+//   blog tool urgently. Once DevOps confirms env propagation, re-enable
+//   the gate by:
+//
+//     1. Restore the cookie check from git history (commit 1cdef31).
+//     2. Restore middleware.ts at the repo root.
+//
+//   The supporting code (lib/admin-auth.ts, /api/admin/auth route,
+//   LoginForm.tsx, LogoutButton.tsx) is intentionally left in place
+//   so re-enabling is a one-revert change.
+//
+// Until then, anyone who can reach /admin can edit the blog. Make sure
+// the container's port stays bound to 127.0.0.1 and Nginx puts at least
+// basic-auth in front of /admin/ at the reverse-proxy layer.
+
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const isAuthed = await validateAdminCookie(
-    cookieStore.get(ADMIN_COOKIE_NAME)?.value
-  )
-
-  if (!isAuthed) {
-    return <LoginForm />
-  }
-
   return (
     <div className="min-h-screen bg-ink-50">
       <nav className="bg-gray-900 text-white">
@@ -39,6 +39,12 @@ export default async function AdminLayout({
               className="font-display text-sm font-semibold uppercase text-gray-300 transition-colors hover:text-white"
             >
               Blog
+            </Link>
+            <Link
+              href="/admin/rss"
+              className="font-display text-sm font-semibold uppercase text-gray-300 transition-colors hover:text-white"
+            >
+              RSS
             </Link>
             <Link
               href="/admin/authors"
@@ -78,7 +84,6 @@ export default async function AdminLayout({
             >
               View site →
             </Link>
-            <LogoutButton />
           </div>
         </div>
       </nav>

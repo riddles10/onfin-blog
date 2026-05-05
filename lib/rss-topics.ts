@@ -26,7 +26,7 @@ type RssItem = {
   pubDate?: string
 }
 
-type FetchedHeadline = {
+export type FetchedHeadline = {
   title: string
   link: string | null
   pubDate: string | null
@@ -169,6 +169,55 @@ async function filterByDb(
 
 function normalizeTitle(t: string): string {
   return t.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim()
+}
+
+/**
+ * Pull every configured feed in parallel and return the cleaned items —
+ * no DB write. Used by the admin /rss triage UI to render a live preview.
+ *
+ * Already-triaged source URLs are filtered out so the operator sees only
+ * fresh items. Junk-headline filter is applied; promo filter is NOT
+ * (the admin user can decide what to do with promo-shaped headlines —
+ * they're more useful as carousel material than as blog posts).
+ */
+export async function fetchAllConfiguredFeeds(): Promise<FetchedHeadline[]> {
+  const all = (
+    await Promise.all(
+      TOPIC_RSS_FEEDS.map((f) => fetchFeed(f.url, f.source, f.defaultCategory))
+    )
+  ).flat()
+
+  const cleaned = all.filter((h) => !isJunkHeadline(h.title))
+
+  // Hide items the operator has already actioned on a previous visit.
+  const triaged = await fetchTriagedSourceUrls()
+  return cleaned.filter((h) => !h.link || !triaged.has(h.link))
+}
+
+/**
+ * Set of source URLs already actioned (Article / Carousel / Reel / Skip)
+ * so the admin RSS view doesn't re-show them on refresh. Looks back 30
+ * days; older items rotate out of the cache and may reappear if the
+ * feed still surfaces them, but that's fine.
+ */
+async function fetchTriagedSourceUrls(): Promise<Set<string>> {
+  const supabase = getServiceClient()
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+  const { data, error } = await supabase
+    .from('topic_queue')
+    .select('source_url')
+    .not('triaged_at', 'is', null)
+    .gte('created_at', since)
+    .limit(2000)
+  if (error) {
+    console.warn('[rss] could not load triaged URL set:', error.message)
+    return new Set()
+  }
+  const set = new Set<string>()
+  for (const r of data || []) {
+    if (r.source_url) set.add(r.source_url as string)
+  }
+  return set
 }
 
 /**
