@@ -47,9 +47,19 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Cron worker script + its dependency (node-cron is already in node_modules,
-# which standalone bundles selectively — copy the worker script alongside).
+# Cron worker script + its dependencies.
+#
+# Next.js's `output: 'standalone'` only bundles node_modules that its tracer
+# can reach from app routes. scripts/cron-worker.js isn't a route, so its
+# `require('node-cron')` would fail in the runner ("Cannot find module
+# 'node-cron'") because the standalone bundle never saw it.
+#
+# Fix: copy the worker script + its deps explicitly. node-cron@3.x has one
+# transitive dep, uuid@8.x. If you bump node-cron, re-check its dependency
+# tree and update this list.
 COPY --from=builder --chown=nextjs:nodejs /app/scripts ./scripts
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/node-cron ./node_modules/node-cron
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/uuid ./node_modules/uuid
 
 USER nextjs
 EXPOSE 3000
