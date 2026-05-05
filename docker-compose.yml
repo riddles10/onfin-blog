@@ -45,3 +45,11 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    # The image-level HEALTHCHECK in the Dockerfile probes /api/health,
+    # which only the `app` service serves. The cron-worker is a plain
+    # Node process with no HTTP server — that probe would always fail,
+    # which made `docker compose up --wait` exit 1 even though the
+    # worker itself was running fine. Disable the inherited probe and
+    # let the supervisor judge liveness from the process exit code.
+    healthcheck:
+      disable: true

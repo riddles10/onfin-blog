@@ -58,6 +58,13 @@ services:
     cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
     mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
     memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
+    # Disable the inherited image-level HEALTHCHECK from the Dockerfile.
+    # That probe pings /api/health, which only the `app` service serves —
+    # the cron-worker is a plain Node process with no HTTP listener, so
+    # the probe was always failing and `docker compose up --wait` was
+    # exiting 1 with "container ... is unhealthy".
+    healthcheck:
+      disable: true
     logging:
       options:
         max-size: "32m"
