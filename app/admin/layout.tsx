@@ -1,6 +1,18 @@
 import Link from 'next/link'
 import { ADMIN_TITLE } from '@/lib/cms-config'
 
+// Force dynamic rendering for the entire /admin tree.
+//
+// The admin pages all read from Supabase at request time and use
+// useSearchParams() in BlogEditor — both of which conflict with
+// static prerender. Without this, `next build` tries to prerender
+// every /admin/* route, hits the useSearchParams() bailout, and
+// fails the production build (see Dockerfile RUN npm run build).
+//
+// Admin pages are operator-facing and never need to be static, so
+// opting the whole subtree out is the right move.
+export const dynamic = 'force-dynamic'
+
 // Admin shell.
 //
 // ⚠ Auth is currently DISABLED — the env-var pipeline isn't reliably
