@@ -58,13 +58,28 @@ services:
     cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
     mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
     memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
-    # Disable the inherited image-level HEALTHCHECK from the Dockerfile.
-    # That probe pings /api/health, which only the `app` service serves —
-    # the cron-worker is a plain Node process with no HTTP listener, so
-    # the probe was always failing and `docker compose up --wait` was
-    # exiting 1 with "container ... is unhealthy".
+    # Replace the inherited image-level HEALTHCHECK with a trivial
+    # always-true probe.
+    #
+    # Why not `disable: true`: the runner's `docker compose up --wait`
+    # refuses services with no healthcheck at all ("has no healthcheck
+    # configured") — it needs *something* to wait on.
+    #
+    # Why not the inherited probe: it pings /api/health, which only the
+    # `app` service serves; the cron-worker is a plain Node process with
+    # no HTTP listener, so that probe always fails.
+    #
+    # The cron-worker's real liveness signal is the container's running
+    # state — if the node process exits, the container exits, and
+    # `restart: unless-stopped` brings it back. Mapping that to a "true"
+    # healthcheck is the cleanest expression of "as long as we're
+    # running, we're healthy."
     healthcheck:
-      disable: true
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
+      start_period: 5s
     logging:
       options:
         max-size: "32m"

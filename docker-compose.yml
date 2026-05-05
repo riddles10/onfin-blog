@@ -47,9 +47,16 @@ services:
         condition: service_healthy
     # The image-level HEALTHCHECK in the Dockerfile probes /api/health,
     # which only the `app` service serves. The cron-worker is a plain
-    # Node process with no HTTP server — that probe would always fail,
-    # which made `docker compose up --wait` exit 1 even though the
-    # worker itself was running fine. Disable the inherited probe and
-    # let the supervisor judge liveness from the process exit code.
+    # Node process with no HTTP listener — that probe always fails.
+    #
+    # We replace it with a trivial always-true healthcheck rather than
+    # `disable: true` because the deploy runner uses
+    # `docker compose up --wait`, which refuses services with no
+    # healthcheck ("has no healthcheck configured"). Container running
+    # = worker healthy is the right semantic for a Node-only worker.
     healthcheck:
-      disable: true
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
+      start_period: 5s
