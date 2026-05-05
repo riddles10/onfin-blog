@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit",
     "import:tilda": "tsx --env-file=.env.local scripts/import-tilda.ts",
     "build:fixture": "tsx --env-file=.env.local scripts/build-fixture.ts",
+    "reclassify": "tsx --env-file=.env.local scripts/reclassify-posts.ts",
+    "upload:covers": "tsx --env-file=.env.local scripts/upload-tilda-covers.ts",
     "cron:worker": "node scripts/cron-worker.js"
   },
   "dependencies": {

@@ -193,28 +193,71 @@ export function extractOgImage(rawHtml: string): string | null {
 
 /**
  * Bucket a parsed news post into the OnFin category set based on title
- * keywords. Conservative: when in doubt, fall back to `general`.
+ * keywords. Order matters — earlier rules win when titles match more
+ * than one pattern. Tightened against the actual archive headlines, so
+ * the catch-all `general` only fires for true edge cases.
  */
 export function classifyCategory(title: string): PostCategorySlug {
   const t = title.toLowerCase()
-  if (/maintenance|outage|server|platform|mt[45]|terminal|update to the/.test(t)) {
-    return 'platform-updates'
-  }
-  if (/schedule|trading hours|holiday|daylight saving|session/.test(t)) {
-    return 'platform-updates'
-  }
-  if (/regulation|license|licence|compliance|kyc|aml|cftc|esma|fca|mas|misa/.test(t)) {
+
+  // Regulation-news first — narrow, specific signals (jurisdiction acronyms,
+  // licensing) shouldn't get swallowed by the broader platform bucket if the
+  // headline happens to mention MT5 in the same breath.
+  if (/regulation|license|licence|compliance|\bkyc\b|\baml\b|cftc|esma|\bfca\b|\bmas\b|misa|prudential/.test(t)) {
     return 'regulation-news'
   }
-  if (/strategy|setup|backtest|signal|indicator/.test(t)) {
+
+  // Platform updates — by far the largest bucket in the archive. Covers:
+  //   - infrastructure (maintenance, outages, server moves)
+  //   - terminal versions (MT4/MT5/launch/support)
+  //   - schedule changes (sessions, holidays, daylight saving, time change)
+  //   - tradeable-instrument additions (shares, ETFs, indices, instruments,
+  //     trading tools, currency pairs added/removed)
+  //   - account-spec changes (leverage, MINI/VIP/Standard accounts, conditions)
+  //   - payment / deposit / withdrawal channel changes
+  //   - product launches (copytrading, prop trading, ETF access)
+  //   - support hours, contact channels
+  if (/maintenance|outage|server|platform|\bmt[45]\b|metatrader|terminal|update to the|launch/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/schedule|trading hours|market hours|holiday|daylight saving|session|time change/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/instrument|trading tools|shares|stocks|\betfs?\b|indices|currency pair|trading pair/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/leverage|trading conditions|account|spread|commission|swap|margin/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/deposit|withdraw|payment|replenish|fund (your|account)|fiatsystem|billline|mpay|paylib/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/copytrading|copy trading|prop trading|prop challenge/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/support service|opening hours|contact|customer service/.test(t)) {
+    return 'platform-updates'
+  }
+  if (/restriction|limitation|temporary|election/.test(t)) {
+    return 'platform-updates'
+  }
+
+  // Strategies — narrower set, has to match technique-specific terminology.
+  if (/strategy|setup|backtest|signal|indicator|risk management|position sizing|stop loss/.test(t)) {
     return 'strategies'
   }
-  if (/market|analysis|forecast|outlook|recap|review|currency|forex|fx|gold|oil|index|index|nfp|fomc|cpi/.test(t)) {
+
+  // Market analysis — recaps, forecasts, instrument-specific commentary,
+  // year-in-review pieces.
+  if (/analysis|forecast|outlook|recap|review|year with|deals of the year|most profitable|forex|\bfx\b|gold|oil|\bnfp\b|fomc|\bcpi\b|\becb\b|\bfed\b|inflation|rate decision/.test(t)) {
     return 'market-analysis'
   }
-  if (/guide|how to|explained|primer|walkthrough/.test(t)) {
+
+  // Trading guides — how-to / explainer / primer style.
+  if (/guide|how to|explained|primer|walkthrough|tutorial|beginners?/.test(t)) {
     return 'trading-guides'
   }
+
   return 'general'
 }
 
