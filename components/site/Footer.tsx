@@ -1,10 +1,13 @@
 import Link from 'next/link'
-
-const PARENT_SITE = 'https://onfin.io'
+import { parentSiteHome, parentSiteUrl } from '@/lib/onfin-links'
 
 // Public site footer. Light surface to match the parent onfin.io footer
 // (`bg-ink-50/50`). The dark slab pattern is reserved for hero cards and
 // the article-page CTA — not for the footer.
+//
+// Outbound links forward the visitor's current locale to onfin.io via
+// `parentSiteUrl()`. Logo goes to the bare onfin.io root so the parent
+// site's own redirect picks the locale (lets the user re-pick if needed).
 export default function Footer({ locale }: { locale: string }) {
   const year = new Date().getFullYear()
 
@@ -22,21 +25,21 @@ export default function Footer({ locale }: { locale: string }) {
     {
       heading: 'OnFin',
       links: [
-        { href: `${PARENT_SITE}`, label: 'Home', external: true },
-        { href: `${PARENT_SITE}/en/about`, label: 'About', external: true },
-        { href: `${PARENT_SITE}/en/contacts`, label: 'Contact', external: true },
-        { href: `${PARENT_SITE}/en/account-types`, label: 'Account types', external: true },
-        { href: `${PARENT_SITE}/en/documents`, label: 'Documents', external: true },
+        { href: parentSiteHome(), label: 'Home', external: true },
+        { href: parentSiteUrl(locale, '/about'), label: 'About', external: true },
+        { href: parentSiteUrl(locale, '/contacts'), label: 'Contact', external: true },
+        { href: parentSiteUrl(locale, '/account-types'), label: 'Account types', external: true },
+        { href: parentSiteUrl(locale, '/documents'), label: 'Documents', external: true },
       ],
     },
     {
       heading: 'Trading',
       links: [
-        { href: `${PARENT_SITE}/en/mt4`, label: 'MT4', external: true },
-        { href: `${PARENT_SITE}/en/mt5`, label: 'MT5', external: true },
-        { href: `${PARENT_SITE}/en/copytrading`, label: 'Copy trading', external: true },
-        { href: `${PARENT_SITE}/en/prop-trading`, label: 'Prop trading', external: true },
-        { href: `${PARENT_SITE}/en/economic-calendar`, label: 'Economic calendar', external: true },
+        { href: parentSiteUrl(locale, '/mt4'), label: 'MT4', external: true },
+        { href: parentSiteUrl(locale, '/mt5'), label: 'MT5', external: true },
+        { href: parentSiteUrl(locale, '/copytrading'), label: 'Copy trading', external: true },
+        { href: parentSiteUrl(locale, '/prop-trading'), label: 'Prop trading', external: true },
+        { href: parentSiteUrl(locale, '/economic-calendar'), label: 'Economic calendar', external: true },
       ],
     },
   ]
@@ -50,7 +53,7 @@ export default function Footer({ locale }: { locale: string }) {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand block */}
           <div>
-            <a href={PARENT_SITE} aria-label="OnFin home" className="block">
+            <a href={parentSiteHome()} aria-label="OnFin home" className="block">
               <img
                 src="/logo-dark.svg"
                 alt=""
@@ -113,7 +116,7 @@ export default function Footer({ locale }: { locale: string }) {
             <span className="text-ink-400">© {year} OnFin. All rights reserved.</span>
             <span>
               <a
-                href={`${PARENT_SITE}/en/documents`}
+                href={parentSiteUrl(locale, '/documents')}
                 className="text-ink-500 hover:text-brand-black"
               >
                 Legal documents

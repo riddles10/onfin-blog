@@ -313,7 +313,7 @@ export default async function BlogArticlePage({
                 variant="full"
               />
 
-              <ArticleCTA />
+              <ArticleCTA locale={lang} />
 
               <RelatedPosts locale={lang} posts={related} />
             </div>

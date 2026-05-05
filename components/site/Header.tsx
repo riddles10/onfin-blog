@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { parentSiteHome, parentSiteUrl } from '@/lib/onfin-links'
 
 // Public site header for blog.onfin.io.
 //
@@ -6,8 +7,6 @@ import Link from 'next/link'
 // Logo links to the parent marketing site (onfin.io); a single right-side
 // CTA points at account opening so OnFin gets a constant, unobtrusive
 // conversion path without cluttering the editorial surface.
-
-const PARENT_SITE = 'https://onfin.io'
 
 export default function Header({ locale }: { locale: string }) {
   return (
@@ -18,8 +17,12 @@ export default function Header({ locale }: { locale: string }) {
       <div className="container-site flex items-center justify-between gap-6 py-4">
         <div className="flex items-center gap-8">
           {/* Logo — to parent marketing site */}
+          {/* Logo links to bare onfin.io so the parent site's own root
+              redirect (cookie / Accept-Language) decides the locale —
+              don't inherit ours, since the user may have only stopped
+              by the blog momentarily. */}
           <a
-            href={PARENT_SITE}
+            href={parentSiteHome()}
             className="flex items-center gap-2"
             aria-label="OnFin home"
           >
@@ -48,7 +51,7 @@ export default function Header({ locale }: { locale: string }) {
         </div>
 
         <a
-          href={`${PARENT_SITE}/en/account-types`}
+          href={parentSiteUrl(locale, '/account-types')}
           className="group inline-flex items-center gap-1.5 rounded-pill bg-brand-lime px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-black transition hover:bg-brand-lime/90"
         >
           Open account

@@ -2,9 +2,9 @@
 // the parent marketing site so OnFin always gets a path to conversion
 // without the blog feeling like a marketing funnel.
 
-const PARENT_SITE = 'https://onfin.io'
+import { parentSiteUrl } from '@/lib/onfin-links'
 
-export default function ArticleCTA() {
+export default function ArticleCTA({ locale }: { locale: string }) {
   return (
     <aside
       aria-label="Get started with OnFin"
@@ -30,14 +30,14 @@ export default function ArticleCTA() {
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
-              href={`${PARENT_SITE}/en/account-types`}
+              href={parentSiteUrl(locale, '/account-types')}
               className="inline-flex items-center justify-center gap-2 rounded-pill bg-brand-lime px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.14em] text-brand-black transition hover:bg-white"
             >
               Open an account
               <span aria-hidden="true">→</span>
             </a>
             <a
-              href={`${PARENT_SITE}/en/how`}
+              href={parentSiteUrl(locale, '/how')}
               className="inline-flex items-center justify-center gap-2 rounded-pill border border-white/30 px-6 py-3 font-display text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:border-brand-lime hover:text-brand-lime"
             >
               How OnFin works
