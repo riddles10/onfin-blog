@@ -5,12 +5,26 @@ import { categoryGradient, categoryLabel } from '@/lib/categories'
 import { htmlToExcerpt } from '@/lib/format'
 import { annotateH2s } from '@/lib/toc'
 import { DEMO_POSTS, DEMO_AUTHOR_BY_ID, isDemoMode } from '@/lib/demo-data'
+import {
+  type Locale,
+  isLocale,
+  SUPPORTED_LOCALES,
+  DEFAULT_LOCALE,
+  BCP47,
+} from '@/lib/locales'
+import {
+  applyTranslation,
+  fetchTranslationForPost,
+  fetchTranslationsBatch,
+  type LocalizedPostView,
+} from '@/lib/post-locale'
 import Breadcrumbs from '@/components/blog/Breadcrumbs'
 import AuthorByline from '@/components/blog/AuthorByline'
 import TableOfContents from '@/components/blog/TableOfContents'
 import ShareRail from '@/components/blog/ShareRail'
 import RelatedPosts from '@/components/blog/RelatedPosts'
 import ArticleCTA from '@/components/blog/ArticleCTA'
+import EnglishFallbackBanner from '@/components/blog/EnglishFallbackBanner'
 import type { PostCardData } from '@/components/blog/PostCard'
 
 type Params = { lang: string; slug: string }
@@ -34,18 +48,26 @@ type AuthorRef = {
   avatar_url: string | null
 }
 
-async function fetchPost(slug: string): Promise<{
+type LocalizedArticle = {
   post: PostFull
+  view: LocalizedPostView                           // localised title/body/excerpt + isFallback
   author: AuthorRef | null
-} | null> {
+}
+
+async function fetchArticle(
+  slug: string,
+  locale: Locale
+): Promise<LocalizedArticle | null> {
   if (isDemoMode()) {
     const p = DEMO_POSTS.find((x) => x.slug === slug)
     if (!p) return null
     const a = DEMO_AUTHOR_BY_ID[p.blog_author_id]
-    return {
-      post: p as unknown as PostFull,
-      author: a ?? null,
-    }
+    const view = applyTranslation(
+      { title_en: p.title_en, body_en: p.body_en, excerpt_en: p.excerpt_en },
+      locale,
+      null
+    )
+    return { post: p as unknown as PostFull, view, author: a ?? null }
   }
 
   const supabase = getServiceClient()
@@ -64,30 +86,44 @@ async function fetchPost(slug: string): Promise<{
   }
   if (!data) return null
 
-  let author: AuthorRef | null = null
-  if (data.blog_author_id) {
-    const { data: a } = await supabase
-      .from('authors')
-      .select('id, name, bio_en, avatar_url')
-      .eq('id', data.blog_author_id)
-      .maybeSingle()
-    author = (a as AuthorRef | null) ?? null
-  }
-  return { post: data as PostFull, author }
+  const post = data as PostFull
+
+  const [translation, author] = await Promise.all([
+    fetchTranslationForPost(supabase, post.id, locale),
+    post.blog_author_id
+      ? supabase
+          .from('authors')
+          .select('id, name, bio_en, avatar_url')
+          .eq('id', post.blog_author_id)
+          .maybeSingle()
+          .then(({ data: a }) => (a as AuthorRef | null) ?? null)
+      : Promise.resolve<AuthorRef | null>(null),
+  ])
+
+  const view = applyTranslation(
+    { title_en: post.title_en, body_en: post.body_en, excerpt_en: post.excerpt_en },
+    locale,
+    translation
+  )
+
+  return { post, view, author }
 }
 
 async function fetchRelated(
   category: string,
+  excludePostId: string,
   excludeSlug: string,
+  locale: Locale,
   limit = 3
 ): Promise<PostCardData[]> {
   if (isDemoMode()) {
     const same = DEMO_POSTS.filter((p) => p.category === category && p.slug !== excludeSlug)
     const fill = DEMO_POSTS.filter((p) => p.slug !== excludeSlug && !same.find((s) => s.id === p.id))
-    return [...same, ...fill].slice(0, limit).map(toCardData)
+    return [...same, ...fill].slice(0, limit).map(toCardDataFromEnglish)
   }
 
   const supabase = getServiceClient()
+
   // Same-category first; pad with newest from any category if there
   // aren't enough siblings yet.
   const { data: same } = await supabase
@@ -95,29 +131,55 @@ async function fetchRelated(
     .select('id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at')
     .eq('published', true)
     .eq('category', category)
-    .neq('slug', excludeSlug)
+    .neq('id', excludePostId)
     .order('published_at', { ascending: false })
     .limit(limit)
 
-  let pool = (same ?? []).map(toCardData)
-  if (pool.length < limit) {
+  const collected: PostFull[] = (same ?? []) as unknown as PostFull[]
+
+  if (collected.length < limit) {
     const { data: fill } = await supabase
       .from('posts')
       .select('id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at')
       .eq('published', true)
-      .neq('slug', excludeSlug)
+      .neq('id', excludePostId)
       .order('published_at', { ascending: false })
-      .limit(limit + 2) // overshoot to leave room for de-duping
-    const seen = new Set(pool.map((p) => p.id))
-    for (const p of fill ?? []) {
-      if (pool.length >= limit) break
-      if (!seen.has(p.id)) pool.push(toCardData(p))
+      .limit(limit + 2)
+    const seen = new Set(collected.map((p) => p.id))
+    for (const p of (fill ?? []) as unknown as PostFull[]) {
+      if (collected.length >= limit) break
+      if (!seen.has(p.id)) collected.push(p)
     }
   }
-  return pool
+
+  // Batch the translations for the related cards in one round trip.
+  const translations = await fetchTranslationsBatch(
+    supabase,
+    collected.map((p) => p.id),
+    locale
+  )
+
+  return collected.map((p) => {
+    const t = translations.get(p.id) ?? null
+    const view = applyTranslation(
+      { title_en: p.title_en, body_en: p.body_en, excerpt_en: p.excerpt_en },
+      locale,
+      t
+    )
+    return {
+      id: p.id,
+      slug: p.slug,
+      title: view.title,
+      excerpt: view.excerpt,
+      body: view.body,
+      category: p.category,
+      coverImage: p.cover_image,
+      publishedAt: p.published_at,
+    }
+  })
 }
 
-function toCardData(row: {
+function toCardDataFromEnglish(row: {
   id: string
   slug: string
   title_en: string
@@ -139,32 +201,50 @@ function toCardData(row: {
   }
 }
 
+/**
+ * Build the alternates.languages map for `<link rel="alternate" hreflang>`.
+ * Every locale points to its own URL; x-default points at English.
+ */
+function buildHreflang(slug: string): Record<string, string> {
+  const map: Record<string, string> = {}
+  for (const loc of SUPPORTED_LOCALES) {
+    map[loc] = `/${loc}/${slug}`
+  }
+  map['x-default'] = `/${DEFAULT_LOCALE}/${slug}`
+  return map
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<Params>
 }): Promise<Metadata> {
   const { lang, slug } = await params
-  const result = await fetchPost(slug)
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE
+  const result = await fetchArticle(slug, locale)
   if (!result) return { title: 'Not found' }
-  const { post } = result
-  const description = post.excerpt_en || htmlToExcerpt(post.body_en, 160)
+  const { post, view } = result
+  const description = view.excerpt || htmlToExcerpt(view.body, 160)
   const canonical = `/${lang}/${post.slug}`
   return {
-    title: post.title_en,
+    title: view.title,
     description,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: buildHreflang(post.slug),
+    },
     openGraph: {
       type: 'article',
       url: canonical,
-      title: post.title_en,
+      title: view.title,
       description,
       publishedTime: post.published_at ?? undefined,
       images: post.cover_image ? [{ url: post.cover_image }] : undefined,
+      locale: BCP47[locale],
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title_en,
+      title: view.title,
       description,
       images: post.cover_image ? [post.cover_image] : undefined,
     },
@@ -177,28 +257,33 @@ export default async function BlogArticlePage({
   params: Promise<Params>
 }) {
   const { lang, slug } = await params
-  const result = await fetchPost(slug)
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE
+  const result = await fetchArticle(slug, locale)
   if (!result) notFound()
-  const { post, author } = result
+  const { post, view, author } = result
 
   const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io').replace(/\/$/, '')
   const canonicalPath = `/${lang}/${post.slug}`
   const canonicalUrl = `${baseUrl}${canonicalPath}`
-  const description = post.excerpt_en || htmlToExcerpt(post.body_en, 160)
+  const description = view.excerpt || htmlToExcerpt(view.body, 160)
 
   // Decorate H2s with stable ids and pull the list out for the TOC.
-  const { html: bodyHtml, items: tocItems } = annotateH2s(post.body_en)
+  const { html: bodyHtml, items: tocItems } = annotateH2s(view.body)
 
-  const related = await fetchRelated(post.category, post.slug, 3)
+  const related = await fetchRelated(post.category, post.id, post.slug, locale, 3)
 
+  // The schema's inLanguage tells crawlers what language the rendered
+  // body is actually in — important when we fall back to English for a
+  // non-English route, otherwise Google would treat the page as
+  // mismatched-locale duplicate content.
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: post.title_en,
+    headline: view.title,
     description,
     datePublished: post.published_at ?? undefined,
     dateModified: post.published_at ?? undefined,
-    inLanguage: 'en-US',
+    inLanguage: BCP47[view.effectiveLocale],
     image: post.cover_image ?? undefined,
     author: author
       ? {
@@ -220,7 +305,7 @@ export default async function BlogArticlePage({
       label: categoryLabel(post.category),
       href: `/${lang}?category=${post.category}`,
     },
-    { label: post.title_en },
+    { label: view.title },
   ]
 
   return (
@@ -230,24 +315,25 @@ export default async function BlogArticlePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
+      {view.isFallback && <EnglishFallbackBanner requestedLocale={locale} />}
+
       <article>
         {/* ── Header ──────────────────────────────────────────────────── */}
         <header className="border-b border-ink-100 bg-white">
           <div className="container-site pt-8 sm:pt-10">
             <Breadcrumbs crumbs={breadcrumbs} baseUrl={baseUrl} />
           </div>
-
           <div className="container-site pb-12 pt-6 sm:pb-16 sm:pt-8">
             <div className="mx-auto max-w-3xl">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
                 {categoryLabel(post.category)}
               </p>
               <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-brand-black sm:text-4xl lg:text-5xl">
-                {post.title_en}
+                {view.title}
               </h1>
-              {post.excerpt_en && (
+              {view.excerpt && (
                 <p className="mt-5 text-base leading-relaxed text-ink-500 sm:text-lg">
-                  {post.excerpt_en}
+                  {view.excerpt}
                 </p>
               )}
               <div className="mt-7">
@@ -269,20 +355,14 @@ export default async function BlogArticlePage({
         </header>
 
         {/* ── Cover image ─────────────────────────────────────────────── */}
-        <CoverImage src={post.cover_image} alt={post.title_en} category={post.category} />
+        <CoverImage src={post.cover_image} alt={view.title} category={post.category} />
 
         {/* ── Body + side rails ──────────────────────────────────────── */}
         <div className="container-site py-12 sm:py-16">
-          {/*
-            Three-column at xl (1280+): share-rail | body (720px) | TOC (260px)
-            One-column below xl. The desktop rails are gracefully replaced by
-            the inline share row + the heading list at the bottom of the body
-            on tablet and mobile.
-          */}
           <div className="mx-auto grid max-w-[1100px] gap-10 xl:grid-cols-[48px_minmax(0,720px)_240px]">
             {/* Left rail — sticky share buttons on desktop */}
             <div className="hidden xl:block xl:sticky xl:top-28 xl:self-start">
-              <ShareRail title={post.title_en} url={canonicalUrl} variant="rail" />
+              <ShareRail title={view.title} url={canonicalUrl} variant="rail" />
             </div>
 
             {/* Body */}
@@ -296,7 +376,7 @@ export default async function BlogArticlePage({
                   sticky rail below xl, where there's no spare horizontal
                   real estate. */}
               <div className="mt-12 border-t border-ink-100 pt-6 xl:hidden">
-                <ShareRail title={post.title_en} url={canonicalUrl} variant="inline" />
+                <ShareRail title={view.title} url={canonicalUrl} variant="inline" />
               </div>
 
               <AuthorByline
@@ -345,28 +425,32 @@ function CoverImage({
 }) {
   if (src) {
     return (
-      <div className="bg-ink-100">
+      <figure className="bg-ink-50">
         <div className="container-site py-6 sm:py-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt={alt}
-            // The cover is the LCP element on most articles → prioritise it.
-            // `fetchPriority` is the right knob; `loading="eager"` reinforces it.
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            className="mx-auto block aspect-[16/9] w-full max-w-5xl rounded-2xl object-cover"
-          />
+          <div className="mx-auto aspect-[1200/630] max-w-[1100px] overflow-hidden rounded-3xl bg-ink-100">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={alt}
+              className="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         </div>
-      </div>
+      </figure>
     )
   }
   return (
-    <div
-      aria-hidden="true"
-      className="h-32 w-full sm:h-40"
-      style={{ backgroundImage: categoryGradient(category) }}
-    />
+    <div className="bg-ink-50">
+      <div className="container-site py-6 sm:py-8">
+        <div
+          className={`mx-auto aspect-[1200/630] max-w-[1100px] rounded-3xl ${categoryGradient(
+            category
+          )}`}
+          aria-hidden="true"
+        />
+      </div>
+    </div>
   )
 }

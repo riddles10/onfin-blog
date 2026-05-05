@@ -1,9 +1,7 @@
 import { notFound } from 'next/navigation'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
-
-const SUPPORTED_LOCALES = ['en'] as const
-type Locale = (typeof SUPPORTED_LOCALES)[number]
+import { SUPPORTED_LOCALES, isLocale } from '@/lib/locales'
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((lang) => ({ lang }))
@@ -17,7 +15,7 @@ export default async function LocaleLayout({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params
-  if (!(SUPPORTED_LOCALES as readonly string[]).includes(lang)) {
+  if (!isLocale(lang)) {
     notFound()
   }
 
@@ -39,4 +37,4 @@ export default async function LocaleLayout({
   )
 }
 
-export type { Locale }
+export type { Locale } from '@/lib/locales'

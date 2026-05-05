@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { isPostCategory, categoryLabel, categoryTagline } from '@/lib/categories'
 import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
+import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@/lib/locales'
+import { applyTranslation, fetchTranslationsBatch } from '@/lib/post-locale'
 import BlogHero from '@/components/blog/BlogHero'
 import CategoryChips from '@/components/blog/CategoryChips'
 import PostCard from '@/components/blog/PostCard'
@@ -10,6 +12,14 @@ import Pagination from '@/components/blog/Pagination'
 // Public blog index. SEO-clean: every category and page combination has
 // a real, crawlable URL via search params, and the SSR response always
 // reflects the filter — no client-side gating.
+//
+// Locale handling: posts are fetched with their English columns, then
+// translations for the requested locale are batch-loaded from
+// post_translations and zipped on. Posts without a translation fall
+// back to English (with a banner on the article page; cards on the
+// index just show the English title — no banner, since a card showing
+// "this card is in English" inside a localised list would be more
+// noisy than helpful).
 
 const POSTS_PER_PAGE = 12
 
@@ -27,20 +37,42 @@ type IndexPost = {
   published_at: string | null
 }
 
+type LocalizedIndexPost = IndexPost & {
+  // Resolved view: title/body/excerpt are already in the requested
+  // locale (or English fallback). isFallback flags whether we had to
+  // fall back so the design can render an indicator if it wants to.
+  title: string
+  body: string
+  excerpt: string | null
+  isFallback: boolean
+}
+
 async function fetchPosts(opts: {
+  locale: Locale
   category: string | null
   page: number
-}): Promise<{ posts: IndexPost[]; total: number }> {
+}): Promise<{ posts: LocalizedIndexPost[]; total: number }> {
   // Local-dev path: render the design with fixture data when no real
   // Supabase is configured. Removed automatically once env vars point at
-  // a live instance.
+  // a live instance. Demo posts are English-only — every locale falls
+  // back so locale routing can be visually verified without translations.
   if (isDemoMode()) {
     const all = opts.category
       ? DEMO_POSTS.filter((p) => p.category === opts.category)
       : DEMO_POSTS
     const from = (opts.page - 1) * POSTS_PER_PAGE
     const slice = all.slice(from, from + POSTS_PER_PAGE)
-    return { posts: slice as unknown as IndexPost[], total: all.length }
+    const isFallback = opts.locale !== DEFAULT_LOCALE
+    return {
+      posts: slice.map((p) => ({
+        ...(p as unknown as IndexPost),
+        title: p.title_en,
+        body: p.body_en,
+        excerpt: p.excerpt_en,
+        isFallback,
+      })),
+      total: all.length,
+    }
   }
 
   const supabase = getServiceClient()
@@ -64,13 +96,53 @@ async function fetchPosts(opts: {
     console.error('[blog index] supabase error:', error.message)
     return { posts: [], total: 0 }
   }
-  return { posts: (data || []) as IndexPost[], total: count ?? 0 }
+  const rawPosts = (data ?? []) as IndexPost[]
+
+  // Batch-fetch translations for the visible page.
+  const translations = await fetchTranslationsBatch(
+    supabase,
+    rawPosts.map((p) => p.id),
+    opts.locale
+  )
+
+  const posts: LocalizedIndexPost[] = rawPosts.map((p) => {
+    const t = translations.get(p.id) ?? null
+    const view = applyTranslation(
+      { title_en: p.title_en, body_en: p.body_en, excerpt_en: p.excerpt_en },
+      opts.locale,
+      t
+    )
+    return {
+      ...p,
+      title: view.title,
+      body: view.body,
+      excerpt: view.excerpt,
+      isFallback: view.isFallback,
+    }
+  })
+
+  return { posts, total: count ?? 0 }
 }
 
 function parseSearch(search: Search): { category: string | null; page: number } {
   const c = search.category && isPostCategory(search.category) ? search.category : null
   const pageNum = Math.max(1, parseInt(search.page ?? '1', 10) || 1)
   return { category: c, page: pageNum }
+}
+
+/**
+ * Build the alternates.languages map for a given canonical path. Emits
+ * `<link rel="alternate" hreflang="..">` tags so Google treats the
+ * locale variants as the same content rather than duplicate pages.
+ * `x-default` points at English.
+ */
+function buildHreflang(pathSuffix: string): Record<string, string> {
+  const map: Record<string, string> = {}
+  for (const loc of SUPPORTED_LOCALES) {
+    map[loc] = `/${loc}${pathSuffix}`
+  }
+  map['x-default'] = `/${DEFAULT_LOCALE}${pathSuffix}`
+  return map
 }
 
 export async function generateMetadata({
@@ -89,16 +161,21 @@ export async function generateMetadata({
   const description = category
     ? categoryTagline(category)
     : 'Market analysis, trading guides, platform updates, and regulation news from the OnFin editorial desk.'
-  const canonical = category ? `/${lang}?category=${category}` : `/${lang}`
+  const pathSuffix = category ? `?category=${category}` : ''
+  const canonical = `/${lang}${pathSuffix}`
   return {
     title,
     description,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: buildHreflang(pathSuffix),
+    },
     openGraph: {
       type: 'website',
       url: canonical,
       title,
       description,
+      locale: lang,
     },
   }
 }
@@ -111,9 +188,10 @@ export default async function BlogIndexPage({
   searchParams: Promise<Search>
 }) {
   const { lang } = await params
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE
   const sp = await searchParams
   const { category, page } = parseSearch(sp)
-  const { posts, total } = await fetchPosts({ category, page })
+  const { posts, total } = await fetchPosts({ locale, category, page })
   const totalPages = Math.max(1, Math.ceil(total / POSTS_PER_PAGE))
 
   // Hero copy: when the index is filtered, swap the default tagline for
@@ -176,13 +254,13 @@ export default async function BlogIndexPage({
   )
 }
 
-function toCardData(p: IndexPost) {
+function toCardData(p: LocalizedIndexPost) {
   return {
     id: p.id,
     slug: p.slug,
-    title: p.title_en,
-    excerpt: p.excerpt_en,
-    body: p.body_en,
+    title: p.title,
+    excerpt: p.excerpt,
+    body: p.body,
     category: p.category,
     coverImage: p.cover_image,
     publishedAt: p.published_at,
