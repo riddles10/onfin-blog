@@ -99,10 +99,38 @@ export function cleanTitle(raw: string): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
+ * Phrases that mark a tn_text block as site-wide chrome rather than the
+ * article body. Tilda includes a long legal disclaimer + company info
+ * + support-email block on every news page; without filtering, those
+ * outrun the actual article body in length and our "pick the longest"
+ * heuristic returns the wrong thing.
+ *
+ * Match against the first ~200 chars of the block's plain text — that
+ * way a legitimate article body that happens to *mention* "OnFin Ltd
+ * is registered" further down doesn't get filtered out.
+ */
+const SITEWIDE_CHROME_PATTERNS: RegExp[] = [
+  /^Website information does not contain/i,
+  /^Risk Warning:\s*Trading foreign exchange/i,
+  /^OnFin Ltd is registered/i,
+  /^If you have any questions, our support team/i,
+  // Russian + Spanish translated copies of the same disclaimers (some pages
+  // were already partially localised on Tilda — those localised chrome
+  // blocks would also win the "longest" race otherwise).
+  /^Информация на веб[- ]сайте не содержит/i,
+  /^Предупреждение о рисках/i,
+]
+
+function isSitewideChrome(plainText: string): boolean {
+  const head = plainText.slice(0, 200).trim()
+  return SITEWIDE_CHROME_PATTERNS.some((rx) => rx.test(head))
+}
+
+/**
  * Tilda renders editor content into many <div class="tn-atom" field="tn_text_xxx">
- * blocks. The article body is the *single longest* tn_text block on the page,
- * surrounded by short ones for headers, nav, and footer chrome. We pick the
- * longest, clean it, and return semantic HTML the prose-blog stylesheet handles.
+ * blocks. The article body is the longest tn_text block on the page that
+ * ISN'T site-wide chrome (legal disclaimer / company info / support email,
+ * which Tilda repeats on every page).
  */
 export function extractBody(rawHtml: string): { html: string; excerpt: string | null } {
   const blockRe =
@@ -117,6 +145,7 @@ export function extractBody(rawHtml: string): { html: string; excerpt: string | 
       .replace(/<script[\s\S]*?<\/script>/gi, '')
       .replace(/<style[\s\S]*?<\/style>/gi, '')
     const plain = stripped.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    if (isSitewideChrome(plain)) continue
     if (plain.length > longestText.length) {
       longestText = plain
       longest = stripped
