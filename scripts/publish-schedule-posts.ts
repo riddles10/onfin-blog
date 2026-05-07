@@ -1,6 +1,11 @@
 /**
- * One-shot publisher for the two trading-schedule articles Nick filed
- * via Asana but never landed on the blog (April + May 2026 holidays).
+ * One-shot publisher for trading-schedule + maintenance articles that
+ * are filed via Asana but didn't land on the blog. Originally scoped to
+ * the April + May 2026 schedule posts; now also handles single-event
+ * maintenance notices (Centroid Bridge migration, etc.).
+ *
+ * Pass --slug <slug> to publish only one article from the registry
+ * below. With no flag, all entries are upserted in order.
  *
  * What it does, per article:
  *   1. Upserts the post into `posts` (English-canonical, published=true)
@@ -158,7 +163,30 @@ const MAY: Article = {
 `.trim(),
 }
 
-const ARTICLES: Article[] = [APRIL, MAY]
+const BRIDGE: Article = {
+  slug: 'news_22_04_2026',
+  title: 'Centroid Bridge Migration on April 25, 2026',
+  excerpt:
+    "A short downtime window this Saturday: our liquidity bridge is moving to upgraded server hardware — the kind of behind-the-scenes work that doesn't show up in a press release but shows up later as faster execution and tighter spreads.",
+  publishedAt: '2026-04-22T00:00:00.000Z',
+  category: 'platform-updates',
+  unsplashId: 'VHmBX7FnXw0',
+  unsplashPhotographer: 'Domaintechnik Ledl.net',
+  bodyHtml: `
+<p>A short downtime window this Saturday: our liquidity bridge is moving to upgraded server hardware — the kind of behind-the-scenes work that doesn't show up in a press release but shows up later as faster execution and tighter spreads.</p>
+<p>All times below are in UTC.</p>
+<p><strong>What you need to know</strong></p>
+<ul>
+<li><strong>When:</strong> Saturday, April 25, 2026 · 08:00 – 16:00 UTC</li>
+<li><strong>What's affected:</strong> Pricing and trading services on OnFin's MT4 and MT5 platforms</li>
+<li><strong>Expected duration:</strong> 4 to 8 hours</li>
+</ul>
+<p>The Centroid Bridge (CS 360) — the layer that connects OnFin's terminals to our liquidity providers — is migrating to an upgraded server environment as part of an ongoing performance investment. The bridge provider has confirmed that all preparations are complete and the cutover should run smoothly.</p>
+<p>If you have weekend positions you'd want to manage actively, square them on Friday's close — pricing won't be available during the migration window. Trading resumes automatically when the cutover completes; we'll be back at the desk Monday morning.</p>
+`.trim(),
+}
+
+const ARTICLES: Article[] = [APRIL, MAY, BRIDGE]
 
 async function main() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -170,6 +198,12 @@ async function main() {
     )
     process.exit(1)
   }
+
+  // --slug <slug> filter so re-running for one new article doesn't
+  // re-publish (and re-download covers for) every prior article.
+  const argv = process.argv.slice(2)
+  const slugIdx = argv.indexOf('--slug')
+  const slugFilter = slugIdx >= 0 ? argv[slugIdx + 1] : null
 
   const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: { persistSession: false },
@@ -183,7 +217,15 @@ async function main() {
     .maybeSingle()
   const authorId = defaultAuthor?.id ?? null
 
-  for (const article of ARTICLES) {
+  const targets = slugFilter
+    ? ARTICLES.filter((a) => a.slug === slugFilter)
+    : ARTICLES
+  if (targets.length === 0) {
+    console.error(`No article matching --slug ${slugFilter}`)
+    process.exit(1)
+  }
+
+  for (const article of targets) {
     console.log(`\n=== ${article.slug} ===`)
 
     // 1. Upsert the post (English canonical).
@@ -277,7 +319,7 @@ async function main() {
   }
 
   console.log('\nNext step: translate the new posts to 8 locales:')
-  for (const a of ARTICLES) {
+  for (const a of targets) {
     console.log(`  npm run translate:archive -- --slug ${a.slug}`)
   }
 }

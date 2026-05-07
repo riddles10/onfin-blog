@@ -75,6 +75,13 @@ well-informed decisions about their own positions.`
 
 export const SEO_GUIDELINES = `${SITE_NAME} BLOG — SEO & STRUCTURAL GUIDELINES
 
+CANONICAL STYLE GUIDE
+The full editorial standard — voice, structural patterns, slug rules,
+table format, cover-image conventions, translation glossary — lives in
+docs/BLOG_STYLE_GUIDE.md. Read that first if you're authoring or
+publishing a post; the rules below are the AI-generation-prompt
+subset.
+
 ARTICLE LENGTH
 - Target 2200–2800 words for guides and strategy articles
 - Target 1500–2200 words for market-analysis and regulation-news pieces
@@ -111,6 +118,34 @@ FAQ SECTION (REQUIRED for guides and strategies, last section)
 - Single <h2>FAQ</h2>
 - Exactly 5 question-style H3s
 - Each answer 50–100 words
+
+SCHEDULE-NOTICE STRUCTURE (for posts about holiday trading hours,
+DST transitions, multi-event calendars)
+- 3-column table: Date | Event | Schedule changes
+- One row per (date, event) pair
+- Inline <ul> in the third cell when an event affects multiple
+  instrument groups
+- For posts spanning distinct events (e.g. Labour Day + Memorial Day
+  in May), use separate <h2> sections each with its own table
+
+MAINTENANCE-NOTICE STRUCTURE (for single-event downtime / migration /
+outage notices — single-row tables look anaemic)
+- Bullet block under "What you need to know":
+    <p><strong>What you need to know</strong></p>
+    <ul>
+      <li><strong>When:</strong> [date · time window UTC or EET]</li>
+      <li><strong>What's affected:</strong> [services]</li>
+      <li><strong>Expected duration:</strong> [hours]</li>
+    </ul>
+- One paragraph explaining why (infrastructure investment, regulatory
+  compliance, etc.)
+- One closing line with action guidance for traders
+
+UNIVERSAL CLOSING
+- One human, action-oriented sentence
+- Examples: "Square Friday positions on the close if you want to
+  manage them actively", "Plan ahead and decide whether to hold or
+  close", "Set your alarms, see you back at the desk"
 
 LINKING & ENTITIES
 - Mention ${SITE_NAME} 1–2 times naturally in the body, never more
