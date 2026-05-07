@@ -129,6 +129,75 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
 }
 
+/* ---------------------------------------------------------------------------
+ * Tables — used for trading-schedule grids, instrument spec tables, and
+ * any other structured data inside the article body. Standard pattern is
+ * a 3-column shape (Date | Event | Schedule changes) but the styles below
+ * work for any column count.
+ *
+ * On screens narrower than 640px the wrapper is allowed to scroll
+ * horizontally rather than break the table layout — clearer than the
+ * "stack each row vertically" responsive trick when the data is genuinely
+ * tabular and readers expect to scan across columns.
+ * -------------------------------------------------------------------------- */
+.prose-blog table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1.6em;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  /* horizontal scroll on small screens without breaking the row alignment */
+  display: block;
+  overflow-x: auto;
+}
+.prose-blog thead {
+  background: var(--color-ink-50);
+  border-bottom: 2px solid var(--color-ink-100);
+}
+.prose-blog th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-brand-black);
+  padding: 0.65em 0.9em;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.prose-blog td {
+  padding: 0.85em 0.9em;
+  vertical-align: top;
+  color: var(--color-ink-600);
+  border-bottom: 1px solid var(--color-ink-100);
+}
+.prose-blog tbody tr:last-child td {
+  border-bottom: none;
+}
+.prose-blog tbody tr:nth-child(even) {
+  background: rgba(247, 247, 247, 0.5);   /* ink-50 at half opacity */
+}
+.prose-blog td:first-child {
+  font-weight: 600;
+  color: var(--color-brand-black);
+  white-space: nowrap;                    /* keep "Apr 2, 2026" on one line */
+}
+.prose-blog td strong {
+  color: var(--color-brand-black);
+  font-weight: 600;
+}
+/* Inline lists inside cells — used in the 3-col table when the
+   "Schedule changes" cell groups multiple instrument changes per row. */
+.prose-blog td ul {
+  margin: 0;
+  padding-left: 1.1em;
+  list-style: disc;
+}
+.prose-blog td ul li {
+  margin-block: 0.25em;
+}
+
 /* Honor prefers-reduced-motion across all hover/transition affordances. */
 @media (prefers-reduced-motion: reduce) {
   *,

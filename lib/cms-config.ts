@@ -126,8 +126,17 @@ ANTI-PATTERNS (auto-fail)
 - Anything that reads like investment advice for a specific instrument
 
 ALLOWED HTML TAGS
-<p>, <h2>, <h3>, <ul>, <ol>, <li>, <strong>, <em>, <blockquote>
-Never <h1>, <h4>, <div>, <span>, <br>, <img>.`
+<p>, <h2>, <h3>, <ul>, <ol>, <li>, <strong>, <em>, <blockquote>,
+<a> (with href attribute), <table>, <thead>, <tbody>, <tr>, <th>, <td>.
+Never <h1>, <h4>, <div>, <span>, <br>, <img>.
+
+WHEN TO USE A TABLE
+Use a <table> for any structured data the reader will scan rather
+than read top-to-bottom — trading schedules, instrument specs,
+fee comparisons, regulator-by-regulator deadlines. Standard shape:
+3 columns. Header row in <thead>; data rows in <tbody>. The first
+column is the row identifier (date / instrument / regulator).
+Don't use tables for layout. Don't nest tables.`
 
 export const CONTENT_RULES = `CONTENT RULES FOR ${SITE_NAME} BLOG
 - Write in English. No Thai or other languages in the body.
