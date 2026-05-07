@@ -62,21 +62,38 @@ async function main() {
   let inserted = 0
   let failed = 0
   for (const post of stats.posts) {
-    const { error } = await supabase.from('posts').upsert(
-      {
-        slug: post.slug,
-        title_en: post.title,
-        body_en: post.body,
-        excerpt_en: post.excerpt,
-        category: post.category,
-        cover_image: post.coverImage,
-        published: true,
-        published_at: post.publishedAt,
-        blog_author_id: authorId,
-        generation_status: null,
-      },
-      { onConflict: 'slug' }
-    )
+    // cover_image is intentionally OMITTED from the upsert payload after
+    // the first import. scripts/upload-tilda-covers.ts populates this
+    // field separately (Supabase Storage URL), and re-running import
+    // shouldn't undo that. We still write a cover on first INSERT —
+    // hence the read-then-write below.
+    const { data: existing } = await supabase
+      .from('posts')
+      .select('cover_image')
+      .eq('slug', post.slug)
+      .maybeSingle()
+
+    const payload: Record<string, unknown> = {
+      slug: post.slug,
+      title_en: post.title,
+      body_en: post.body,
+      excerpt_en: post.excerpt,
+      category: post.category,
+      published: true,
+      published_at: post.publishedAt,
+      blog_author_id: authorId,
+      generation_status: null,
+    }
+    if (!existing) {
+      payload.cover_image = post.coverImage  // first insert
+    } else if (!existing.cover_image && post.coverImage) {
+      payload.cover_image = post.coverImage  // post had no cover yet
+    }
+    // else: existing cover stays — preserved across re-imports.
+
+    const { error } = await supabase
+      .from('posts')
+      .upsert(payload, { onConflict: 'slug' })
     if (error) {
       console.warn(`  ✗ ${post.slug}: ${error.message}`)
       failed++

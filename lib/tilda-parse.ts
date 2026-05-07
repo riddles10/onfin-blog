@@ -127,6 +127,46 @@ function isSitewideChrome(plainText: string): boolean {
 }
 
 /**
+ * Decode the HTML entities that survive after we strip tags. Bodies are
+ * left as HTML so browser rendering decodes entities natively, but the
+ * excerpt is plain text fed straight into JSX (`{post.excerpt}`) where
+ * React renders entities as literal characters — so we must decode here.
+ *
+ * Limited to the entities Tilda actually emits. Numeric entities are
+ * rare in this corpus; if we ever see them, add a `&#\d+;` pass.
+ */
+function decodeBasicEntities(text: string): string {
+  return text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&#34;/g, '"')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–')
+    .replace(/&hellip;/g, '…')
+    .replace(/&laquo;/g, '«')
+    .replace(/&raquo;/g, '»')
+}
+
+/**
+ * Tilda authors articles with stray spaces around punctuation
+ * (commas, periods, semicolons, colons) — visible as "Day ." and
+ * "2026 ,". Squash one space immediately before each so excerpts
+ * read cleanly. Doesn't touch in-body HTML — only used on plain
+ * excerpt text.
+ */
+function tightenPunctuation(text: string): string {
+  return text
+    .replace(/\s+([,.;:!?])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
  * Tilda renders editor content into many <div class="tn-atom" field="tn_text_xxx">
  * blocks. The article body is the longest tn_text block on the page that
  * ISN'T site-wide chrome (legal disclaimer / company info / support email,
@@ -190,7 +230,14 @@ export function extractBody(rawHtml: string): { html: string; excerpt: string | 
     .replace(/\s+/g, ' ')
     .trim()
 
-  const excerpt = longestText.slice(0, 200).trim() + (longestText.length > 200 ? '…' : '')
+  // Excerpt is plain text fed straight into JSX, not into innerHTML — so
+  // decode entities here (browsers won't decode them in {expr} renders),
+  // and squash Tilda's stray pre-punctuation spaces.
+  const cleanedPlain = tightenPunctuation(decodeBasicEntities(longestText))
+  const excerpt =
+    cleanedPlain.length > 200
+      ? cleanedPlain.slice(0, 200).trim() + '…'
+      : cleanedPlain.trim()
   return { html, excerpt }
 }
 
