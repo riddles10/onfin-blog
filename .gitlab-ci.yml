@@ -115,13 +115,19 @@ stages:
     test -s "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' is empty!"            | tee -a "${ERRLOG}" && exit 1)
     cp -v -- "${CONFIG_FILE}" "${DEPLOY_PATH}/${RELEASE_DIR}/"                    2> >(tee -a "${ERRLOG}")
 
+    echo ---; echo "Validate docker compose config..."
+    docker compose --project-directory "${DEPLOY_PATH}/${RELEASE_DIR}/" \
+      config > /dev/null                                                          2> >(tee -a "${ERRLOG}") \
+      || (echo "docker compose config validation failed." && exit 78)
+    echo "done."
+
     # echo ---;echo "Stop and remove old 'current-release' container(s)..."
     # docker compose --project-directory "${DEPLOY_PATH}/current-release/" down --remove-orphans --rmi all || true
 
     echo ---;echo "Update 'current-release' symlink..."
     echo "old current-release target was: $(readlink -f -- "${DEPLOY_PATH}/current-release" 2>/dev/null || echo "n/a")"
-    ln -v -sfn -- "${RELEASE_DIR}" "${DEPLOY_PATH}/next-release"                          2> >(tee -a "${ERRLOG}")
-    mv -v -Tf -- "${DEPLOY_PATH}/next-release" "${DEPLOY_PATH}/current-release"           2> >(tee -a "${ERRLOG}")
+    ln -v -sfn -- "${RELEASE_DIR}" "${DEPLOY_PATH}/next-release"                  2> >(tee -a "${ERRLOG}")
+    mv -v -Tf -- "${DEPLOY_PATH}/next-release" "${DEPLOY_PATH}/current-release"   2> >(tee -a "${ERRLOG}")
     echo "new current-release target is: $(readlink -f -- "${DEPLOY_PATH}/current-release" 2>/dev/null || echo "n/a")"
 
     echo ---;echo "Pull new image(s) from registry..."
@@ -183,6 +189,7 @@ deploy-prod:
       when: on_success
 
 include:
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
   - component: $CI_SERVER_FQDN/ci-components/notification/notify@2
     inputs: { environment: dev }
     rules:
@@ -191,3 +198,9 @@ include:
     inputs: { environment: prod }
     rules:
       - if: $CI_COMMIT_BRANCH == "master"
+
+secret_detection:
+  variables:
+    HOME: "/root" # reset custom $HOME to default value
+  tags: ["cicd.docker"]
+  stage: build
