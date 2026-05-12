@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Header from '@/components/site/Header'
 import Footer from '@/components/site/Footer'
-import { SUPPORTED_LOCALES, isLocale } from '@/lib/locales'
+import { SUPPORTED_LOCALES, isLocale, t } from '@/lib/locales'
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((lang) => ({ lang }))
@@ -28,7 +28,7 @@ export default async function LocaleLayout({
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-brand-black focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold focus:text-brand-lime"
       >
-        Skip to content
+        {t(lang, 'blog.skip_to_content')}
       </a>
       <Header locale={lang} />
       {children}

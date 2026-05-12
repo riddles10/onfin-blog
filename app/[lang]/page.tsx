@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { isPostCategory, categoryLabel, categoryTagline } from '@/lib/categories'
 import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
-import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@/lib/locales'
+import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE, t, tf } from '@/lib/locales'
 import { applyTranslation, fetchTranslationsBatch } from '@/lib/post-locale'
 import BlogHero from '@/components/blog/BlogHero'
 import CategoryChips from '@/components/blog/CategoryChips'
@@ -153,14 +153,15 @@ export async function generateMetadata({
   searchParams: Promise<Search>
 }): Promise<Metadata> {
   const { lang } = await params
+  const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE
   const sp = await searchParams
   const { category } = parseSearch(sp)
   const title = category
-    ? `${categoryLabel(category)} — OnFin Blog`
-    : 'OnFin Blog — Editorial coverage for retail traders'
+    ? tf(locale, 'blog.metadata.title_filtered', { label: categoryLabel(category, locale) })
+    : t(locale, 'blog.metadata.title')
   const description = category
-    ? categoryTagline(category)
-    : 'Market analysis, trading guides, platform updates, and regulation news from the OnFin editorial desk.'
+    ? categoryTagline(category, locale)
+    : t(locale, 'blog.metadata.description')
   const pathSuffix = category ? `?category=${category}` : ''
   const canonical = `/${lang}${pathSuffix}`
   return {
@@ -197,13 +198,15 @@ export default async function BlogIndexPage({
   // Hero copy: when the index is filtered, swap the default tagline for
   // the category-specific one so readers landing from a search engine
   // land on a page that says exactly what it is.
-  const heroEyebrow = category ? `Category · ${categoryLabel(category)}` : 'OnFin Editorial'
+  const heroEyebrow = category
+    ? tf(locale, 'blog.hero.eyebrow_filtered', { label: categoryLabel(category, locale) })
+    : t(locale, 'blog.hero.eyebrow')
   const heroTitle = category
-    ? categoryLabel(category)
-    : 'Market analysis, guides, and news for retail traders'
+    ? categoryLabel(category, locale)
+    : t(locale, 'blog.hero.title')
   const heroTagline = category
-    ? categoryTagline(category)
-    : "Everything coming out of the OnFin desk — schedule notices, platform updates, regulation explainers, and the occasional long-form trading guide. New writing every week."
+    ? categoryTagline(category, locale)
+    : t(locale, 'blog.hero.tagline')
 
   // First page only: lift the most recent post into a wide "featured"
   // tile so the layout doesn't read as a uniform grid the moment readers
@@ -216,17 +219,17 @@ export default async function BlogIndexPage({
     <main id="main-content">
       <BlogHero eyebrow={heroEyebrow} title={heroTitle} tagline={heroTagline} />
 
-      <CategoryChips locale={lang} active={category} />
+      <CategoryChips locale={locale} active={category} />
 
       <section className="container-site py-14 sm:py-20">
         {posts.length === 0 ? (
-          <EmptyState category={category} />
+          <EmptyState category={category} locale={locale} />
         ) : (
           <>
             {featured && (
               <div className="mb-10">
                 <PostCard
-                  locale={lang}
+                  locale={locale}
                   post={toCardData(featured)}
                   variant="featured"
                 />
@@ -236,7 +239,7 @@ export default async function BlogIndexPage({
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {rest.map((p) => (
                 <li key={p.id}>
-                  <PostCard locale={lang} post={toCardData(p)} />
+                  <PostCard locale={locale} post={toCardData(p)} />
                 </li>
               ))}
             </ul>
@@ -246,6 +249,7 @@ export default async function BlogIndexPage({
               page={page}
               totalPages={totalPages}
               category={category}
+              locale={locale}
             />
           </>
         )}
@@ -267,25 +271,37 @@ function toCardData(p: LocalizedIndexPost) {
   }
 }
 
-function EmptyState({ category }: { category: string | null }) {
+function EmptyState({
+  category,
+  locale,
+}: {
+  category: string | null
+  locale: Locale
+}) {
   return (
     <div className="mx-auto max-w-xl rounded-2xl border border-dashed border-ink-200 bg-ink-50 p-10 text-center">
       <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-ink-400">
-        Nothing here yet
+        {t(locale, 'blog.empty.kicker')}
       </p>
       <h2 className="mt-3 font-display text-2xl font-semibold text-brand-black">
-        {category ? `No ${categoryLabel(category)} articles yet` : 'No articles published yet'}
+        {category
+          ? tf(locale, 'blog.empty.title_filtered', {
+              label: categoryLabel(category, locale),
+            })
+          : t(locale, 'blog.empty.title')}
       </h2>
       <p className="mt-3 text-sm leading-relaxed text-ink-500">
-        The OnFin desk is preparing the first batch of articles in this
-        category. {category && (
+        {category ? (
           <>
-            Try{' '}
+            {t(locale, 'blog.empty.body_filtered_intro')}{' '}
+            {t(locale, 'blog.empty.body_filtered_try')}{' '}
             <a className="text-brand-blue underline" href="./">
-              all articles
+              {t(locale, 'blog.empty.body_filtered_all')}
             </a>{' '}
-            or check back soon.
+            {t(locale, 'blog.empty.body_filtered_or_check')}
           </>
+        ) : (
+          t(locale, 'blog.empty.body_unfiltered')
         )}
       </p>
     </div>

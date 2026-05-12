@@ -11,6 +11,7 @@ import {
   SUPPORTED_LOCALES,
   DEFAULT_LOCALE,
   BCP47,
+  t,
 } from '@/lib/locales'
 import {
   applyTranslation,
@@ -300,9 +301,9 @@ export default async function BlogArticlePage({
   }
 
   const breadcrumbs = [
-    { label: 'Blog', href: `/${lang}` },
+    { label: t(locale, 'blog.breadcrumb_root'), href: `/${lang}` },
     {
-      label: categoryLabel(post.category),
+      label: categoryLabel(post.category, locale),
       href: `/${lang}?category=${post.category}`,
     },
     { label: view.title },
@@ -326,7 +327,7 @@ export default async function BlogArticlePage({
           <div className="container-site pb-12 pt-6 sm:pb-16 sm:pt-8">
             <div className="mx-auto max-w-3xl">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
-                {categoryLabel(post.category)}
+                {categoryLabel(post.category, locale)}
               </p>
               <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-brand-black sm:text-4xl lg:text-5xl">
                 {view.title}
@@ -338,6 +339,7 @@ export default async function BlogArticlePage({
               )}
               <div className="mt-7">
                 <AuthorByline
+                  locale={locale}
                   author={
                     author
                       ? {
@@ -362,7 +364,7 @@ export default async function BlogArticlePage({
           <div className="mx-auto grid max-w-[1100px] gap-10 xl:grid-cols-[48px_minmax(0,720px)_240px]">
             {/* Left rail — sticky share buttons on desktop */}
             <div className="hidden xl:block xl:sticky xl:top-28 xl:self-start">
-              <ShareRail title={view.title} url={canonicalUrl} variant="rail" />
+              <ShareRail locale={locale} title={view.title} url={canonicalUrl} variant="rail" />
             </div>
 
             {/* Body */}
@@ -376,10 +378,11 @@ export default async function BlogArticlePage({
                   sticky rail below xl, where there's no spare horizontal
                   real estate. */}
               <div className="mt-12 border-t border-ink-100 pt-6 xl:hidden">
-                <ShareRail title={view.title} url={canonicalUrl} variant="inline" />
+                <ShareRail locale={locale} title={view.title} url={canonicalUrl} variant="inline" />
               </div>
 
               <AuthorByline
+                locale={locale}
                 author={
                   author
                     ? {
@@ -393,14 +396,14 @@ export default async function BlogArticlePage({
                 variant="full"
               />
 
-              <ArticleCTA locale={lang} />
+              <ArticleCTA locale={locale} />
 
-              <RelatedPosts locale={lang} posts={related} />
+              <RelatedPosts locale={locale} posts={related} />
             </div>
 
             {/* Right rail — sticky table of contents on desktop */}
             <aside className="hidden xl:block xl:sticky xl:top-28 xl:self-start">
-              <TableOfContents items={tocItems} />
+              <TableOfContents locale={locale} items={tocItems} />
             </aside>
           </div>
         </div>
