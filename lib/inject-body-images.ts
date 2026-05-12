@@ -128,7 +128,9 @@ export async function injectBodyImages(
     const alt = escapeHtmlAttr(img.altText || c.query);
     // Full-width, lazy-loaded inline figure. No figure/figcaption wrapper —
     // we let the prose styles (LanguageToggle > prose) render it centered.
-    const snippet = `\n<img src="${img.url}" alt="${alt}" loading="lazy" />\n`;
+    // width/height attributes reserve the layout box before load — without
+    // them every body image causes a CLS jolt as it streams in.
+    const snippet = `\n<img src="${img.url}" alt="${alt}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async" />\n`;
     insertionPairs.push({ at: c.h2.indexEnd, snippet });
     inserted++;
   }

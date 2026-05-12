@@ -4,6 +4,7 @@ import { getServiceClient } from '@/lib/supabase'
 import { categoryGradient, categoryLabel } from '@/lib/categories'
 import { htmlToExcerpt } from '@/lib/format'
 import { annotateH2s } from '@/lib/toc'
+import { extractFaqEntries, buildFaqSchema } from '@/lib/faq-schema'
 import { DEMO_POSTS, DEMO_AUTHOR_BY_ID, isDemoMode } from '@/lib/demo-data'
 import {
   type Locale,
@@ -44,9 +45,13 @@ type PostFull = {
 
 type AuthorRef = {
   id: string
+  slug: string
   name: string
   bio_en: string | null
   avatar_url: string | null
+  twitter: string | null
+  linkedin: string | null
+  website: string | null
 }
 
 type LocalizedArticle = {
@@ -94,7 +99,7 @@ async function fetchArticle(
     post.blog_author_id
       ? supabase
           .from('authors')
-          .select('id, name, bio_en, avatar_url')
+          .select('id, slug, name, bio_en, avatar_url, twitter, linkedin, website')
           .eq('id', post.blog_author_id)
           .maybeSingle()
           .then(({ data: a }) => (a as AuthorRef | null) ?? null)
@@ -271,6 +276,11 @@ export default async function BlogArticlePage({
   // Decorate H2s with stable ids and pull the list out for the TOC.
   const { html: bodyHtml, items: tocItems } = annotateH2s(view.body)
 
+  // FAQPage schema — only emitted when the body has a recognisable FAQ
+  // section (long-form trading guides). Operational notice posts don't
+  // carry FAQs, so this is a no-op for them.
+  const faqSchema = buildFaqSchema(extractFaqEntries(view.body))
+
   const related = await fetchRelated(post.category, post.id, post.slug, locale, 3)
 
   // The schema's inLanguage tells crawlers what language the rendered
@@ -290,10 +300,23 @@ export default async function BlogArticlePage({
       ? {
           '@type': 'Person',
           name: author.name,
+          // Linking the byline to a profile URL is the YMYL E-E-A-T signal
+          // Google reads to verify a human authored the piece.
+          url: `${baseUrl}/${lang}/authors/${author.slug}`,
+          ...(author.twitter || author.linkedin || author.website
+            ? {
+                sameAs: [author.twitter, author.linkedin, author.website].filter(
+                  (s): s is string => Boolean(s)
+                ),
+              }
+            : {}),
         }
-      : { '@type': 'Organization', name: 'OnFin' },
+      : { '@type': 'Organization', '@id': 'https://onfin.io/#organization', name: 'OnFin' },
     publisher: {
       '@type': 'Organization',
+      // Match the @id declared in the root layout's Organization schema
+      // so Google reads them as the same entity, not two duplicates.
+      '@id': 'https://onfin.io/#organization',
       name: 'OnFin',
       logo: { '@type': 'ImageObject', url: `${baseUrl}/logo.svg` },
     },
@@ -315,6 +338,12 @@ export default async function BlogArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {view.isFallback && <EnglishFallbackBanner requestedLocale={locale} />}
 
@@ -343,6 +372,7 @@ export default async function BlogArticlePage({
                   author={
                     author
                       ? {
+                          slug: author.slug,
                           name: author.name,
                           bio: author.bio_en,
                           avatarUrl: author.avatar_url,
@@ -386,6 +416,7 @@ export default async function BlogArticlePage({
                 author={
                   author
                     ? {
+                        slug: author.slug,
                         name: author.name,
                         bio: author.bio_en,
                         avatarUrl: author.avatar_url,
@@ -435,9 +466,12 @@ function CoverImage({
             <img
               src={src}
               alt={alt}
+              width={1200}
+              height={630}
               className="h-full w-full object-cover"
               loading="eager"
               decoding="async"
+              fetchPriority="high"
             />
           </div>
         </div>

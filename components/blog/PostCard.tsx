@@ -68,11 +68,14 @@ export default function PostCard({
           {post.coverImage ? (
             // Plain <img> avoids needing every Tilda/Supabase/Unsplash host
             // in next.config remotePatterns. Native lazy loading is enough
-            // for editorial cover images.
+            // for editorial cover images. width/height match the 16:10 box
+            // so the layout reserves space and CLS stays at 0.
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={post.coverImage}
               alt=""
+              width={1200}
+              height={isCompact ? 675 : 750}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"

@@ -25,10 +25,14 @@ export type DemoPost = {
 
 const DEMO_AUTHOR = {
   id: 'demo-author',
+  slug: 'onfin-editorial',
   name: 'OnFin Editorial',
   bio_en:
     'The OnFin editorial desk covers market analysis, trading guides, platform updates, and regulation news for retail forex and CFD traders.',
   avatar_url: null,
+  twitter: null,
+  linkedin: null,
+  website: null,
 }
 
 export const DEMO_AUTHOR_BY_ID: Record<string, typeof DEMO_AUTHOR> = {

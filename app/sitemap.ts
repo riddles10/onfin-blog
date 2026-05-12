@@ -1,22 +1,63 @@
 import type { MetadataRoute } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
-import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@/lib/locales'
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale } from '@/lib/locales'
 
-// Built-in Next.js sitemap. Emits one entry per (locale, post) pair plus
-// the localised index pages, with `alternates.languages` filled in so
-// search engines can de-duplicate the localised versions.
+// Per-locale sitemaps + automatic sitemap index. Next 15's
+// `generateSitemaps` emits one /sitemap/<id>.xml file per shard (one
+// per locale here) and an index at /sitemap.xml that points at them.
+// GSC Performance reports tag each URL by its sitemap, so splitting by
+// locale lets us see ranking & indexation per language without manual
+// CSV wrangling.
 //
-// Strategy: every post is emitted once per supported locale, even if no
-// translation row exists yet (the route falls back to English with a
-// banner — still a valid, indexable page). This way sitemap entries
-// stay aligned with what the routes actually serve.
+// Each entry still carries hreflang `alternates.languages` so search
+// engines can de-duplicate the localised versions across the shards.
 
 export const revalidate = 3600  // 1h — sitemap doesn't need to be hot
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io'
 
 type SlugRow = { slug: string; published_at: string | null }
+
+export async function generateSitemaps() {
+  // Numeric ids — Next.js maps these to /sitemap/<id>.xml. We index by
+  // locale order so the file→locale mapping is deterministic.
+  return SUPPORTED_LOCALES.map((_, idx) => ({ id: idx }))
+}
+
+export default async function sitemap({
+  id,
+}: {
+  id: number
+}): Promise<MetadataRoute.Sitemap> {
+  const locale = SUPPORTED_LOCALES[id]
+  if (!locale) return []
+
+  const rows = await fetchRows()
+  // Future: add an /authors index entry once the listing page exists.
+  return [indexEntry(locale), editorialEntry(locale), ...postEntries(rows, locale)]
+}
+
+async function fetchRows(): Promise<SlugRow[]> {
+  if (isDemoMode()) {
+    return DEMO_POSTS.map((p) => ({
+      slug: p.slug,
+      published_at: p.published_at,
+    }))
+  }
+  const supabase = getServiceClient()
+  const { data, error } = await supabase
+    .from('posts')
+    .select('slug, published_at')
+    .eq('published', true)
+    .order('published_at', { ascending: false })
+
+  if (error) {
+    console.error('[sitemap] supabase error:', error.message)
+    return []
+  }
+  return (data ?? []) as SlugRow[]
+}
 
 function buildAlternatesForSlug(slug: string | null): Record<string, string> {
   const out: Record<string, string> = {}
@@ -29,55 +70,38 @@ function buildAlternatesForSlug(slug: string | null): Record<string, string> {
   return out
 }
 
-function postEntries(rows: SlugRow[]): MetadataRoute.Sitemap {
-  const out: MetadataRoute.Sitemap = []
-  for (const r of rows) {
-    const lastModified = r.published_at ? new Date(r.published_at) : new Date()
-    const alternates = { languages: buildAlternatesForSlug(r.slug) }
-    for (const loc of SUPPORTED_LOCALES) {
-      out.push({
-        url: `${BASE_URL}/${loc}/${r.slug}`,
-        lastModified,
-        changeFrequency: 'monthly',
-        priority: 0.7,
-        alternates,
-      })
-    }
-  }
-  return out
-}
-
-function indexEntries(): MetadataRoute.Sitemap {
-  const alternates = { languages: buildAlternatesForSlug(null) }
-  return SUPPORTED_LOCALES.map((loc) => ({
-    url: `${BASE_URL}/${loc}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const,
-    priority: 1.0,
-    alternates,
+function postEntries(rows: SlugRow[], locale: Locale): MetadataRoute.Sitemap {
+  return rows.map((r) => ({
+    url: `${BASE_URL}/${locale}/${r.slug}`,
+    lastModified: r.published_at ? new Date(r.published_at) : new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+    alternates: { languages: buildAlternatesForSlug(r.slug) },
   }))
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  if (isDemoMode()) {
-    const rows: SlugRow[] = DEMO_POSTS.map((p) => ({
-      slug: p.slug,
-      published_at: p.published_at,
-    }))
-    return [...indexEntries(), ...postEntries(rows)]
+function indexEntry(locale: Locale): MetadataRoute.Sitemap[number] {
+  return {
+    url: `${BASE_URL}/${locale}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1.0,
+    alternates: { languages: buildAlternatesForSlug(null) },
   }
-
-  const supabase = getServiceClient()
-  const { data, error } = await supabase
-    .from('posts')
-    .select('slug, published_at')
-    .eq('published', true)
-    .order('published_at', { ascending: false })
-
-  if (error) {
-    console.error('[sitemap] supabase error:', error.message)
-    return indexEntries()
-  }
-
-  return [...indexEntries(), ...postEntries((data ?? []) as SlugRow[])]
 }
+
+function editorialEntry(locale: Locale): MetadataRoute.Sitemap[number] {
+  const alternates: Record<string, string> = {}
+  for (const loc of SUPPORTED_LOCALES) {
+    alternates[loc] = `${BASE_URL}/${loc}/editorial-policy`
+  }
+  alternates['x-default'] = `${BASE_URL}/${DEFAULT_LOCALE}/editorial-policy`
+  return {
+    url: `${BASE_URL}/${locale}/editorial-policy`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly',
+    priority: 0.4,
+    alternates: { languages: alternates },
+  }
+}
+

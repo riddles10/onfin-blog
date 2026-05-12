@@ -1,7 +1,11 @@
+import Link from 'next/link'
 import { formatDate } from '@/lib/format'
 import { t, type Locale } from '@/lib/locales'
 
 export type Author = {
+  // `slug` enables the byline link to the author profile page (E-E-A-T
+  // signal). Optional because demo data and legacy posts may not carry it.
+  slug?: string | null
   name: string
   bio?: string | null
   avatarUrl?: string | null
@@ -24,6 +28,8 @@ export default function AuthorByline({
 }) {
   if (!author && !publishedAt) return null
 
+  const profileHref = author?.slug ? `/${locale}/authors/${author.slug}` : null
+
   if (variant === 'full') {
     return (
       <aside className="mt-16 rounded-2xl border border-ink-100 bg-ink-50 p-6 sm:p-8">
@@ -36,7 +42,13 @@ export default function AuthorByline({
               {t(locale, 'blog.author.written_by')}
             </p>
             <p className="mt-1 font-display text-xl font-semibold text-brand-black">
-              {author?.name ?? t(locale, 'blog.author.default_name')}
+              {profileHref ? (
+                <Link href={profileHref} className="hover:text-brand-blue">
+                  {author?.name ?? t(locale, 'blog.author.default_name')}
+                </Link>
+              ) : (
+                author?.name ?? t(locale, 'blog.author.default_name')
+              )}
             </p>
             {author?.bio && (
               <p className="mt-3 text-sm leading-relaxed text-ink-500">
@@ -53,9 +65,18 @@ export default function AuthorByline({
     <div className="flex flex-wrap items-center gap-3 text-sm text-ink-500">
       <Avatar author={author} size={36} />
       {author?.name && (
-        <span className="font-display font-semibold text-brand-black">
-          {author.name}
-        </span>
+        profileHref ? (
+          <Link
+            href={profileHref}
+            className="font-display font-semibold text-brand-black hover:text-brand-blue"
+          >
+            {author.name}
+          </Link>
+        ) : (
+          <span className="font-display font-semibold text-brand-black">
+            {author.name}
+          </span>
+        )
       )}
       {publishedAt && (
         <>

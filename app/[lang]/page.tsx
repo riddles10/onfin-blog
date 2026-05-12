@@ -156,9 +156,13 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE
   const sp = await searchParams
   const { category } = parseSearch(sp)
+  // Filtered views (?category=…) get the standard `<label> | OnFin Blog`
+  // template treatment. The unfiltered homepage gets an absolute title so
+  // the carefully-tuned brand-first SEO string isn't suffixed with
+  // "| OnFin Blog" by the root template.
   const title = category
     ? tf(locale, 'blog.metadata.title_filtered', { label: categoryLabel(category, locale) })
-    : t(locale, 'blog.metadata.title')
+    : { absolute: t(locale, 'blog.metadata.title') }
   const description = category
     ? categoryTagline(category, locale)
     : t(locale, 'blog.metadata.description')

@@ -159,7 +159,36 @@ For trading-guides and strategies posts (1500+ words):
 - Final section is `<h2>FAQ</h2>` with exactly 5 question-style `<h3>`s, each answered in 50–100 words
 - See `docs/design/content-samples/article-trading-guide-sample.md` for a worked example
 
-### 6.5 Universal structure
+### 6.5 Internal linking and outbound citations
+
+Both rules below are mandatory for long-form trading guides (1500+ words). They are recommended for everything else.
+
+**Internal links — five per article:**
+
+- 2 links to other blog posts on related topics. Anchor text is descriptive (e.g. "what leverage does to your position size"), never "click here" or "read more".
+- 3 links to onfin.io product pages. Match topic to destination — a guide on MT5 links to onfin.io/mt5, an article on copy trading links to onfin.io/copytrading, a piece on account funding links to onfin.io/deposit. Don't link to /about as filler.
+- Anchor text rotation: the 5 links should not all use the brand name. Mix descriptive anchors with one or two brand-anchored links.
+- Don't double-link the same destination from one article — one link per target page.
+
+**Outbound citations — three to five per article, all from authoritative sources:**
+
+- Central banks: Fed (federalreserve.gov), ECB (ecb.europa.eu), BoE (bankofengland.co.uk), BoJ (boj.or.jp), RBA (rba.gov.au)
+- Regulators: ESMA (esma.europa.eu), FCA (fca.org.uk), MAS (mas.gov.sg), CFTC (cftc.gov), SEC (sec.gov)
+- Multilaterals: BIS (bis.org), IMF (imf.org)
+- Government statistics agencies (BLS, Eurostat, ONS) where the article cites macro data
+
+**Sources we never cite:**
+
+- Competitor brokers (Saxo, IG, Pepperstone, AvaTrade, OANDA, etc.) — even when their educational content is good. We are a broker; citing competitors signals their content as more authoritative than ours.
+- Affiliate-marketing sites (BrokerChooser, ForexBrokers.com) as authorities — link to their *broker reviews of OnFin* if relevant, but never as a source for trading concepts.
+- Wikipedia for facts inside our domain (forex/CFD mechanics) — link to the primary regulator or central bank instead. Wikipedia is OK for tangential definitions only.
+
+**Outbound link attributes:**
+
+- All outbound links open in the same tab (no `target="_blank"`) unless they're sign-in or document downloads.
+- Add `rel="noopener"` only for `target="_blank"` links. Don't add `nofollow` to authoritative citations — it suppresses the credibility transfer that makes citations worth including.
+
+### 6.6 Universal structure
 
 Every post, regardless of type:
 
@@ -253,6 +282,8 @@ When a post is filed late (e.g. an Asana task that was completed but never lande
 - [ ] Excerpt is 180–200 chars, plain text, no entities
 - [ ] Body uses only allowed tags (§6.1)
 - [ ] Schedule posts use the 3-col table; maintenance posts use the bullet block; long-form uses H2 + FAQ
+- [ ] Long-form: 5 internal links (2 blog + 3 onfin.io) and 3–5 outbound citations to BIS / IMF / central banks / regulators (§6.5)
+- [ ] Long-form: visible risk disclosure block via `<RiskDisclosure />` near the article opening
 - [ ] Opening hook tied to context (1–3 sentences)
 - [ ] Time-zone declaration if times are mentioned
 - [ ] Closing line is human + action-oriented

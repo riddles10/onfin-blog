@@ -128,6 +128,26 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-ink-500);
   font-style: italic;
 }
+/* Inline body images. width/height attributes carry the intrinsic
+ * aspect ratio so the layout box is reserved before the image loads
+ * (CLS contributor #1 in the May 2026 audit). max-width keeps wide
+ * Unsplash photos from blowing past the article column. */
+.prose-blog img {
+  max-width: 100%;
+  height: auto;
+  margin-block: 1.4em;
+  border-radius: 0.75rem;
+  display: block;
+}
+/* Legacy bodies (Tilda imports, hand-edited posts) sometimes have
+ * <img> tags without width/height attributes. The fallback ratio
+ * keeps CLS in check until those bodies are reflowed. */
+.prose-blog img:not([width]):not([height]) {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  object-fit: cover;
+  background: var(--color-ink-100);
+}
 
 /* ---------------------------------------------------------------------------
  * Tables — used for trading-schedule grids, instrument spec tables, and

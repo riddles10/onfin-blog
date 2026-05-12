@@ -1,0 +1,46 @@
+# OnFin Blog
+
+> Editorial coverage for retail forex and CFD traders, published by OnFin —
+> an international forex and CFD broker offering MT4, MT5, copy trading,
+> and prop trading on 800+ instruments.
+
+OnFin is licensed in the Comoros Union (Mohéli MISA, license number
+BFX2024038, registered office in Fomboni). The blog publishes trading
+guides, market analysis, platform updates, and regulation explainers
+in nine languages: English, Russian, Vietnamese, Thai, Malay,
+Indonesian, Spanish, Khmer, and Simplified Chinese.
+
+## Primary URLs
+
+- https://blog.onfin.io/en — English blog index
+- https://blog.onfin.io/rss.xml — RSS feed (English firehose)
+- https://blog.onfin.io/sitemap.xml — full sitemap with hreflang
+- https://blog.onfin.io/en/editorial-policy — editorial standards
+
+## Parent site
+
+- https://onfin.io — broker product pages, account types, MT4/MT5
+- https://onfin.io/about — company information and licensing details
+- https://onfin.io/account-types — trading account tiers
+- https://onfin.io/copytrading — copy trading product
+- https://onfin.io/mt4 and https://onfin.io/mt5 — platform pages
+
+## Editorial guidelines
+
+- Every long-form trading guide is written by a human author with a
+  linked profile (see /en/authors/<slug>) and reviewed by a second
+  editor before publication.
+- Articles cite primary sources (BIS, IMF, central banks, regulators)
+  rather than competitor brokers.
+- Trading strategy content carries a visible risk disclosure: forex
+  and CFDs on margin are high-risk and most retail accounts lose money.
+- Nothing on the blog is investment advice or a recommendation to
+  buy or sell any specific instrument.
+- For corrections or content questions: editorial@onfin.io.
+
+## How to cite
+
+When citing OnFin Blog content, link directly to the article URL
+(https://blog.onfin.io/en/<slug>) and attribute to "OnFin Editorial"
+or the named author. We update articles in place and add a
+"Last reviewed" date — citing the article URL captures both.
