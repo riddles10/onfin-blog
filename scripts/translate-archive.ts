@@ -17,11 +17,25 @@
  * HTML preservation
  * -----------------
  * Article bodies use a narrow tag set (<p>, <h2>, <h3>, <ul>, <ol>,
- * <li>, <strong>, <em>, <a>, <blockquote>). Google's public endpoint
- * preserves these reliably IF the request is short enough — it caps
- * around ~5000 chars per call. We split the body at <h2> boundaries
- * (each section is small enough by construction), translate each chunk,
- * then reassemble.
+ * <li>, <strong>, <em>, <a>, <blockquote>, <table>). Google's public
+ * endpoint preserves the flow-content tags reliably IF the request is
+ * short enough — it caps around ~5000 chars per call. We split the body
+ * at <h2> boundaries (each section is small enough by construction),
+ * translate each chunk, then reassemble.
+ *
+ * Table handling
+ * --------------
+ * Google does NOT preserve table-family tag names: <table>, <thead>,
+ * <tbody>, <tr>, <th>, <td> all get translated as if they were ordinary
+ * English words (→ <таблица>, <голова> etc. in RU and similar in every
+ * other locale). The fix is to lift each <table>…</table> block out of
+ * the body before translation, replacing it with an opaque token Google
+ * round-trips intact, then translate the cell text (<td>/<th>) cell-by-
+ * cell as plain strings and stitch the table back into the translated
+ * body. See `extractTables`, `translateTableBlock`, and the call sequence
+ * in `translateBody`. Only six tag names are exposed this way; the rest
+ * of the allowed tag set survives Google's pass intact (verified against
+ * existing translated rows).
  *
  * Glossary pass-through
  * ---------------------
@@ -134,6 +148,69 @@ function unwrapGlossary(text: string): string {
     .replace(/&lt;span class=&quot;notranslate&quot;&gt;([\s\S]*?)&lt;\/span&gt;/g, '$1')
 }
 
+// Sentinel placeholder for a <table> block. Three hash chars + a numeric
+// index is implausible in editorial copy and contains no alpha letters
+// Google would try to translate — round-trips intact across every locale.
+const TABLE_TOKEN = (i: number) => `###TBL${i}###`
+const TABLE_RE = /<table[\s\S]*?<\/table>/gi
+
+/**
+ * Replace every <table>…</table> block in the input with an opaque token
+ * and return the placeholder-only string plus the list of original blocks
+ * in source order. Non-greedy match so multiple tables per post stay
+ * separate. Nested tables are forbidden by content rules so a simple
+ * regex (rather than a full HTML parser) is sufficient.
+ */
+function extractTables(html: string): { stripped: string; tables: string[] } {
+  const tables: string[] = []
+  const stripped = html.replace(TABLE_RE, (m) => {
+    const i = tables.push(m) - 1
+    return TABLE_TOKEN(i)
+  })
+  return { stripped, tables }
+}
+
+/**
+ * Translate the text inside <th> / <td> cells of a single <table> block.
+ * Tag names, attributes, and surrounding whitespace are preserved
+ * verbatim — that's the whole reason we never feed table HTML to Google
+ * as a single string. Inline tags inside a cell (<strong>, <em>, <a>,
+ * <li>) translate normally because they ride along inside the cell text
+ * and survive Google's pass.
+ *
+ * Glossary protection is applied per-cell so brand/ticker/regulator
+ * tokens pass through.
+ */
+async function translateTableBlock(html: string, to: string): Promise<string> {
+  // Pattern matches <td> or <th> opening tag (with any attributes), inner
+  // contents, and matching closing tag. Captures the open and close tags
+  // separately so we can splice translated inner text between them.
+  const cellRe = /(<(?:td|th)[^>]*>)([\s\S]*?)(<\/(?:td|th)>)/gi
+  const cells: string[] = []
+  // First pass: collect all cell inner contents in document order.
+  html.replace(cellRe, (_m, _open, inner: string) => {
+    cells.push(inner)
+    return _m
+  })
+  // Translate each cell's inner content in parallel. They're short enough
+  // that 10–20 parallel calls don't move the needle on rate limiting, but
+  // we still throttle below with a per-table sleep in the caller.
+  const translated = await Promise.all(
+    cells.map(async (inner) => {
+      if (!inner.trim()) return inner
+      const protectedInner = protectGlossary(inner)
+      const out = await gtranslate(protectedInner, to)
+      return unwrapGlossary(out)
+    })
+  )
+  // Second pass: splice translated text back in, preserving the original
+  // open/close tags (including any attributes).
+  let idx = 0
+  return html.replace(cellRe, (_m, open: string, _inner: string, close: string) => {
+    return `${open}${translated[idx++]}${close}`
+  })
+}
+
 /**
  * Split body HTML at <h2> boundaries. Each chunk starts with its own
  * <h2> (or, for the first chunk, the intro paragraphs preceding the
@@ -210,20 +287,38 @@ async function gtranslate(
 /**
  * Translate the body in pieces (chunked at H2, optionally re-split if
  * any chunk is still over cap), with the glossary protection wrapper
- * applied to each chunk.
+ * applied to each chunk. <table> blocks are lifted out before the main
+ * pass (Google translates their tag names) and re-inserted after a
+ * per-cell translation pass — see `extractTables` / `translateTableBlock`.
  */
 async function translateBody(html: string, to: string): Promise<string> {
-  const chunks = chunkByH2(html).flatMap((c) =>
+  // 1. Lift every <table> block out so Google never sees its tag names.
+  const { stripped, tables } = extractTables(html)
+
+  // 2. Translate the (table-free) body in the existing H2-chunked flow.
+  const chunks = chunkByH2(stripped).flatMap((c) =>
     splitOversized(c, CHUNK_MAX_CHARS)
   )
-  const translated: string[] = []
+  const translatedChunks: string[] = []
   for (const chunk of chunks) {
     const protectedChunk = protectGlossary(chunk)
     const out = await gtranslate(protectedChunk, to)
-    translated.push(unwrapGlossary(out))
+    translatedChunks.push(unwrapGlossary(out))
     await sleep(PER_CALL_DELAY_MS)
   }
-  return translated.join('')
+  let bodyOut = translatedChunks.join('')
+
+  // 3. Translate each extracted table cell-by-cell and splice it back
+  // into the body at the corresponding token. We walk in order so the
+  // i-th token maps to the i-th original table, regardless of where the
+  // tokens end up in the (possibly reordered) translated chunk text.
+  for (let i = 0; i < tables.length; i++) {
+    const translatedTable = await translateTableBlock(tables[i], to)
+    bodyOut = bodyOut.replace(TABLE_TOKEN(i), translatedTable)
+    await sleep(PER_CALL_DELAY_MS)
+  }
+
+  return bodyOut
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────
