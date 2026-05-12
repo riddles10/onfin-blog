@@ -1,4 +1,5 @@
 import { formatDate } from '@/lib/format'
+import { t, type Locale } from '@/lib/locales'
 
 export type Author = {
   name: string
@@ -14,10 +15,12 @@ export default function AuthorByline({
   author,
   publishedAt,
   variant = 'compact',
+  locale,
 }: {
   author: Author | null
   publishedAt: string | null
   variant?: 'compact' | 'full'
+  locale: Locale
 }) {
   if (!author && !publishedAt) return null
 
@@ -30,10 +33,10 @@ export default function AuthorByline({
           </div>
           <div>
             <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">
-              Written by
+              {t(locale, 'blog.author.written_by')}
             </p>
             <p className="mt-1 font-display text-xl font-semibold text-brand-black">
-              {author?.name ?? 'OnFin Editorial'}
+              {author?.name ?? t(locale, 'blog.author.default_name')}
             </p>
             {author?.bio && (
               <p className="mt-3 text-sm leading-relaxed text-ink-500">

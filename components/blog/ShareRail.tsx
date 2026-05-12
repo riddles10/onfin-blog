@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { t, type Locale } from '@/lib/locales'
 
 // Vertical share rail (sticky left of the article body on desktop) and
 // inline horizontal version (rendered at the bottom of the body on mobile
@@ -14,10 +15,12 @@ export default function ShareRail({
   title,
   url,
   variant = 'rail',
+  locale,
 }: {
   title: string
   url: string                 // absolute URL of the current article
   variant?: Variant
+  locale: Locale
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -30,7 +33,7 @@ export default function ShareRail({
       // Fallback: open a simple prompt the user can copy from manually.
       // Clipboard permissions can fail in an iframe or after the tab
       // loses focus — degrade gracefully rather than swallow the click.
-      window.prompt('Copy article URL', url)
+      window.prompt(t(locale, 'blog.copy_url_prompt'), url)
     }
   }
 
@@ -51,16 +54,16 @@ export default function ShareRail({
   const labelHidden = variant === 'rail' ? 'sr-only' : ''
 
   return (
-    <div className={wrapperCls} aria-label="Share this article">
+    <div className={wrapperCls} aria-label={t(locale, 'blog.share_aria')}>
       {variant === 'rail' && (
         <p className="mb-1 [writing-mode:vertical-rl] rotate-180 font-display text-[10px] font-semibold uppercase tracking-[0.32em] text-ink-300">
-          Share
+          {t(locale, 'blog.share')}
         </p>
       )}
 
       <ShareButton
         href={xHref}
-        label="Share on X"
+        label={t(locale, 'blog.share_on_x')}
         labelClass={labelHidden}
       >
         <IconX />
@@ -68,7 +71,7 @@ export default function ShareRail({
 
       <ShareButton
         href={linkedInHref}
-        label="Share on LinkedIn"
+        label={t(locale, 'blog.share_on_linkedin')}
         labelClass={labelHidden}
       >
         <IconLinkedIn />
@@ -77,11 +80,13 @@ export default function ShareRail({
       <button
         type="button"
         onClick={handleCopy}
-        aria-label={copied ? 'Link copied' : 'Copy link'}
+        aria-label={copied ? t(locale, 'blog.link_copied') : t(locale, 'blog.copy_link')}
         className="group grid h-10 w-10 place-items-center rounded-full border border-ink-200 bg-white text-ink-500 transition hover:border-brand-black hover:text-brand-black"
       >
         {copied ? <IconCheck /> : <IconLink />}
-        <span className={labelHidden}>{copied ? 'Copied' : 'Copy link'}</span>
+        <span className={labelHidden}>
+          {copied ? t(locale, 'blog.copied') : t(locale, 'blog.copy_link')}
+        </span>
       </button>
     </div>
   )

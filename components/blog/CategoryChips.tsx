@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { ALL_CATEGORIES } from '@/lib/categories'
+import { categoriesForLocale } from '@/lib/categories'
+import { t, type Locale } from '@/lib/locales'
 
 // Filter chips for the blog index. Real `<a href>` links so the URL
 // updates and the filtered list comes back via SSR — no client-side
@@ -10,12 +11,13 @@ export default function CategoryChips({
   locale,
   active,
 }: {
-  locale: string
+  locale: Locale
   active: string | null
 }) {
+  const categories = categoriesForLocale(locale)
   return (
     <nav
-      aria-label="Filter posts by category"
+      aria-label={t(locale, 'blog.chips.aria')}
       className="border-b border-ink-100 bg-[#f5f5f8]"
     >
       <div className="container-site">
@@ -24,11 +26,11 @@ export default function CategoryChips({
           <li className="shrink-0">
             <Chip
               href={`/${locale}`}
-              label="All articles"
+              label={t(locale, 'blog.chips.all_articles')}
               active={active === null}
             />
           </li>
-          {ALL_CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <li key={c.slug} className="shrink-0">
               <Chip
                 href={`/${locale}?category=${c.slug}`}

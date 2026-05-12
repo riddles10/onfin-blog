@@ -1,4 +1,4 @@
-import { type Locale, LOCALE_NAMES } from '@/lib/locales'
+import { type Locale, LOCALE_NAMES, t, tf } from '@/lib/locales'
 
 // Small notice rendered at the top of an article when the visitor's
 // requested locale doesn't have a translation yet, and we're serving
@@ -23,10 +23,9 @@ export default function EnglishFallbackBanner({
       <div className="container-site py-3">
         <p className="text-sm text-ink-600">
           <span className="mr-2 inline-flex items-center rounded-pill bg-brand-lime/20 px-2 py-0.5 text-xs font-display font-semibold uppercase tracking-[0.14em] text-brand-black">
-            EN
+            {t(requestedLocale, 'blog.fallback.badge')}
           </span>
-          This article is shown in English. The {localeName} translation
-          isn&apos;t available yet — we&apos;re working through the archive.
+          {tf(requestedLocale, 'blog.fallback.banner', { language: localeName })}
         </p>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { categoryGradient, categoryLabel } from '@/lib/categories'
 import { formatDate, htmlToExcerpt } from '@/lib/format'
+import { t, type Locale } from '@/lib/locales'
 
 // Single article tile. The whole card is one `<a>` so the entire surface
 // is clickable; nested elements use `pointer-events: none` for fine
@@ -23,7 +24,7 @@ export default function PostCard({
   post,
   variant = 'default',
 }: {
-  locale: string
+  locale: Locale
   post: PostCardData
   variant?: 'default' | 'featured' | 'compact'
 }) {
@@ -81,7 +82,7 @@ export default function PostCard({
             // so the empty block still earns its space.
             <div className="absolute inset-0 flex items-end p-5">
               <span className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
-                {categoryLabel(post.category)}
+                {categoryLabel(post.category, locale)}
               </span>
             </div>
           )}
@@ -96,7 +97,7 @@ export default function PostCard({
         >
           <div className="flex flex-wrap items-center gap-3 text-xs">
             <span className="font-display font-semibold uppercase tracking-[0.18em] text-brand-blue">
-              {categoryLabel(post.category)}
+              {categoryLabel(post.category, locale)}
             </span>
             {post.publishedAt && (
               <>
@@ -128,7 +129,7 @@ export default function PostCard({
           )}
 
           <span className="mt-auto inline-flex items-center gap-1.5 pt-2 font-display text-xs font-semibold uppercase tracking-[0.14em] text-brand-black">
-            Read article
+            {t(locale, 'blog.read_article')}
             <span aria-hidden="true" className="transition group-hover:translate-x-1">→</span>
           </span>
         </div>

@@ -1,4 +1,5 @@
 import PostCard, { type PostCardData } from '@/components/blog/PostCard'
+import { t, type Locale } from '@/lib/locales'
 
 // Three-card "Read next" rail at the bottom of an article. Reuses
 // PostCard so the visual language matches the index. Hidden when there's
@@ -9,7 +10,7 @@ export default function RelatedPosts({
   locale,
   posts,
 }: {
-  locale: string
+  locale: Locale
   posts: PostCardData[]
 }) {
   if (posts.length < 2) return null
@@ -23,13 +24,13 @@ export default function RelatedPosts({
       <div className="mb-8 flex items-end justify-between">
         <div>
           <p className="font-display text-xs font-semibold uppercase tracking-[0.22em] text-ink-400">
-            Read next
+            {t(locale, 'blog.read_next')}
           </p>
           <h2
             id="related-posts-heading"
             className="mt-2 font-display text-2xl font-semibold text-brand-black sm:text-3xl"
           >
-            More from the OnFin desk
+            {t(locale, 'blog.related_heading')}
           </h2>
         </div>
       </div>

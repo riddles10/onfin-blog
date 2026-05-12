@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { t, type Locale } from '@/lib/locales'
 
 // Sticky right-rail table of contents on desktop. The list is built
 // server-side from the article's H2s (passed as `items`) so search
@@ -10,7 +11,13 @@ import { useEffect, useRef, useState } from 'react'
 
 export type TocItem = { id: string; label: string }
 
-export default function TableOfContents({ items }: { items: TocItem[] }) {
+export default function TableOfContents({
+  items,
+  locale,
+}: {
+  items: TocItem[]
+  locale: Locale
+}) {
   const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -48,10 +55,10 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
   return (
     <nav
       ref={containerRef}
-      aria-label="On this page"
+      aria-label={t(locale, 'blog.toc_aria')}
     >
       <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">
-        On this page
+        {t(locale, 'blog.toc_heading')}
       </p>
       <ol className="space-y-2 border-l border-ink-100 pl-4 text-sm">
         {items.map((it) => {

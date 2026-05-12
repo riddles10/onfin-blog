@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { t, tf, type Locale } from '@/lib/locales'
 
 // Pagination footer for the blog index. Pure links, SEO-clean: the URL
 // always reflects the active page, so search engines crawl every page in
@@ -9,11 +10,13 @@ export default function Pagination({
   page,
   totalPages,
   category,
+  locale,
 }: {
   basePath: string                    // e.g. "/en"
   page: number                        // 1-based
   totalPages: number
   category?: string | null
+  locale: Locale
 }) {
   if (totalPages <= 1) return null
 
@@ -27,10 +30,12 @@ export default function Pagination({
 
   const prev = page > 1 ? buildHref(page - 1) : null
   const next = page < totalPages ? buildHref(page + 1) : null
+  const prevLabel = t(locale, 'blog.pagination.prev')
+  const nextLabel = t(locale, 'blog.pagination.next')
 
   return (
     <nav
-      aria-label="Article pages"
+      aria-label={t(locale, 'blog.pagination.aria')}
       className="mt-12 flex items-center justify-between border-t border-ink-100 pt-8"
     >
       {prev ? (
@@ -39,16 +44,16 @@ export default function Pagination({
           rel="prev"
           className="inline-flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.14em] text-brand-black transition hover:text-brand-blue"
         >
-          <span aria-hidden="true">←</span> Previous
+          <span aria-hidden="true">←</span> {prevLabel}
         </Link>
       ) : (
         <span className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-ink-300">
-          <span aria-hidden="true">←</span> Previous
+          <span aria-hidden="true">←</span> {prevLabel}
         </span>
       )}
 
       <span className="font-display text-xs uppercase tracking-[0.18em] text-ink-400">
-        Page {page} of {totalPages}
+        {tf(locale, 'blog.pagination.page_of', { page, total: totalPages })}
       </span>
 
       {next ? (
@@ -57,11 +62,11 @@ export default function Pagination({
           rel="next"
           className="inline-flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.14em] text-brand-black transition hover:text-brand-blue"
         >
-          Next <span aria-hidden="true">→</span>
+          {nextLabel} <span aria-hidden="true">→</span>
         </Link>
       ) : (
         <span className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-ink-300">
-          Next <span aria-hidden="true">→</span>
+          {nextLabel} <span aria-hidden="true">→</span>
         </span>
       )}
     </nav>
