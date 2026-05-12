@@ -125,6 +125,23 @@ export function t(locale: Locale, key: string): string {
 }
 
 /**
+ * Like `t()`, but interpolates `{name}` tokens in the looked-up string
+ * with values from `vars`. Tokens that don't have a matching var are left
+ * untouched — same failure mode as `t()` for a missing key, makes typos
+ * easy to spot in dev.
+ */
+export function tf(
+  locale: Locale,
+  key: string,
+  vars: Record<string, string | number>
+): string {
+  return t(locale, key).replace(/\{(\w+)\}/g, (m, name) => {
+    const v = vars[name]
+    return v === undefined ? m : String(v)
+  })
+}
+
+/**
  * Build a localized path. Always returns a prefixed path — the blog
  * uses `prefixDefaultLocale: true` semantics so /en/... is canonical.
  */
