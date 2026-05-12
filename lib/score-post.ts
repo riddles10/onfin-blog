@@ -9,6 +9,7 @@
 // files, so the route just re-exports the function from here).
 
 import { SITE_MENTION_PATTERN, SITE_NAME } from '@/lib/cms-config';
+import type { Locale } from '@/lib/locales';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -58,7 +59,26 @@ const DISALLOWED_TAGS = ['h1', 'h4', 'h5', 'h6', 'div', 'span', 'br', 'img', 'if
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type Severity = 'error' | 'warning' | 'info';
-export type Lang = 'en' | 'th';
+
+// `Lang` widened from the original `'en' | 'th'` to any supported locale.
+// EN and TH have full rule sets (filler phrases, Thai spacing, keyword
+// stuffing detection, etc). The other 7 locales run a "light-touch" pass
+// covering only the universal checks: word count, heading structure,
+// disallowed tags, bolding density, FAQ presence.
+export type Lang = Locale;
+
+// Non-spaced scripts — word count must be measured by character density
+// rather than whitespace splits.
+const NON_SPACED_LOCALES: ReadonlySet<Locale> = new Set(['th', 'km', 'zh']);
+
+// Approximate characters-per-word for non-spaced scripts. Used only to give
+// a rough word-count signal; tokenization for ranking would need a real
+// segmenter. Numbers come from common reference corpora.
+const CHARS_PER_WORD: Partial<Record<Locale, number>> = {
+  th: 4,
+  km: 5,
+  zh: 1.7,
+};
 
 export type Issue = {
   severity: Severity;
@@ -127,12 +147,18 @@ function topKeywords(text: string, n: number): Array<{ word: string; count: numb
 export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
   const text = plainText(html);
   const lowerText = text.toLowerCase();
-  // Thai script has no spaces between words, so word count must be measured
-  // by character density rather than whitespace splits.
-  const wordCount =
-    lang === 'th'
-      ? Math.round((text.match(/[\u0E00-\u0E7F]/g) || []).length / 4) // ~4 Thai chars per word
-      : (text ? text.split(/\s+/).filter(Boolean).length : 0);
+  // Locales without inter-word whitespace need a character-density estimate
+  // rather than a whitespace split. CHARS_PER_WORD is a coarse divisor \u2014
+  // good enough for the length-band checks below, not for SEO ranking.
+  const isNonSpaced = NON_SPACED_LOCALES.has(lang);
+  // EN and TH have bespoke rules; everything else uses the light-touch path.
+  const isLightTouch = lang !== 'en' && lang !== 'th';
+  const wordCount = isNonSpaced
+    ? Math.round(
+        text.replace(/[\sA-Za-z0-9.,;:!?'"()\[\]{}\-\u2014\u2013_/\\<>@#$%^&*+=|`~]/g, '').length /
+          (CHARS_PER_WORD[lang] ?? 3)
+      )
+    : (text ? text.split(/\s+/).filter(Boolean).length : 0);
   const h2Count = countTags(html, 'h2');
   const h3Count = countTags(html, 'h3');
   const paragraphCount = countTags(html, 'p');
@@ -156,7 +182,8 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
     thaiInterWordSpaces = matches ? matches.length : 0;
   }
 
-  // Filler phrases (English only)
+  // Filler phrases (English only — every other locale would need its own
+  // filler dictionary, intentionally out of scope for the light-touch path).
   const fillerHits: string[] = [];
   if (lang === 'en') {
     for (const phrase of FILLER_PHRASES) {
@@ -175,8 +202,9 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
   const avgStrongPerParagraph =
     paragraphCount > 0 ? Math.round((strongCount / paragraphCount) * 100) / 100 : 0;
 
-  // Top keywords (English only — Thai tokenization is non-trivial without
-  // a dedicated tokenizer and would produce noise on a per-character split)
+  // Top keywords (English only — non-English tokenization is non-trivial
+  // without a dedicated tokenizer and would produce noise on a per-character
+  // or per-whitespace split).
   const top = lang === 'en' ? topKeywords(text, 8) : [];
 
   // ──────────────────────────────────────────
@@ -185,11 +213,13 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
   const issues: Issue[] = [];
   let score = 100;
 
-  // Word count — Thai targets are slightly lower (Thai is more compact per
-  // word and translations typically run 80-90% of English word count).
-  const minWords = lang === 'th' ? 1300 : 1500;
-  const targetMinWords = lang === 'th' ? 1700 : 2000;
-  const targetMaxWords = lang === 'th' ? 3000 : 3500;
+  // Word count — non-English locales target slightly lower bands because
+  // translations typically run 80-90% of English word count (and the
+  // non-spaced char-density estimate adds noise of similar magnitude).
+  const isEn = lang === 'en';
+  const minWords = isEn ? 1500 : 1300;
+  const targetMinWords = isEn ? 2000 : 1700;
+  const targetMaxWords = isEn ? 3500 : 3000;
   if (wordCount < minWords) {
     issues.push({
       severity: 'error',
@@ -251,8 +281,8 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
   }
 
   // Language: in English mode, Thai script is forbidden. In Thai mode,
-  // Thai script is REQUIRED (a Thai post with no Thai chars is broken),
-  // and inter-word ASCII spaces inside Thai prose are a translation bug.
+  // Thai script is REQUIRED and inter-word ASCII spaces are a translation
+  // bug. Other locales skip language checks under the light-touch policy.
   if (lang === 'en') {
     if (thaiCharsInBody > 0) {
       issues.push({
@@ -262,7 +292,7 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
       });
       score -= 20;
     }
-  } else {
+  } else if (lang === 'th') {
     if (thaiCharsInBody < 200) {
       issues.push({
         severity: 'error',
@@ -287,6 +317,10 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
       score -= 4;
     }
   }
+  // isLightTouch (every locale other than en/th): no language-bleed checks
+  // for now. Detecting "this Russian article still has English prose left
+  // over" would need per-locale tokenizers — out of scope for the light pass.
+  void isLightTouch; // silence unused-var warning while keeping the flag readable above
 
   // Bolding density
   if (avgStrongPerParagraph > 2) {
@@ -364,6 +398,8 @@ export function scorePostHtml(html: string, lang: Lang = 'en'): ScoreResult {
     suggestions.push('Clean English body — no Thai script bleed.');
   if (lang === 'th' && thaiCharsInBody >= 200 && thaiInterWordSpaces === 0)
     suggestions.push('Clean Thai prose — no inter-word spacing bugs.');
+  if (lang !== 'en' && lang !== 'th' && h2Count >= 5 && wordCount >= minWords)
+    suggestions.push(`Translation looks structurally sound for ${lang}.`);
   if (lang === 'en' && fillerHits.length === 0)
     suggestions.push('No filler phrases — voice is direct.');
   if (SITE_MENTION_PATTERN && siteMentions >= 1 && siteMentions <= 2)

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { scorePostHtml, type Lang } from '@/lib/score-post';
+import { isLocale } from '@/lib/locales';
 
 // Thin HTTP wrapper around the deterministic QA scorer in /lib/score-post.ts.
 // All scoring logic lives in lib/ so the daily cron pipeline can call it
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest) {
     if (typeof html !== 'string') {
       return NextResponse.json({ error: 'html is required' }, { status: 400 });
     }
-    const targetLang: Lang = lang === 'th' ? 'th' : 'en';
+    const targetLang: Lang = typeof lang === 'string' && isLocale(lang) ? lang : 'en';
     const result = scorePostHtml(html, targetLang);
     return NextResponse.json(result);
   } catch (error) {

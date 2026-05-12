@@ -178,7 +178,7 @@ export async function GET(request: NextRequest) {
     const [scoreEn, scoreTh, cover] = await Promise.all([
       Promise.resolve(scorePostHtml(bodyEnWithImages, 'en')),
       bodyTh
-        ? Promise.resolve(scorePostHtml(bodyTh, (SECONDARY_LANG || 'en') as 'en' | 'th'))
+        ? Promise.resolve(scorePostHtml(bodyTh, (SECONDARY_LANG || 'en') as Parameters<typeof scorePostHtml>[1]))
         : Promise.resolve(null),
       fetchCoverImage(post.title_en),
     ])
