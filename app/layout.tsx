@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import ConsentBanner from '@/components/ConsentBanner'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io'
 const PARENT_URL = 'https://onfin.io'
@@ -92,6 +93,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
         />
         {children}
+        <ConsentBanner />
       </body>
     </html>
   )

@@ -1,5 +1,6 @@
 import { localizedPath, t, type Locale } from '@/lib/locales'
 import { parentSiteUrl } from '@/lib/onfin-links'
+import CookiePreferencesButton from './CookiePreferencesButton'
 
 // Site footer — ports onfin.io's Footer.astro structure 1:1 so the
 // blog reads as part of the same family.
@@ -151,6 +152,14 @@ export default function Footer({ locale }: { locale: string }) {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* Cookie preferences re-open trigger (client island).
+            Required by GDPR so users can withdraw or change consent.
+            English-only for v1; translation tracked in a follow-up
+            Asana task. */}
+        <div className="mt-6 flex justify-end">
+          <CookiePreferencesButton />
         </div>
       </div>
     </footer>
