@@ -1073,6 +1073,8 @@
   "blog.cta.open_account": "เปิดบัญชี",
   "blog.cta.how_it_works": "OnFin ทำงานอย่างไร",
   "blog.cta.aria": "เริ่มต้นกับ OnFin",
+  "blog.tldr.label": "สรุปสั้นๆ",
+  "blog.tldr.aria": "สรุปบทความ",
   "blog.category.market_analysis.label": "การวิเคราะห์ตลาด",
   "blog.category.market_analysis.tagline": "ความเคลื่อนไหวทางมหภาค สกุลเงิน และอัตราดอกเบี้ย อธิบายให้เทรดเดอร์รายย่อย",
   "blog.category.trading_guides.label": "คู่มือเทรด",

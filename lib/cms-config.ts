@@ -42,12 +42,12 @@ export type EventCategory = (typeof EVENT_CATEGORIES)[number]
 
 // ── AI content generation ────────────────────────────────────────────────────
 
-export const BRAND_VOICE = `${SITE_NAME} — BRAND VOICE & AUDIENCE
+export const BRAND_VOICE = `${SITE_NAME} BRAND VOICE & AUDIENCE
 
 WHO WE ARE
 ${SITE_NAME} is a multi-asset broker focused on forex and CFD trading. The
 ${SITE_NAME} blog is the editorial home for traders who want clear, practical
-analysis — schedule notices, platform updates, regulation explainers, market
+analysis: schedule notices, platform updates, regulation explainers, market
 recaps, and how-to guides.
 
 AUDIENCE
@@ -58,66 +58,95 @@ AUDIENCE
 
 VOICE
 - Direct, confident, concrete.
-- Use real numbers — pip values, spreads, leverage ratios, session times,
-  contract specs — instead of vague qualifiers.
+- Use real numbers (pip values, spreads, leverage ratios, session times,
+  contract specs) instead of vague qualifiers.
 - Acknowledge tradeoffs honestly. Every strategy has a downside; name it.
 - Never moralize, never use "important to note", "remember", "in conclusion".
 - Never promise guaranteed profits. Trading involves risk, full stop.
+- Never use em-dashes ("—") in any output. They are the strongest AI-tell
+  in retail-facing copy and ${SITE_NAME} bans them site-wide. Use a comma,
+  a colon, a pair of parentheses, or two shorter sentences instead.
 
 WE ARE NOT
 - A finfluencer pushing trade ideas
 - A marketing channel for promo bonuses (those live on onfin.io, not here)
-- A source of investment advice — we explain mechanics and process, the
+- A source of investment advice; we explain mechanics and process, the
   reader decides.
 
-We are an editorial platform — our job is to help traders make confident,
+We are an editorial platform. Our job is to help traders make confident,
 well-informed decisions about their own positions.`
 
-export const SEO_GUIDELINES = `${SITE_NAME} BLOG — SEO & STRUCTURAL GUIDELINES
+export const SEO_GUIDELINES = `${SITE_NAME} BLOG SEO & STRUCTURAL GUIDELINES
 
 CANONICAL STYLE GUIDE
-The full editorial standard — voice, structural patterns, slug rules,
-table format, cover-image conventions, translation glossary — lives in
+The full editorial standard (voice, structural patterns, slug rules,
+table format, cover-image conventions, translation glossary) lives in
 docs/BLOG_STYLE_GUIDE.md. Read that first if you're authoring or
 publishing a post; the rules below are the AI-generation-prompt
 subset.
 
 ARTICLE LENGTH
-- Target 2200–2800 words for guides and strategy articles
-- Target 1500–2200 words for market-analysis and regulation-news pieces
-- 800–1200 words is acceptable for short platform-updates and schedule notices
-- Below the floor for the type is a failure — Google ranks long-form for
-  guide and strategy queries
+- Target 2200 to 2800 words for guides and strategy articles
+- Target 1500 to 2200 words for market-analysis and regulation-news pieces
+- 800 to 1200 words is acceptable for short platform-updates and schedule notices
+- Below the floor for the type is a failure. Google ranks long-form for
+  guide and strategy queries.
 
 HOOK TAXONOMY (pick ONE for the intro, do not stack them)
 1. Specific-Number Promise (e.g. "five spread mistakes that cost a typical
    EUR/USD scalper $40 a session")
-2. Counter-Intuitive Claim
-3. Money or Time Stake
-4. Direct Question
-5. Stakes / Threat (margin call, slippage, liquidity gap)
-6. Concrete Scenario (a setup or a chart pattern)
+2. Counter-Intuitive Claim (something the reader thinks is true that isn't)
+3. Money or Time Stake (a concrete dollar amount, pip count, or session)
+4. Stakes / Threat (margin call, slippage, liquidity gap, regulator action)
+5. Concrete Scenario (a real setup, chart pattern, or news event)
+Banned hooks: rhetorical questions ("Have you ever wondered..."), soft
+preambles ("In today's fast-moving market..."), and definitions
+("Leverage is...") as the opening sentence.
 
-INTRO FORMULA — APP (Agree → Promise → Preview)
-- Agree: One sentence acknowledging what the trader already knows or fears
-- Promise: One sentence stating exactly what they will learn
-- Preview: One sentence hinting at the structure
-Total intro length: 2–3 sentences, 50–80 words. No headings inside the intro.
+INTRO FORMULA — APP (Agree, Promise, Preview)
+The intro is the most-edited part of the piece. Every word earns its
+place. Three sentences, 50 to 80 words total, no headings inside.
+- Agree (1 sentence): name what the reader already knows or fears, in
+  concrete terms. Use the chosen hook here. Specific numbers beat
+  qualifiers every time.
+- Promise (1 sentence): state what the reader will be able to DO after
+  finishing the article, not what you will "cover". Example:
+  "By the end you will size a 1:500 position without blowing past
+  your daily loss limit."
+- Preview (1 sentence): name the 2 to 3 anchors the body will hit so
+  the reader knows it is worth scrolling.
+
+TL;DR (REQUIRED for guides and strategies)
+Immediately after the intro paragraph, on a new line, emit a paragraph
+that begins with the literal string "TL;DR." followed by a space. It
+renders as a styled callout, so do not wrap the label in any tags
+beyond the surrounding <p> and a leading <strong>.
+
+Format:
+<p><strong>TL;DR.</strong> [Direct answer in one sentence.] [Mechanic with
+specific numbers, the rate, the session, or the contract spec.] [The one
+tradeoff that matters.] [The safe default for a typical retail trader.]</p>
+
+Rules:
+- 2 to 4 sentences, 40 to 80 words total
+- Plain prose; no bullets, no headings, no further <strong> tags
+- First sentence is the single most actionable takeaway
+- Front-load specifics; if there is no number, the TL;DR is too vague
 
 H2 SECTION RULES
-- 6–8 H2 sections per guide (not counting FAQ)
+- 6 to 8 H2 sections per guide (not counting FAQ)
 - Each H2 must be SPECIFIC and BENEFIT-FOCUSED
-- Each H2 should target 250–400 words of body
-- Avoid generic H2s like "What is forex?" — assume reader basics
+- Each H2 should target 250 to 400 words of body
+- Avoid generic H2s like "What is forex?"; assume reader basics
 
 H3 SUBSECTION RULES
 - Use H3 for sub-points within an H2 section
-- 2–4 H3s per H2 is ideal for scannability
+- 2 to 4 H3s per H2 is ideal for scannability
 
 FAQ SECTION (REQUIRED for guides and strategies, last section)
 - Single <h2>FAQ</h2>
 - Exactly 5 question-style H3s
-- Each answer 50–100 words
+- Each answer 50 to 100 words
 
 SCHEDULE-NOTICE STRUCTURE (for posts about holiday trading hours,
 DST transitions, multi-event calendars)
@@ -129,7 +158,7 @@ DST transitions, multi-event calendars)
   in May), use separate <h2> sections each with its own table
 
 MAINTENANCE-NOTICE STRUCTURE (for single-event downtime / migration /
-outage notices — single-row tables look anaemic)
+outage notices, where single-row tables look anaemic)
 - Bullet block under "What you need to know":
     <p><strong>What you need to know</strong></p>
     <ul>
@@ -148,16 +177,20 @@ UNIVERSAL CLOSING
   close", "Set your alarms, see you back at the desk"
 
 LINKING & ENTITIES
-- Mention ${SITE_NAME} 1–2 times naturally in the body, never more
+- Mention ${SITE_NAME} 1 to 2 times naturally in the body, never more
 - Link out to authoritative neutral sources for facts (BIS, IOSCO, central
-  bank releases, CFTC, FCA, MAS) — not to competitor brokers
+  bank releases, CFTC, FCA, MAS), never to competitor brokers
 
 ANTI-PATTERNS (auto-fail)
-- Keyword stuffing — no single keyword appears more than ~1.5% density
-- Excessive bolding — max 2 <strong> per paragraph
+- Em-dashes (U+2014, the long dash "—") anywhere in body copy. This is
+  the single most over-used AI-tell and is banned outright. Use commas,
+  colons, parentheses, or two shorter sentences instead. En-dashes
+  (U+2013) for numeric ranges like "1500–2200 words" are fine.
+- Keyword stuffing: no single keyword appears more than ~1.5% density
+- Excessive bolding: max 2 <strong> per paragraph (TL;DR label excluded)
 - Generic filler phrases ("in today's fast-paced world")
 - Made-up statistics, fabricated quotes
-- Promises of guaranteed returns / profitability claims
+- Promises of guaranteed returns or profitability claims
 - Anything that reads like investment advice for a specific instrument
 
 ALLOWED HTML TAGS
@@ -167,10 +200,10 @@ Never <h1>, <h4>, <div>, <span>, <br>, <img>.
 
 WHEN TO USE A TABLE
 Use a <table> for any structured data the reader will scan rather
-than read top-to-bottom — trading schedules, instrument specs,
+than read top-to-bottom: trading schedules, instrument specs,
 fee comparisons, regulator-by-regulator deadlines. Standard shape:
 3 columns. Header row in <thead>; data rows in <tbody>. The first
-column is the row identifier (date / instrument / regulator).
+column is the row identifier (date, instrument, or regulator).
 Don't use tables for layout. Don't nest tables.`
 
 export const CONTENT_RULES = `CONTENT RULES FOR ${SITE_NAME} BLOG

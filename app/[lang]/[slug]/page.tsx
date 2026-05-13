@@ -26,8 +26,11 @@ import TableOfContents from '@/components/blog/TableOfContents'
 import ShareRail from '@/components/blog/ShareRail'
 import RelatedPosts from '@/components/blog/RelatedPosts'
 import ArticleCTA from '@/components/blog/ArticleCTA'
+import TldrCallout from '@/components/blog/TldrCallout'
 import EnglishFallbackBanner from '@/components/blog/EnglishFallbackBanner'
 import type { PostCardData } from '@/components/blog/PostCard'
+import { extractTldr } from '@/lib/tldr'
+import { stripEmDashes } from '@/lib/strip-emdash'
 
 type Params = { lang: string; slug: string }
 
@@ -230,7 +233,9 @@ export async function generateMetadata({
   const result = await fetchArticle(slug, locale)
   if (!result) return { title: 'Not found' }
   const { post, view } = result
-  const description = view.excerpt || htmlToExcerpt(view.body, 160)
+  const description = stripEmDashes(
+    view.excerpt || htmlToExcerpt(view.body, 160)
+  )
   const canonical = `/${lang}/${post.slug}`
   return {
     title: view.title,
@@ -271,10 +276,21 @@ export default async function BlogArticlePage({
   const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io').replace(/\/$/, '')
   const canonicalPath = `/${lang}/${post.slug}`
   const canonicalUrl = `${baseUrl}${canonicalPath}`
-  const description = view.excerpt || htmlToExcerpt(view.body, 160)
+
+  // Em-dashes are banned in body copy (the dominant LLM-tell) and stripped
+  // at render time so legacy posts in the archive stay clean alongside the
+  // one-shot DB migration. Excerpt gets the same treatment.
+  const cleanBody = stripEmDashes(view.body)
+  const cleanExcerpt = view.excerpt ? stripEmDashes(view.excerpt) : view.excerpt
+  const description = cleanExcerpt || htmlToExcerpt(cleanBody, 160)
+
+  // Lift the TL;DR paragraph out of the body so it can render as a
+  // distinct callout above the prose instead of a bold-prefixed sentence
+  // buried in the intro.
+  const { tldr, body: bodyWithoutTldr } = extractTldr(cleanBody)
 
   // Decorate H2s with stable ids and pull the list out for the TOC.
-  const { html: bodyHtml, items: tocItems } = annotateH2s(view.body)
+  const { html: bodyHtml, items: tocItems } = annotateH2s(bodyWithoutTldr)
 
   // FAQPage schema — only emitted when the body has a recognisable FAQ
   // section (long-form trading guides). Operational notice posts don't
@@ -361,9 +377,9 @@ export default async function BlogArticlePage({
               <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-brand-black sm:text-4xl lg:text-5xl">
                 {view.title}
               </h1>
-              {view.excerpt && (
+              {cleanExcerpt && (
                 <p className="mt-5 text-base leading-relaxed text-ink-500 sm:text-lg">
-                  {view.excerpt}
+                  {cleanExcerpt}
                 </p>
               )}
               <div className="mt-7">
@@ -399,6 +415,7 @@ export default async function BlogArticlePage({
 
             {/* Body */}
             <div className="min-w-0">
+              {tldr && <TldrCallout html={tldr} locale={locale} />}
               <div
                 className="prose-blog"
                 dangerouslySetInnerHTML={{ __html: bodyHtml }}

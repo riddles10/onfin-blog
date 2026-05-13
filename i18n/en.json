@@ -1302,6 +1302,8 @@
   "blog.cta.open_account": "Open an account",
   "blog.cta.how_it_works": "How OnFin works",
   "blog.cta.aria": "Get started with OnFin",
+  "blog.tldr.label": "TL;DR",
+  "blog.tldr.aria": "Article summary",
   "blog.category.market_analysis.label": "Market analysis",
   "blog.category.market_analysis.tagline": "Macro, currency, and rate moves explained for retail traders.",
   "blog.category.trading_guides.label": "Trading guides",

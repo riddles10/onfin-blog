@@ -1073,6 +1073,8 @@
   "blog.cta.open_account": "Abrir una cuenta",
   "blog.cta.how_it_works": "Cómo funciona OnFin",
   "blog.cta.aria": "Empezar con OnFin",
+  "blog.tldr.label": "En resumen",
+  "blog.tldr.aria": "Resumen del artículo",
   "blog.category.market_analysis.label": "Análisis de mercado",
   "blog.category.market_analysis.tagline": "Movimientos macro, de divisas y de tipos explicados para traders minoristas.",
   "blog.category.trading_guides.label": "Guías de trading",

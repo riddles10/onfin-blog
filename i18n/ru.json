@@ -1073,6 +1073,8 @@
   "blog.cta.open_account": "Открыть счёт",
   "blog.cta.how_it_works": "Как работает OnFin",
   "blog.cta.aria": "Начать работу с OnFin",
+  "blog.tldr.label": "Кратко",
+  "blog.tldr.aria": "Краткое содержание статьи",
   "blog.category.market_analysis.label": "Аналитика рынка",
   "blog.category.market_analysis.tagline": "Макроэкономика, валюты и движения ставок понятным языком для розничных трейдеров.",
   "blog.category.trading_guides.label": "Торговые гайды",

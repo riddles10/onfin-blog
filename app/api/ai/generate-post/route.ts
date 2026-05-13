@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import anthropic, { MODEL, FAST_MODEL } from '@/lib/anthropic';
 import { loadSeoContext } from '@/lib/seo-context';
 import { CONTENT_RULES } from '@/lib/cms-config';
+import { stripEmDashes } from '@/lib/strip-emdash';
 
 // Two-stage generation. Stage 1 (outline) ~10s. Stage 2 (parallel sections) ~25s.
 // Typical wall time ~35-45s. On Vercel Pro we budget the full 300s so a
@@ -27,7 +28,8 @@ Your outline must include:
 - A compelling SEO title (50-65 characters)
 - A URL slug
 - A meta description (140-160 characters)
-- An intro paragraph: 2-3 sentences, plain HTML (no heading), opens with a hook
+- An intro paragraph following the APP formula (Agree, Promise, Preview): 3 sentences, 50 to 80 words, plain HTML (no heading), opens with a concrete hook from the HOOK TAXONOMY. NEVER open with a rhetorical question, a definition, or a soft preamble. NEVER use em-dashes anywhere; use commas, colons, or two shorter sentences.
+- Immediately after the intro, a TL;DR paragraph: <p><strong>TL;DR.</strong> ...</p>. 2 to 4 sentences, 40 to 80 words. The first sentence is the single most actionable takeaway. Subsequent sentences give specific numbers (rates, sessions, contract specs), the one tradeoff that matters, and the safe default. The TL;DR is part of intro_html, appended after the APP paragraph.
 - 6-8 H2 sections (NOT including FAQ)
   - Each section heading must be specific and benefit-focused, never generic ("Understanding the Market" X, "What Used Models Actually Cost" Y)
   - Each section gets 250-400 target words
@@ -146,7 +148,7 @@ const OUTLINE_TOOL = {
       intro_html: {
         type: 'string',
         description:
-          'Opening 2-3 sentences as HTML. Plain <p> tags only. No heading. Should hook the reader.',
+          'Two <p> blocks back-to-back. First <p>: APP intro, 3 sentences, 50-80 words, opens with a concrete hook (no questions, no definitions, no soft preambles). Second <p>: TL;DR paragraph starting with "<strong>TL;DR.</strong> " then 2-4 sentences (40-80 words) front-loading the single most actionable takeaway with specific numbers. No em-dashes anywhere.',
       },
       sections: {
         type: 'array',
@@ -455,8 +457,12 @@ export async function POST(request: NextRequest) {
 
     // Assemble final article. stripThaiScript runs on every chunk so the
     // English body is guaranteed to be Thai-script-free even if the model slips.
-    const introHtml = stripThaiScript(sanitizeHtml(outline.intro_html));
-    const fullBody = [introHtml, ...bodySections, faqHtml].join('\n\n');
+    // stripEmDashes is a second backstop alongside the prompt rule banning
+    // em-dashes; if the model still slips one in, we never persist it.
+    const introHtml = stripEmDashes(stripThaiScript(sanitizeHtml(outline.intro_html)));
+    const fullBody = stripEmDashes(
+      [introHtml, ...bodySections, faqHtml].join('\n\n')
+    );
     const wordCount = countWords(fullBody);
     const residualThai = countThaiChars(fullBody);
 
@@ -468,9 +474,9 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      title_en: stripThaiScript(outline.title_en),
+      title_en: stripEmDashes(stripThaiScript(outline.title_en)),
       slug: outline.slug,
-      excerpt_en: stripThaiScript(outline.excerpt_en),
+      excerpt_en: stripEmDashes(stripThaiScript(outline.excerpt_en)),
       body_en: fullBody,
       _meta: {
         wordCount,

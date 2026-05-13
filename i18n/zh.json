@@ -1137,6 +1137,8 @@
   "blog.cta.open_account": "开设账户",
   "blog.cta.how_it_works": "OnFin 如何运作",
   "blog.cta.aria": "开始使用 OnFin",
+  "blog.tldr.label": "速览",
+  "blog.tldr.aria": "文章摘要",
   "blog.category.market_analysis.label": "市场分析",
   "blog.category.market_analysis.tagline": "面向零售交易者的宏观、汇率与利率走势解读。",
   "blog.category.trading_guides.label": "交易指南",
