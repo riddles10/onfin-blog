@@ -7,6 +7,8 @@ name: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog
 services:
   app:
     image: IMAGE_NAME_PLACEHOLDER
+    container_name: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-app
+    hostname: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-app
     environment:
       PORT: "3000"
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:?}
@@ -15,16 +17,17 @@ services:
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:?}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:?}
       SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
       UNSPLASH_ACCESS_KEY: ${UNSPLASH_ACCESS_KEY:-}
       CRON_SECRET: ${CRON_SECRET:?}
     ports:
       - "127.0.0.1:3000:3000"
     restart: unless-stopped
-    pids_limit: 1024        # TODO: revisit this limit after launching beta and monitoring actual usage
-    cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
-    mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
-    memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
+    pids_limit: 512
+    cpus: "0.75"
+    mem_limit: "1024m"
+    memswap_limit: "1024m"
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
       interval: 30s
@@ -41,6 +44,8 @@ services:
       app:
         condition: service_healthy
     image: IMAGE_NAME_PLACEHOLDER
+    container_name: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-cron-worker
+    hostname: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-cron-worker
     environment:
       CRON_TARGET_BASE_URL: "http://app:3000" # The worker calls back into the app over the docker network
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:?}
@@ -49,15 +54,16 @@ services:
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:?}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:?}
       SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
       UNSPLASH_ACCESS_KEY: ${UNSPLASH_ACCESS_KEY:-}
       CRON_SECRET: ${CRON_SECRET:?}
     command: ["node", "scripts/cron-worker.js"]
     restart: unless-stopped
-    pids_limit: 1024        # TODO: revisit this limit after launching beta and monitoring actual usage
-    cpus: "1.00"            # TODO: revisit this limit after launching beta and monitoring actual usage
-    mem_limit: "1024m"      # TODO: revisit this limit after launching beta and monitoring actual usage
-    memswap_limit: "1024m"  # TODO: revisit this limit after launching beta and monitoring actual usage
+    pids_limit: 512
+    cpus: "0.75"
+    mem_limit: "1024m"
+    memswap_limit: "1024m"
     # Replace the inherited image-level HEALTHCHECK with a trivial
     # always-true probe.
     #

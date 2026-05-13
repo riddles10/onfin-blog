@@ -7,6 +7,7 @@ variables:
   # DOCKER_IMAGE_CUSTOM_TAG: "experimental"
 
 stages:
+  - preflight
   - build
   - deploy
   - notify
@@ -49,7 +50,7 @@ stages:
 
     docker push --quiet "${IMAGE_NAME}" 2> >(tee -a "${ERRLOG}") || exit 126 # push new image
     docker image inspect --format=true "${IMAGE_NAME}-prev" >/dev/null 2>&1 && docker push --quiet "${IMAGE_NAME}-prev" || true # push retagged previous image (if exists) as well
-    docker image inspect --format=true --filter "dangling=true" "${CI_REGISTRY_IMAGE}" >/dev/null 2>&1 && docker rmi $(docker images "${CI_REGISTRY_IMAGE}" --filter "dangling=true" --no-trunc -q) || true # remove older untagged
+    docker images -q --no-trunc --filter "dangling=true" "${CI_REGISTRY_IMAGE}" | sort -u | xargs -r docker rmi -f >/dev/null || true # remove older untagged
 
     sed -i "s#IMAGE_NAME_PLACEHOLDER#${IMAGE_SHORT_NAME}#g" "${DOCKER_FILES_PATH:-.}/docker-compose.yml"  2> >(tee -a "${ERRLOG}")
     tar -czf ./build-project.tgz -C "${DOCKER_FILES_PATH:-.}" -- docker-compose.yml                       2> >(tee -a "${ERRLOG}")
@@ -83,6 +84,11 @@ stages:
     set -euo pipefail
     ERRLOG="./stderr.deploy"
 
+    fatal_config_error() {
+      printf 'ERROR: %s\n' "$1" | tee -a "${ERRLOG}" >&2
+      exit 78 # EX_CONFIG
+    }
+
     echo '===================================================='
     echo '#                  -START DEPLOY-                  #'
     echo '===================================================='
@@ -110,15 +116,15 @@ stages:
     tar -xzf ./build-project.tgz -C "${DEPLOY_PATH}/${RELEASE_DIR}"               2> >(tee -a "${ERRLOG}")
 
     CONFIG_FILE="${DEPLOY_PATH}/.env"
-    test -e "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' not found!"           | tee -a "${ERRLOG}" && exit 1)
-    test -r "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' not readable!"        | tee -a "${ERRLOG}" && exit 1)
-    test -s "${CONFIG_FILE}" || (echo "ERROR: '${CONFIG_FILE}' is empty!"            | tee -a "${ERRLOG}" && exit 1)
+    test -e "${CONFIG_FILE}" || fatal_config_error "'${CONFIG_FILE}' not found!"
+    test -r "${CONFIG_FILE}" || fatal_config_error "'${CONFIG_FILE}' not readable!"
+    test -s "${CONFIG_FILE}" || fatal_config_error "'${CONFIG_FILE}' is empty!"
     cp -v -- "${CONFIG_FILE}" "${DEPLOY_PATH}/${RELEASE_DIR}/"                    2> >(tee -a "${ERRLOG}")
 
     echo ---; echo "Validate docker compose config..."
     docker compose --project-directory "${DEPLOY_PATH}/${RELEASE_DIR}/" \
       config > /dev/null                                                          2> >(tee -a "${ERRLOG}") \
-      || (echo "docker compose config validation failed." && exit 78)
+      || fatal_config_error "docker compose config validation failed!"
     echo "done."
 
     # echo ---;echo "Stop and remove old 'current-release' container(s)..."
@@ -161,14 +167,12 @@ build-dev:
   environment: dev
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
-      when: always
 
 build-prod:
   extends: .build-common
   environment: prod
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-      when: always
 
 deploy-dev:
   extends: .deploy-common
@@ -203,4 +207,7 @@ secret_detection:
   variables:
     HOME: "/root" # reset custom $HOME to default value
   tags: ["cicd.docker"]
-  stage: build
+  stage: preflight
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+    - if: $CI_COMMIT_BRANCH == "master"
