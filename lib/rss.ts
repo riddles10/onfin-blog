@@ -53,17 +53,20 @@ export async function buildFeed(rawLocale: string): Promise<string> {
     const pubDate = r.published_at
       ? new Date(r.published_at).toUTCString()
       : new Date().toUTCString()
+    const media = r.cover_image
+      ? `\n      <media:content url="${esc(r.cover_image)}" medium="image" />`
+      : ''
     return `    <item>
       <title>${esc(view.title)}</title>
       <link>${esc(link)}</link>
       <guid isPermaLink="true">${esc(link)}</guid>
       <pubDate>${pubDate}</pubDate>
-      <description>${esc(desc)}</description>
+      <description>${esc(desc)}</description>${media}
     </item>`
   })
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${esc(t(locale, 'blog.metadata.title'))}</title>
     <link>${esc(indexUrl)}</link>
