@@ -17,6 +17,7 @@
     "publish:schedule": "tsx --env-file=.env.local scripts/publish-schedule-posts.ts",
     "strip:emdashes": "tsx --env-file=.env.local scripts/strip-emdashes.ts",
     "improve:intros": "tsx --env-file=.env.local scripts/improve-intros.ts",
+    "populate:also-read": "tsx --env-file=.env.local scripts/populate-also-read.ts",
     "cron:worker": "node scripts/cron-worker.js"
   },
   "dependencies": {
