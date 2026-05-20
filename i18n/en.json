@@ -1315,5 +1315,21 @@
   "blog.category.strategies.label": "Strategies",
   "blog.category.strategies.tagline": "Setups, frameworks, and risk-management patterns under real conditions.",
   "blog.category.general.label": "OnFin desk",
-  "blog.category.general.tagline": "Editorial notes, longer reads, and team perspectives."
+  "blog.category.general.tagline": "Editorial notes, longer reads, and team perspectives.",
+  "consent.title": "We use cookies",
+  "consent.intro_short": "OnFin uses cookies to keep the site working and (when you allow it) measure how visitors find us. Your choice is shared with the main onfin.io site.",
+  "consent.intro_full": "Pick which categories you want to share. You can change this any time via the \"Cookie preferences\" link in the footer.",
+  "consent.gdpr_link": "See our GDPR policy",
+  "consent.cookie_prefs_label": "Cookie preferences",
+  "consent.cat.necessary.label": "Necessary",
+  "consent.cat.necessary.desc": "Required for the site to function and for first-party attribution (so we know which ad brought you in). Always on.",
+  "consent.cat.analytics.label": "Analytics",
+  "consent.cat.analytics.desc": "Google Analytics (on the main site) so we can understand traffic patterns and improve content.",
+  "consent.cat.marketing.label": "Marketing",
+  "consent.cat.marketing.desc": "Meta, Google and TikTok ad pixels (on the main site) used to measure ad performance and serve relevant campaigns.",
+  "consent.btn.accept": "Accept all",
+  "consent.btn.reject": "Reject all",
+  "consent.btn.customize": "Customize",
+  "consent.btn.save": "Save preferences",
+  "consent.btn.back": "Back"
 }

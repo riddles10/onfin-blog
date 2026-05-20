@@ -155,11 +155,9 @@ export default function Footer({ locale }: { locale: string }) {
         </div>
 
         {/* Cookie preferences re-open trigger (client island).
-            Required by GDPR so users can withdraw or change consent.
-            English-only for v1; translation tracked in a follow-up
-            Asana task. */}
+            Required by GDPR so users can withdraw or change consent. */}
         <div className="mt-6 flex justify-end">
-          <CookiePreferencesButton />
+          <CookiePreferencesButton locale={loc} />
         </div>
       </div>
     </footer>

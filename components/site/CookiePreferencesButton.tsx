@@ -5,7 +5,13 @@
  * onClick handler client-side so the rest of the Footer can stay SSR.
  * Dispatches `onfin:open-consent` which ConsentBanner listens for.
  */
-export default function CookiePreferencesButton() {
+import { t, type Locale } from "@/lib/locales";
+
+export default function CookiePreferencesButton({
+  locale,
+}: {
+  locale: Locale;
+}) {
   return (
     <button
       type="button"
@@ -14,7 +20,7 @@ export default function CookiePreferencesButton() {
         document.dispatchEvent(new CustomEvent("onfin:open-consent"))
       }
     >
-      Cookie preferences
+      {t(locale, "consent.cookie_prefs_label")}
     </button>
   );
 }
