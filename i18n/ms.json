@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "Strategi",
   "blog.category.strategies.tagline": "Setup, kerangka, dan corak pengurusan risiko dalam keadaan sebenar.",
   "blog.category.general.label": "Meja OnFin",
-  "blog.category.general.tagline": "Nota editorial, bacaan panjang dan perspektif pasukan."
+  "blog.category.general.tagline": "Nota editorial, bacaan panjang dan perspektif pasukan.",
+  "consent.title": "Kami menggunakan cookie",
+  "consent.intro_short": "OnFin menggunakan cookie untuk memastikan laman ini berfungsi dan (apabila anda izinkan) untuk mengukur bagaimana pelawat menemui kami. Pilihan anda dikongsi dengan laman utama onfin.io.",
+  "consent.intro_full": "Pilih kategori yang anda mahu kongsi. Anda boleh menukar pilihan ini pada bila-bila masa melalui pautan \"Pilihan cookie\" di kaki laman.",
+  "consent.gdpr_link": "Lihat polisi GDPR kami",
+  "consent.cookie_prefs_label": "Pilihan cookie",
+  "consent.cat.necessary.label": "Perlu",
+  "consent.cat.necessary.desc": "Diperlukan untuk laman ini berfungsi dan untuk atribusi pihak pertama (agar kami tahu iklan mana yang membawa anda ke sini). Sentiasa aktif.",
+  "consent.cat.analytics.label": "Analitik",
+  "consent.cat.analytics.desc": "Google Analytics (di laman utama) supaya kami dapat memahami corak trafik dan menambah baik kandungan.",
+  "consent.cat.marketing.label": "Pemasaran",
+  "consent.cat.marketing.desc": "Pixel iklan Meta, Google dan TikTok (di laman utama) untuk mengukur prestasi iklan dan menyediakan kempen yang relevan.",
+  "consent.btn.accept": "Terima semua",
+  "consent.btn.reject": "Tolak semua",
+  "consent.btn.customize": "Sesuaikan",
+  "consent.btn.save": "Simpan pilihan",
+  "consent.btn.back": "Kembali"
 }

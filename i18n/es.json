@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "Estrategias",
   "blog.category.strategies.tagline": "Configuraciones, marcos y patrones de gestión de riesgo en condiciones reales.",
   "blog.category.general.label": "Equipo de OnFin",
-  "blog.category.general.tagline": "Notas editoriales, lecturas largas y perspectivas del equipo."
+  "blog.category.general.tagline": "Notas editoriales, lecturas largas y perspectivas del equipo.",
+  "consent.title": "Usamos cookies",
+  "consent.intro_short": "OnFin usa cookies para mantener el sitio en funcionamiento y (cuando lo permites) para medir cómo nos encuentran los visitantes. Tu elección se aplica también al sitio principal onfin.io.",
+  "consent.intro_full": "Elige qué categorías quieres compartir. Puedes cambiarlo cuando quieras desde el enlace \"Preferencias de cookies\" en el pie de página.",
+  "consent.gdpr_link": "Ver nuestra política GDPR",
+  "consent.cookie_prefs_label": "Preferencias de cookies",
+  "consent.cat.necessary.label": "Necesarias",
+  "consent.cat.necessary.desc": "Necesarias para que el sitio funcione y para la atribución de primera parte (saber qué anuncio te trajo). Siempre activas.",
+  "consent.cat.analytics.label": "Analítica",
+  "consent.cat.analytics.desc": "Google Analytics (en el sitio principal) para entender los patrones de tráfico y mejorar el contenido.",
+  "consent.cat.marketing.label": "Marketing",
+  "consent.cat.marketing.desc": "Píxeles publicitarios de Meta, Google y TikTok (en el sitio principal) para medir el rendimiento de los anuncios y ofrecer campañas relevantes.",
+  "consent.btn.accept": "Aceptar todo",
+  "consent.btn.reject": "Rechazar todo",
+  "consent.btn.customize": "Personalizar",
+  "consent.btn.save": "Guardar preferencias",
+  "consent.btn.back": "Atrás"
 }

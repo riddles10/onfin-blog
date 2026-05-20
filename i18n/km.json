@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "យុទ្ធសាស្ត្រ",
   "blog.category.strategies.tagline": "ការកំណត់រចនាសម្ព័ន្ធ ក្របខ័ណ្ឌ និងលំនាំគ្រប់គ្រងហានិភ័យក្នុងស្ថានភាពពិត។",
   "blog.category.general.label": "ក្រុម OnFin",
-  "blog.category.general.tagline": "កំណត់ចំណាំវិចារណកថា អត្ថបទវែង និងទស្សនៈរបស់ក្រុម។"
+  "blog.category.general.tagline": "កំណត់ចំណាំវិចារណកថា អត្ថបទវែង និងទស្សនៈរបស់ក្រុម។",
+  "consent.title": "យើងប្រើខូឃី",
+  "consent.intro_short": "OnFin ប្រើខូឃីដើម្បីឱ្យគេហទំព័រដំណើរការ និង (នៅពេលអ្នកអនុញ្ញាត) ដើម្បីវាស់វែងពីរបៀបដែលអ្នកទស្សនារកឃើញពួកយើង។ ការជ្រើសរើសរបស់អ្នកត្រូវបានប្រើជាមួយគេហទំព័រគោល onfin.io ផងដែរ។",
+  "consent.intro_full": "ជ្រើសរើសប្រភេទដែលអ្នកចង់ចែករំលែក។ អ្នកអាចផ្លាស់ប្តូរបាននៅពេលណាក៏បានតាមរយៈតំណ \"ការកំណត់ខូឃី\" នៅជើងគេហទំព័រ។",
+  "consent.gdpr_link": "មើលគោលនយោបាយ GDPR",
+  "consent.cookie_prefs_label": "ការកំណត់ខូឃី",
+  "consent.cat.necessary.label": "ចាំបាច់",
+  "consent.cat.necessary.desc": "ត្រូវការសម្រាប់ឱ្យគេហទំព័រដំណើរការ និងសម្រាប់ការគុណផ្ដួលភាគីទីមួយ (ដើម្បីដឹងថាការផ្សាយណាមួយនាំអ្នកមកដល់)។ បើកនៅគ្រប់ពេល។",
+  "consent.cat.analytics.label": "វិភាគ",
+  "consent.cat.analytics.desc": "Google Analytics (នៅគេហទំព័រគោល) ដើម្បីយល់ដឹងពីលំនាំចរាចរណ៍ និងកែលម្អមាតិកា។",
+  "consent.cat.marketing.label": "ទីផ្សារ",
+  "consent.cat.marketing.desc": "ភីកសែលផ្សាយ Meta, Google និង TikTok (នៅគេហទំព័រគោល) សម្រាប់វាស់ដំណើរការផ្សាយ និងបង្ហាញយុទ្ធនាការដែលពាក់ព័ន្ធ។",
+  "consent.btn.accept": "ទទួលយកទាំងអស់",
+  "consent.btn.reject": "បដិសេធទាំងអស់",
+  "consent.btn.customize": "កែតម្រូវ",
+  "consent.btn.save": "រក្សាទុកការកំណត់",
+  "consent.btn.back": "ត្រឡប់"
 }

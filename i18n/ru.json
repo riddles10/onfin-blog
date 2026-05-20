@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "Стратегии",
   "blog.category.strategies.tagline": "Сетапы, фреймворки и подходы к риску, проверенные в реальных условиях.",
   "blog.category.general.label": "Редакция OnFin",
-  "blog.category.general.tagline": "Заметки редакции, длинные материалы и взгляды команды."
+  "blog.category.general.tagline": "Заметки редакции, длинные материалы и взгляды команды.",
+  "consent.title": "Мы используем файлы cookie",
+  "consent.intro_short": "OnFin использует cookie, чтобы сайт работал и (с вашего разрешения) чтобы отслеживать, как посетители нас находят. Ваш выбор будет применён и на основном сайте onfin.io.",
+  "consent.intro_full": "Выберите, какие категории разрешить. Изменить настройки можно в любой момент через ссылку «Настройки cookie» в подвале сайта.",
+  "consent.gdpr_link": "Политика GDPR",
+  "consent.cookie_prefs_label": "Настройки cookie",
+  "consent.cat.necessary.label": "Необходимые",
+  "consent.cat.necessary.desc": "Нужны для работы сайта и для атрибуции первой стороны (чтобы мы знали, по какой рекламе вы пришли). Всегда включены.",
+  "consent.cat.analytics.label": "Аналитика",
+  "consent.cat.analytics.desc": "Google Analytics (на основном сайте) — помогает нам понимать трафик и улучшать контент.",
+  "consent.cat.marketing.label": "Маркетинг",
+  "consent.cat.marketing.desc": "Пиксели Meta, Google и TikTok (на основном сайте) — измеряют эффективность рекламы и показывают релевантные кампании.",
+  "consent.btn.accept": "Принять все",
+  "consent.btn.reject": "Отклонить все",
+  "consent.btn.customize": "Настроить",
+  "consent.btn.save": "Сохранить настройки",
+  "consent.btn.back": "Назад"
 }

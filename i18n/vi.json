@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "Chiến lược",
   "blog.category.strategies.tagline": "Setup, khung phân tích và mô hình quản lý rủi ro trong điều kiện thực tế.",
   "blog.category.general.label": "Ban biên tập OnFin",
-  "blog.category.general.tagline": "Ghi chú biên tập, bài dài và góc nhìn của đội ngũ."
+  "blog.category.general.tagline": "Ghi chú biên tập, bài dài và góc nhìn của đội ngũ.",
+  "consent.title": "Chúng tôi sử dụng cookie",
+  "consent.intro_short": "OnFin sử dụng cookie để duy trì hoạt động của trang và (khi bạn cho phép) để đo lường khách truy cập tìm chúng tôi như thế nào. Lựa chọn của bạn được dùng chung với trang chính onfin.io.",
+  "consent.intro_full": "Chọn danh mục bạn muốn chia sẻ. Bạn có thể thay đổi bất kỳ lúc nào qua liên kết \"Tùy chọn cookie\" ở chân trang.",
+  "consent.gdpr_link": "Xem chính sách GDPR",
+  "consent.cookie_prefs_label": "Tùy chọn cookie",
+  "consent.cat.necessary.label": "Cần thiết",
+  "consent.cat.necessary.desc": "Bắt buộc để trang hoạt động và để gán nguồn truy cập của bên thứ nhất (để biết quảng cáo nào dẫn bạn đến). Luôn bật.",
+  "consent.cat.analytics.label": "Phân tích",
+  "consent.cat.analytics.desc": "Google Analytics (trên trang chính) để chúng tôi hiểu mẫu lưu lượng và cải thiện nội dung.",
+  "consent.cat.marketing.label": "Tiếp thị",
+  "consent.cat.marketing.desc": "Pixel Meta, Google và TikTok (trên trang chính) để đo hiệu quả quảng cáo và phục vụ chiến dịch liên quan.",
+  "consent.btn.accept": "Chấp nhận tất cả",
+  "consent.btn.reject": "Từ chối tất cả",
+  "consent.btn.customize": "Tùy chỉnh",
+  "consent.btn.save": "Lưu tùy chọn",
+  "consent.btn.back": "Quay lại"
 }

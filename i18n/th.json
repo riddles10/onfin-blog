@@ -1086,5 +1086,21 @@
   "blog.category.strategies.label": "กลยุทธ์",
   "blog.category.strategies.tagline": "เซตอัป กรอบความคิด และรูปแบบการบริหารความเสี่ยงในสภาวะจริง",
   "blog.category.general.label": "กองบรรณาธิการ OnFin",
-  "blog.category.general.tagline": "บันทึกบรรณาธิการ บทความยาว และมุมมองของทีม"
+  "blog.category.general.tagline": "บันทึกบรรณาธิการ บทความยาว และมุมมองของทีม",
+  "consent.title": "เราใช้คุกกี้",
+  "consent.intro_short": "OnFin ใช้คุกกี้เพื่อให้ไซต์ทำงานและ (เมื่อคุณอนุญาต) เพื่อวัดว่าผู้เยี่ยมชมพบเราอย่างไร การเลือกของคุณจะใช้ร่วมกับเว็บไซต์หลัก onfin.io",
+  "consent.intro_full": "เลือกหมวดหมู่ที่คุณต้องการแชร์ คุณเปลี่ยนการตั้งค่าได้ตลอดเวลาผ่านลิงก์ \"การตั้งค่าคุกกี้\" ที่ส่วนท้ายของหน้า",
+  "consent.gdpr_link": "ดูนโยบาย GDPR",
+  "consent.cookie_prefs_label": "การตั้งค่าคุกกี้",
+  "consent.cat.necessary.label": "จำเป็น",
+  "consent.cat.necessary.desc": "จำเป็นเพื่อให้ไซต์ทำงานและสำหรับการกำหนดที่มา (เพื่อให้รู้ว่าโฆษณาใดนำคุณมา) เปิดไว้เสมอ",
+  "consent.cat.analytics.label": "การวิเคราะห์",
+  "consent.cat.analytics.desc": "Google Analytics (บนเว็บหลัก) เพื่อให้เราเข้าใจรูปแบบการเข้าชมและปรับปรุงเนื้อหา",
+  "consent.cat.marketing.label": "การตลาด",
+  "consent.cat.marketing.desc": "พิกเซลโฆษณา Meta, Google และ TikTok (บนเว็บหลัก) ใช้วัดประสิทธิภาพและแสดงแคมเปญที่เกี่ยวข้อง",
+  "consent.btn.accept": "ยอมรับทั้งหมด",
+  "consent.btn.reject": "ปฏิเสธทั้งหมด",
+  "consent.btn.customize": "ปรับแต่ง",
+  "consent.btn.save": "บันทึกการตั้งค่า",
+  "consent.btn.back": "ย้อนกลับ"
 }

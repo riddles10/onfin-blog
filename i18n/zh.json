@@ -1150,5 +1150,21 @@
   "blog.category.strategies.label": "策略",
   "blog.category.strategies.tagline": "在真实条件下经过验证的设置、框架与风险管理模式。",
   "blog.category.general.label": "OnFin 编辑部",
-  "blog.category.general.tagline": "编辑笔记、长读以及团队视角。"
+  "blog.category.general.tagline": "编辑笔记、长读以及团队视角。",
+  "consent.title": "我们使用 Cookie",
+  "consent.intro_short": "OnFin 使用 Cookie 来保持网站正常运行,并(在您同意的情况下)了解访问者如何找到我们。您的选择将同步至主站 onfin.io。",
+  "consent.intro_full": "选择您愿意共享的类别。您可以随时通过页脚的 “Cookie 偏好” 链接更改设置。",
+  "consent.gdpr_link": "查看 GDPR 政策",
+  "consent.cookie_prefs_label": "Cookie 偏好",
+  "consent.cat.necessary.label": "必要",
+  "consent.cat.necessary.desc": "用于网站正常运行和第一方归因(以便我们知道是哪一条广告带您前来)。始终开启。",
+  "consent.cat.analytics.label": "分析",
+  "consent.cat.analytics.desc": "Google Analytics(在主站上),帮助我们了解流量模式并改进内容。",
+  "consent.cat.marketing.label": "营销",
+  "consent.cat.marketing.desc": "Meta、Google 和 TikTok 广告像素(在主站上),用于衡量广告效果并推送相关营销活动。",
+  "consent.btn.accept": "全部接受",
+  "consent.btn.reject": "全部拒绝",
+  "consent.btn.customize": "自定义",
+  "consent.btn.save": "保存偏好",
+  "consent.btn.back": "返回"
 }
