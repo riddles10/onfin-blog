@@ -31,6 +31,8 @@ import EnglishFallbackBanner from '@/components/blog/EnglishFallbackBanner'
 import type { PostCardData } from '@/components/blog/PostCard'
 import { extractTldr } from '@/lib/tldr'
 import { stripEmDashes } from '@/lib/strip-emdash'
+import { Fragment } from 'react'
+import PipCalculator from '@/components/blog/PipCalculator'
 
 type Params = { lang: string; slug: string }
 
@@ -292,6 +294,11 @@ export default async function BlogArticlePage({
   // Decorate H2s with stable ids and pull the list out for the TOC.
   const { html: bodyHtml, items: tocItems } = annotateH2s(bodyWithoutTldr)
 
+  // Split the body on the `[pip-calculator]` author token so the interactive
+  // widget mounts inline where it was placed. No token → body renders as one
+  // block exactly as before.
+  const pipParts = bodyHtml.split(/<p>\s*\[pip-calculator\]\s*<\/p>|\[pip-calculator\]/i)
+
   // FAQPage schema — only emitted when the body has a recognisable FAQ
   // section (long-form trading guides). Operational notice posts don't
   // carry FAQs, so this is a no-op for them.
@@ -416,10 +423,22 @@ export default async function BlogArticlePage({
             {/* Body */}
             <div className="min-w-0">
               {tldr && <TldrCallout html={tldr} locale={locale} />}
-              <div
-                className="prose-blog"
-                dangerouslySetInnerHTML={{ __html: bodyHtml }}
-              />
+              {pipParts.length > 1 ? (
+                pipParts.map((part, i) => (
+                  <Fragment key={i}>
+                    <div
+                      className="prose-blog"
+                      dangerouslySetInnerHTML={{ __html: part }}
+                    />
+                    {i < pipParts.length - 1 && <PipCalculator />}
+                  </Fragment>
+                ))
+              ) : (
+                <div
+                  className="prose-blog"
+                  dangerouslySetInnerHTML={{ __html: bodyHtml }}
+                />
+              )}
 
               {/* Inline share row at the end of the body — replaces the
                   sticky rail below xl, where there's no spare horizontal
