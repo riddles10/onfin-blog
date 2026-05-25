@@ -85,6 +85,7 @@ const GOOGLE_LOCALE_CODE: Record<Locale, string> = {
   es: 'es',
   km: 'km',
   zh: 'zh-CN',
+  tr: 'tr',
 }
 
 /**

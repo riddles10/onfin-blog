@@ -16,6 +16,7 @@ import id from '@/i18n/id.json'
 import es from '@/i18n/es.json'
 import km from '@/i18n/km.json'
 import zh from '@/i18n/zh.json'
+import tr from '@/i18n/tr.json'
 
 export const SUPPORTED_LOCALES = [
   'en',
@@ -27,6 +28,7 @@ export const SUPPORTED_LOCALES = [
   'es',
   'km',
   'zh',
+  'tr',
 ] as const
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
@@ -52,6 +54,7 @@ export const BCP47: Record<Locale, string> = {
   es: 'es-419',
   km: 'km-KH',
   zh: 'zh-Hans',
+  tr: 'tr-TR',
 }
 
 /**
@@ -69,6 +72,7 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   es: 'Español',
   km: 'ភាសាខ្មែរ',
   zh: '简体中文',
+  tr: 'Türkçe',
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -87,6 +91,7 @@ const DICTS: Record<Locale, Dict> = {
   es: es as Dict,
   km: km as Dict,
   zh: zh as Dict,
+  tr: tr as Dict,
 }
 
 function lookup(dict: Dict, key: string): string | undefined {

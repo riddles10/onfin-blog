@@ -30,6 +30,7 @@ const TARGET_LANGUAGE_NAMES: Record<Locale, string> = {
   es: 'Spanish',
   km: 'Khmer',
   zh: 'Simplified Chinese',
+  tr: 'Turkish',
 };
 
 // Locale-specific quirks that benefit from explicit instruction. Most of

@@ -28,6 +28,7 @@ const LOCALE_DISPLAY: { code: Locale; flag: string }[] = [
   { code: 'ru', flag: 'ru' },
   { code: 'km', flag: 'kh' },
   { code: 'zh', flag: 'cn' },
+  { code: 'tr', flag: 'tr' },
 ]
 
 export default function LanguageSwitcher({ locale }: { locale: Locale }) {
