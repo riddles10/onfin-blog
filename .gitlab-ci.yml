@@ -17,6 +17,8 @@ stages:
   tags: ["builder.shell"]
   stage: build
   before_script: |
+    set -euo pipefail
+
     echo "Login to Docker registry..."
     # login early to skip the rest if login fails (so pipeline dies)
     echo "${CI_REGISTRY_PASSWORD}" | docker login "${CI_REGISTRY}" --username "${CI_REGISTRY_USER}" --password-stdin
@@ -36,7 +38,7 @@ stages:
     GIT_COMMIT_MESSAGE_SANITIZED=$(sed -zE 's/[[:space:]]+/ /g; s/([\x22\x27])/"/g' <<< "${CI_COMMIT_MESSAGE}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
 
     echo "Build docker image '${IMAGE_NAME}' with docker files from '${DOCKER_FILES_PATH:-.}'..."
-    /usr/bin/env time --version >/dev/null 2>&1 && time env NO_COLOR=1 docker build --pull \
+    if /usr/bin/env time --version >/dev/null 2>&1 && time env NO_COLOR=1 docker build --pull \
       --build-arg VERSION="${GIT_REVISION}" \
       --build-arg COMMIT_MESSAGE="${GIT_COMMIT_MESSAGE_SANITIZED}" \
       --build-arg COMMIT_REF="${CI_COMMIT_REF_NAME}" \
@@ -44,9 +46,15 @@ stages:
       --build-arg BUILD_DATETIME="$(date -u '+%d.%m.%Y, %T %Z')" \
       -t "${IMAGE_NAME}" \
       -f "${DOCKER_FILES_PATH:-.}/${DOCKERFILE_NAME:-Dockerfile}" \
-      . > "${ERRLOG}" 2>&1 \
-      && (echo "docker build finished with exit code $?." && rm -f -v -- "${ERRLOG}") \
-      || (echo "docker build finished with exit code $?." && false)
+      "${DOCKERFILE_CONTEXT:-.}" > "${ERRLOG}" 2>&1
+    then
+      echo "'docker build' finished successfully."
+      rm -f -v -- "${ERRLOG}"
+    else
+      rc=$?
+      echo "'docker build' finished with exit code ${rc}."
+      exit "${rc}"
+    fi
 
     docker push --quiet "${IMAGE_NAME}" 2> >(tee -a "${ERRLOG}") || exit 126 # push new image
     docker image inspect --format=true "${IMAGE_NAME}-prev" >/dev/null 2>&1 && docker push --quiet "${IMAGE_NAME}-prev" || true # push retagged previous image (if exists) as well
@@ -77,6 +85,8 @@ stages:
   timeout: 10 minutes
   stage: deploy
   before_script: |
+    set -euo pipefail
+
     echo "Login to Docker registry..."
     # login early to skip the rest if login fails (so pipeline dies)
     echo "${CI_REGISTRY_PASSWORD}" | docker login "${CI_REGISTRY}" --username "${CI_REGISTRY_USER}" --password-stdin
@@ -95,17 +105,18 @@ stages:
 
     mkdir -v -p -- "${DEPLOY_PATH:?required}/" 2> >(tee -a "${ERRLOG}")
     CICD_EVIDENCE="${DEPLOY_PATH}/.cicd.evidence"
-    touch -a -- "${CICD_EVIDENCE}" && test -w "${CICD_EVIDENCE}" \
-        || (echo "ERROR: '${CICD_EVIDENCE}' not writable!"                           | tee -a "${ERRLOG}" && exit 1)
-    echo >> "${CICD_EVIDENCE}" && echo '------------------------------------------------------' >> "${CICD_EVIDENCE}"
-    echo "Autodeploy started: $(date -u '+%Y-%m-%dT%H:%M:%S%:z')" | tee -a "${CICD_EVIDENCE}"
-    echo "├── pipeline ID: ${CI_PIPELINE_ID:-unknown}"            | tee -a "${CICD_EVIDENCE}"
-    echo "├── pipeline URL: ${CI_PIPELINE_URL:-unknown}"          | tee -a "${CICD_EVIDENCE}"
-    echo "├── pipeline source: ${CI_PIPELINE_SOURCE}"             | tee -a "${CICD_EVIDENCE}"
-    echo "├── repository name: ${CI_PROJECT_PATH}"                | tee -a "${CICD_EVIDENCE}"
-    echo "├── repository URL: ${CI_PROJECT_URL}"                  | tee -a "${CICD_EVIDENCE}"
-    echo "├── commit SHA: ${CI_COMMIT_SHA}"                       | tee -a "${CICD_EVIDENCE}"
-    echo "└── git reference: ${CI_COMMIT_REF_NAME}"               | tee -a "${CICD_EVIDENCE}"
+    touch -a -- "${CICD_EVIDENCE}" && test -w "${CICD_EVIDENCE}" || fatal_config_error "'${CICD_EVIDENCE}' not writable!"
+    printf '\n------------------------------------------------------\n' >> "${CICD_EVIDENCE}"
+    {
+      echo "Autodeploy started: $(date -u '+%Y-%m-%dT%H:%M:%S%:z')"
+      echo "├── pipeline ID: ${CI_PIPELINE_ID:-unknown}"
+      echo "├── pipeline URL: ${CI_PIPELINE_URL:-unknown}"
+      echo "├── pipeline source: ${CI_PIPELINE_SOURCE}"
+      echo "├── repository name: ${CI_PROJECT_PATH}"
+      echo "├── repository URL: ${CI_PROJECT_URL}"
+      echo "├── commit SHA: ${CI_COMMIT_SHA}"
+      echo "└── git reference: ${CI_COMMIT_REF_NAME}"
+    } | tee -a "${CICD_EVIDENCE}"
 
     RELEASE_DIR="releases/$(date +%Y%m%d-%H%M%S).${CI_COMMIT_SHORT_SHA}.${CI_COMMIT_REF_SLUG}"
 
@@ -140,10 +151,16 @@ stages:
     docker compose --project-directory "${DEPLOY_PATH}/current-release/" pull -q  2> >(tee -a "${ERRLOG}") && echo "done." || exit $?
 
     echo ---;echo "Run new 'current-release' container(s)..."
-    docker compose --project-directory "${DEPLOY_PATH}/current-release/" up -d --remove-orphans --wait --wait-timeout 120 > "${ERRLOG}" 2>&1 \
-      && (echo "'docker compose' finished with exit code $?." && rm -f -v -- "${ERRLOG}") \
-      || (echo "'docker compose' finished with exit code $?." && false)
-
+    if docker compose --project-directory "${DEPLOY_PATH}/current-release/" \
+      up -d --remove-orphans --wait --wait-timeout 120 > "${ERRLOG}" 2>&1
+    then
+      echo "'docker compose' finished successfully."
+      rm -f -v -- "${ERRLOG}"
+    else
+      rc=$?
+      echo "'docker compose' finished with exit code ${rc}."
+      exit "${rc}"
+    fi
     echo ---;echo "Clean-up '${DEPLOY_PATH}/releases/'..."
     find "${DEPLOY_PATH}/releases/" -maxdepth 1 -mindepth 1 -type d -mtime +30 -exec rm -vrf -- "{}" \+
 
@@ -181,7 +198,6 @@ deploy-dev:
   tags: ["marketing.shell"]
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
-      when: on_success
 
 deploy-prod:
   extends: .deploy-common
@@ -190,7 +206,6 @@ deploy-prod:
   tags: ["web.shell"]
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-      when: on_success
 
 include:
   - template: Jobs/Secret-Detection.gitlab-ci.yml
