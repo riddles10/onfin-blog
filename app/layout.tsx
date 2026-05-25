@@ -1,9 +1,16 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import ConsentBanner from '@/components/ConsentBanner'
+import { GtmHead, GtmNoScript } from '@/components/GoogleTagManager'
+import GtmConsentBridge from '@/components/GtmConsentBridge'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io'
 const PARENT_URL = 'https://onfin.io'
+
+// Google Tag Manager container id (e.g. GTM-XXXXXXX). When unset, no GTM/GA
+// scripts are emitted — the site behaves exactly as before. Set in the host
+// env to switch analytics on. See components/GoogleTagManager.tsx.
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
 // Organization JSON-LD lives on every page. Mirrors the brand profile
 // declared on onfin.io so that Google treats the blog subdomain as
@@ -63,6 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* GTM + Consent Mode v2 — emitted as high in <head> as possible, and
+            only when a container id is configured. */}
+        {GTM_ID && <GtmHead gtmId={GTM_ID} />}
         {/*
           Web fonts are loaded via the standard Google Fonts link tags so
           static export and Docker SSR both work without next/font's
@@ -85,6 +95,10 @@ export default function RootLayout({
         />
       </head>
       <body>
+        {/* GTM <noscript> fallback — must be immediately after <body>. */}
+        {GTM_ID && <GtmNoScript gtmId={GTM_ID} />}
+        {/* Forwards live consent-banner choices to Consent Mode v2. */}
+        {GTM_ID && <GtmConsentBridge />}
         {/* Site-wide Organization schema — picked up by Google Knowledge
             Graph and answer-engine crawlers so the blog subdomain
             inherits brand identity from onfin.io. */}

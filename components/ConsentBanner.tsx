@@ -5,9 +5,9 @@
  *
  * Mirrors the onfin.io banner (categories + UX) so a visitor's choice on
  * either subdomain is honored on the other via the shared `.onfin.io`
- * `onfin_consent` cookie. Unlike the main site, the blog has no GTM/GA
- * scripts of its own, so this banner only persists the choice — there's
- * no Consent Mode v2 dataLayer to update here.
+ * `onfin_consent` cookie. The choice persisted here also drives Google
+ * Consent Mode v2 on the blog: setConsent() dispatches `onfin:consent-changed`
+ * which GtmConsentBridge forwards to gtag (see components/GoogleTagManager).
  *
  * Also calls captureFromCurrentUrl() on mount so first-touch UTM /
  * click-id / referral params are captured into `onfin_attr` even when
