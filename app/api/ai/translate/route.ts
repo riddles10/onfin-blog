@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import anthropic, { MODEL } from '@/lib/anthropic';
 import { THAI_TRANSLATION_RULES, ENGLISH_TRANSLATION_RULES } from '@/lib/cms-config';
 import { SUPPORTED_LOCALES, isLocale, type Locale } from '@/lib/locales';
+import { repairAnchors } from '@/lib/repair-anchors';
 
 // Vercel Pro plan: up to 300s. Long-form blog bodies are auto-chunked at H2
 // boundaries and translated in parallel, so the wall time is bounded by the
@@ -242,7 +243,7 @@ export async function POST(request: NextRequest) {
             translateChunk(chunk, systemPrompt, targetLanguage, ctx)
           )
         );
-        const joined = translatedChunks.join('\n\n');
+        const joined = repairAnchors(translatedChunks.join('\n\n'));
         return new Response(joined, {
           headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         });
@@ -256,7 +257,7 @@ export async function POST(request: NextRequest) {
       targetLanguage,
       ctx
     );
-    return new Response(single, {
+    return new Response(repairAnchors(single), {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     });
   } catch (error) {

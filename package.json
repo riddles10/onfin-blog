@@ -13,6 +13,7 @@
     "reclassify": "tsx --env-file=.env.local scripts/reclassify-posts.ts",
     "upload:covers": "tsx --env-file=.env.local scripts/upload-tilda-covers.ts",
     "translate:archive": "tsx --env-file=.env.local scripts/translate-archive.ts",
+    "repair:anchors": "tsx --env-file=.env.local scripts/repair-translation-anchors.ts",
     "covers:unsplash": "tsx --env-file=.env.local scripts/fill-covers-unsplash.ts",
     "publish:schedule": "tsx --env-file=.env.local scripts/publish-schedule-posts.ts",
     "strip:emdashes": "tsx --env-file=.env.local scripts/strip-emdashes.ts",

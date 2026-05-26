@@ -57,6 +57,7 @@ import { createClient } from '@supabase/supabase-js'
 // google-translate-api-x is CJS-only; import the default export and unwrap.
 import translatePkg from 'google-translate-api-x'
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale } from '../lib/locales'
+import { repairAnchors } from '../lib/repair-anchors'
 
 const translate = (translatePkg as unknown as {
   default?: typeof translatePkg
@@ -436,7 +437,7 @@ async function main() {
       ])
 
       const title = unwrapGlossary(titleOut).trim()
-      const body = bodyOut
+      const body = repairAnchors(bodyOut)
       const excerpt = excerptOut ? unwrapGlossary(excerptOut).trim() : null
 
       const { error: upErr } = await supabase.from('post_translations').upsert(
