@@ -11,10 +11,10 @@
  *   onfin_attr     90 days   utm_* + fbclid/gclid/msclkid/ttclid + referral
  *   onfin_consent 365 days   analytics + marketing booleans
  *
- * The consent choice persisted here drives Google Consent Mode v2 on the
- * blog (when NEXT_PUBLIC_GTM_ID is set): setConsent dispatches
- * `onfin:consent-changed`, forwarded to gtag by GtmConsentBridge. It is also
- * shared with the main site via the `.onfin.io` cookie.
+ * The consent choice persisted here drives GA4 Consent Mode v2 on the
+ * blog: setConsent dispatches `onfin:consent-changed`, forwarded to gtag by
+ * GaConsentBridge. It is also shared with the main site via the `.onfin.io`
+ * cookie.
  */
 
 export const ATTR_COOKIE = "onfin_attr";
@@ -137,8 +137,8 @@ export function setConsent(input: { analytics: boolean; marketing: boolean }): C
     ts: new Date().toISOString(),
   };
   writeCookie(CONSENT_COOKIE, JSON.stringify(value), CONSENT_TTL_DAYS);
-  // Notify Google Consent Mode v2 (GtmConsentBridge) so GTM-managed tags react
-  // to the new choice without a reload. No-op when GTM isn't loaded.
+  // Notify GA4 Consent Mode v2 (GaConsentBridge) so gtag reacts to the new
+  // choice without a reload. No-op when gtag isn't loaded.
   if (typeof document !== "undefined") {
     document.dispatchEvent(new CustomEvent("onfin:consent-changed", { detail: value }));
   }

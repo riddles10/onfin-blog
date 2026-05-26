@@ -1,14 +1,10 @@
 "use client";
 
 /**
- * Forwards live consent changes from the cookie banner to Google Consent
- * Mode v2. lib/attribution `setConsent` dispatches `onfin:consent-changed`
- * with the new state whenever the visitor accepts/rejects/saves; we translate
- * that into a `gtag('consent','update', …)` so GTM-managed tags fire (or stay
- * blocked) without a page reload.
- *
- * Renders nothing. Safe no-op if GTM never loaded (gtag falls back to the
- * dataLayer shim, or is simply absent in dev).
+ * Forwards live consent-banner choices to Google Consent Mode v2 (GA4).
+ * lib/attribution `setConsent` dispatches `onfin:consent-changed` with the new
+ * state; we translate it into `gtag('consent','update', …)` so GA4 reacts
+ * without a page reload. Renders nothing; safe no-op if gtag never loaded.
  */
 
 import { useEffect } from "react";
@@ -21,7 +17,7 @@ declare global {
   }
 }
 
-export default function GtmConsentBridge() {
+export default function GaConsentBridge() {
   useEffect(() => {
     function onChange(e: Event) {
       const detail = (e as CustomEvent<ConsentState>).detail;

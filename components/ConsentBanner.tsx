@@ -7,7 +7,7 @@
  * either subdomain is honored on the other via the shared `.onfin.io`
  * `onfin_consent` cookie. The choice persisted here also drives Google
  * Consent Mode v2 on the blog: setConsent() dispatches `onfin:consent-changed`
- * which GtmConsentBridge forwards to gtag (see components/GoogleTagManager).
+ * which GaConsentBridge forwards to gtag (see components/GoogleAnalytics).
  *
  * Also calls captureFromCurrentUrl() on mount so first-touch UTM /
  * click-id / referral params are captured into `onfin_attr` even when
