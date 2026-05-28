@@ -31,6 +31,7 @@ const TARGET_LANGUAGE_NAMES: Record<Locale, string> = {
   es: 'Spanish',
   km: 'Khmer',
   zh: 'Simplified Chinese',
+  'zh-tw': 'Traditional Chinese (Taiwan, with Taiwan vocabulary preferences such as 軟體/影片/網路)',
   tr: 'Turkish',
 };
 
@@ -46,6 +47,7 @@ const LOCALE_SPECIFIC_RULES: Partial<Record<Locale, string>> = {
   es: '- Use neutral Latin-American Spanish (es-419), not Castilian. Avoid regional slang from any single country. Trading terms commonly used in English (e.g. "spread", "pip", "lot") may stay in English when natural.',
   km: '- Khmer has no inter-word spaces — do not insert ASCII spaces between Khmer words. Use spaces only after punctuation and around English/numeric tokens. Khmer numbers may be used or Arabic numerals — be consistent within the article.',
   zh: '- Use Simplified Chinese (Mainland conventions). Chinese has no inter-word spaces — do not insert ASCII spaces between Chinese characters. Translate punctuation to its full-width Chinese equivalent (。, ,, ;, : ) where appropriate, except inside HTML tags.',
+  'zh-tw': '- Use Traditional Chinese with Taiwan vocabulary conventions (e.g. 軟體 not 軟件, 影片 not 視頻, 網路 not 網絡, 資訊 not 信息). Chinese has no inter-word spaces — do not insert ASCII spaces between Chinese characters. Translate punctuation to its full-width Chinese equivalent (。, ,, ;, : ) where appropriate, except inside HTML tags.',
 };
 
 // Brand and technical terms that must stay in English in every locale.

@@ -27,6 +27,8 @@ const PARENT_LOCALES: ReadonlySet<string> = new Set([
   'es',
   'km',
   'zh',
+  'zh-tw',
+  'tr',
 ])
 
 const FALLBACK_LOCALE = 'en'

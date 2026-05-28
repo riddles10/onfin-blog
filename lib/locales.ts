@@ -16,6 +16,7 @@ import id from '@/i18n/id.json'
 import es from '@/i18n/es.json'
 import km from '@/i18n/km.json'
 import zh from '@/i18n/zh.json'
+import zhTw from '@/i18n/zh-tw.json'
 import tr from '@/i18n/tr.json'
 
 export const SUPPORTED_LOCALES = [
@@ -28,6 +29,7 @@ export const SUPPORTED_LOCALES = [
   'es',
   'km',
   'zh',
+  'zh-tw',
   'tr',
 ] as const
 
@@ -54,6 +56,7 @@ export const BCP47: Record<Locale, string> = {
   es: 'es-419',
   km: 'km-KH',
   zh: 'zh-Hans',
+  'zh-tw': 'zh-Hant',
   tr: 'tr-TR',
 }
 
@@ -72,6 +75,7 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   es: 'Español',
   km: 'ភាសាខ្មែរ',
   zh: '简体中文',
+  'zh-tw': '繁體中文',
   tr: 'Türkçe',
 }
 
@@ -91,6 +95,7 @@ const DICTS: Record<Locale, Dict> = {
   es: es as Dict,
   km: km as Dict,
   zh: zh as Dict,
+  'zh-tw': zhTw as Dict,
   tr: tr as Dict,
 }
 
@@ -161,10 +166,13 @@ export function localizedPath(locale: Locale, path: string = '/'): string {
  * Returns null if the path isn't locale-prefixed (e.g. "/sitemap.xml").
  */
 export function localeFromPath(pathname: string): Locale | null {
-  const match = pathname.match(/^\/([a-z]{2})(\/|$)/)
-  if (!match) return null
-  const candidate = match[1] as Locale
-  return SUPPORTED_LOCALES.includes(candidate) ? candidate : null
+  // Match the longest locale prefix first so "zh-tw" beats the shorter "zh".
+  for (const loc of [...SUPPORTED_LOCALES].sort((a, b) => b.length - a.length)) {
+    if (pathname === `/${loc}` || pathname.startsWith(`/${loc}/`)) {
+      return loc
+    }
+  }
+  return null
 }
 
 /**

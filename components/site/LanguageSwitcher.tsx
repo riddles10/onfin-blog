@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation'
 import {
   LOCALE_NAMES,
-  SUPPORTED_LOCALES,
   switchLocaleInPath,
   type Locale,
 } from '@/lib/locales'
@@ -18,6 +17,10 @@ import {
 
 // Display order mirrors onfin.io. Flag code is the ISO country code used
 // by flagcdn.com — not always the same as the locale code (en→gb, vi→vn).
+// Simplified Chinese (`zh` / cn flag) is intentionally absent from the
+// switcher per the 2026-05-28 product decision: Taiwan users find the PRC
+// flag off-putting and the Traditional build now covers Chinese readers.
+// The /zh/* routes stay reachable by direct link.
 const LOCALE_DISPLAY: { code: Locale; flag: string }[] = [
   { code: 'en', flag: 'gb' },
   { code: 'id', flag: 'id' },
@@ -27,12 +30,16 @@ const LOCALE_DISPLAY: { code: Locale; flag: string }[] = [
   { code: 'vi', flag: 'vn' },
   { code: 'ru', flag: 'ru' },
   { code: 'km', flag: 'kh' },
-  { code: 'zh', flag: 'cn' },
+  { code: 'zh-tw', flag: 'tw' },
   { code: 'tr', flag: 'tr' },
 ]
 
 export default function LanguageSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname() || `/${locale}`
+  // Falls back to the gb flag when the active locale isn't in LOCALE_DISPLAY —
+  // e.g. a visitor on a direct /zh/* link sees the EN flag in the closed
+  // summary chip. Acceptable: the switcher dropdown still lets them jump
+  // to Traditional or any other visible locale.
   const currentFlag = LOCALE_DISPLAY.find((l) => l.code === locale)?.flag ?? 'gb'
 
   return (
@@ -55,8 +62,8 @@ export default function LanguageSwitcher({ locale }: { locale: Locale }) {
         </span>
       </summary>
       <div className="absolute right-0 top-full mt-2 min-w-[180px] rounded-xl border border-ink-100 bg-white p-2 shadow-lg z-50">
-        {SUPPORTED_LOCALES.map((loc) => {
-          const display = LOCALE_DISPLAY.find((l) => l.code === loc)!
+        {LOCALE_DISPLAY.map(({ code: loc, flag }) => {
+          const display = { code: loc, flag }
           return (
             <a
               key={loc}
