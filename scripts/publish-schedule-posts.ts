@@ -186,7 +186,37 @@ const BRIDGE: Article = {
 `.trim(),
 }
 
-const ARTICLES: Article[] = [APRIL, MAY, BRIDGE]
+const JUNETEENTH: Article = {
+  slug: 'news_15_06_2026',
+  title: 'Trading Schedule for Juneteenth, June 19, 2026',
+  excerpt:
+    'Juneteenth lands on Friday this year, which means US stock exchanges go quiet for the day and several index, metals, and energy contracts wrap up early. One date, a handful of early closes: here is the instrument-level schedule.',
+  publishedAt: '2026-06-15T00:00:00.000Z',
+  category: 'platform-updates',
+  unsplashId: 'mHdATQY9fIU',
+  unsplashPhotographer: 'Aditya Vyas',
+  bodyHtml: `
+<p>Juneteenth lands on Friday this year, which means US stock exchanges go quiet for the day and several index, metals, and energy contracts wrap up early. The pause is short: one date, a handful of early closes, and a full reopen the following Monday.</p>
+<p>All times below are based on the trading terminal server time (EET).</p>
+<h2>Juneteenth</h2>
+<table>
+<thead>
+<tr><th>Date</th><th>Event</th><th>Schedule changes</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>June 19, 2026</td>
+<td>Juneteenth (US federal holiday)</td>
+<td><ul><li>DowJones30, Nikkei225, Nasdaq100, S&amp;P500, Russel2000 - early close 20:00</li><li>DAX40, FTSE100, IBEX35, EuroStoxx50 - early close 23:00</li><li>Metals, WTI, NGAS - early close 20:00</li><li>Brent - early close 20:30</li><li>CFD Shares US - trading closed</li></ul></td>
+</tr>
+</tbody>
+</table>
+<p>We recommend considering these changes when planning your trades, especially if you hold positions in US shares CFDs that will sit closed through the holiday.</p>
+<p>If you have any questions or require further assistance, please contact our support team at <a href="mailto:support@onfin.io">support@onfin.io</a>. Wishing you successful trading!</p>
+`.trim(),
+}
+
+const ARTICLES: Article[] = [APRIL, MAY, BRIDGE, JUNETEENTH]
 
 async function main() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
