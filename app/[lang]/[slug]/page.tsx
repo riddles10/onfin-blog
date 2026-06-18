@@ -45,6 +45,7 @@ type PostFull = {
   category: string
   cover_image: string | null
   published_at: string | null
+  updated_at?: string | null                        // real last-edit time (migration 0003); optional until applied
   blog_author_id: string | null
 }
 
@@ -63,6 +64,24 @@ type LocalizedArticle = {
   post: PostFull
   view: LocalizedPostView                           // localised title/body/excerpt + isFallback
   author: AuthorRef | null
+}
+
+// Fetched on its own and error-tolerant so the article keeps rendering even in
+// an environment where migration 0003 (posts.updated_at) hasn't been applied
+// yet — selecting a missing column would otherwise fail the whole query. Until
+// the column exists this returns null and dateModified falls back to
+// published_at, exactly as before.
+async function fetchPostUpdatedAt(
+  supabase: ReturnType<typeof getServiceClient>,
+  postId: string
+): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('updated_at')
+    .eq('id', postId)
+    .maybeSingle()
+  if (error || !data) return null
+  return (data as { updated_at: string | null }).updated_at ?? null
 }
 
 async function fetchArticle(
@@ -99,7 +118,7 @@ async function fetchArticle(
 
   const post = data as PostFull
 
-  const [translation, author] = await Promise.all([
+  const [translation, author, updatedAt] = await Promise.all([
     fetchTranslationForPost(supabase, post.id, locale),
     post.blog_author_id
       ? supabase
@@ -109,7 +128,9 @@ async function fetchArticle(
           .maybeSingle()
           .then(({ data: a }) => (a as AuthorRef | null) ?? null)
       : Promise.resolve<AuthorRef | null>(null),
+    fetchPostUpdatedAt(supabase, post.id),
   ])
+  post.updated_at = updatedAt
 
   const view = applyTranslation(
     { title_en: post.title_en, body_en: post.body_en, excerpt_en: post.excerpt_en },
@@ -316,7 +337,7 @@ export default async function BlogArticlePage({
     headline: view.title,
     description,
     datePublished: post.published_at ?? undefined,
-    dateModified: post.published_at ?? undefined,
+    dateModified: post.updated_at ?? post.published_at ?? undefined,
     inLanguage: BCP47[view.effectiveLocale],
     image: post.cover_image ?? undefined,
     author: author

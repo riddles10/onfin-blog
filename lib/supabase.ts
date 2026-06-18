@@ -46,6 +46,7 @@ export type Post = {
   qa_score_th: number | null
   generation_topic_id: string | null
   created_at: string
+  updated_at: string | null                          // real last-edit time (migration 0003)
 }
 
 export type Author = {
