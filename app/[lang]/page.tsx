@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { isPostCategory, categoryLabel, categoryTagline } from '@/lib/categories'
 import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
-import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE, t, tf } from '@/lib/locales'
+import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE, BCP47, t, tf } from '@/lib/locales'
 import { applyTranslation, fetchTranslationsBatch } from '@/lib/post-locale'
 import BlogHero from '@/components/blog/BlogHero'
 import CategoryChips from '@/components/blog/CategoryChips'
@@ -219,8 +219,50 @@ export default async function BlogIndexPage({
   const featured = lift ? posts[0] : null
   const rest = lift ? posts.slice(1) : posts
 
+  // Blog + ItemList JSON-LD so search engines and answer engines can parse
+  // the listing as a feed (and the posts as ordered entries) rather than an
+  // opaque grid. The Blog node reuses the Organization @id declared in the
+  // root layout so crawlers read one publisher entity, not a duplicate.
+  // ItemList positions are page-aware so pagination reads as one continuous
+  // ordered list.
+  const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io').replace(/\/$/, '')
+  const listingUrl = category ? `${baseUrl}/${lang}?category=${category}` : `${baseUrl}/${lang}`
+  const listingSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Blog',
+        '@id': `${baseUrl}/${lang}#blog`,
+        url: listingUrl,
+        name: t(locale, 'blog.metadata.title'),
+        description: t(locale, 'blog.metadata.description'),
+        inLanguage: BCP47[locale],
+        publisher: { '@id': 'https://onfin.io/#organization' },
+      },
+      ...(posts.length > 0
+        ? [
+            {
+              '@type': 'ItemList',
+              itemListOrder: 'https://schema.org/ItemListOrderDescending',
+              numberOfItems: posts.length,
+              itemListElement: posts.map((p, i) => ({
+                '@type': 'ListItem',
+                position: (page - 1) * POSTS_PER_PAGE + i + 1,
+                url: `${baseUrl}/${lang}/${p.slug}`,
+                name: p.title,
+              })),
+            },
+          ]
+        : []),
+    ],
+  }
+
   return (
     <main id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listingSchema) }}
+      />
       <BlogHero eyebrow={heroEyebrow} title={heroTitle} tagline={heroTagline} />
 
       <CategoryChips locale={locale} active={category} />
