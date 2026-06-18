@@ -31,6 +31,13 @@ export default function RiskDisclosure({ locale }: { locale: Locale }) {
         >
           {t(locale, 'blog.risk.editorial_link')}
         </Link>
+        {' · '}
+        <Link
+          href={`/${locale}/faq`}
+          className="font-semibold text-brand-black underline hover:text-brand-blue"
+        >
+          {t(locale, 'blog.faq.title')}
+        </Link>
       </p>
     </aside>
   )

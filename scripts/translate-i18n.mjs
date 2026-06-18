@@ -38,6 +38,7 @@ const TARGET_LANGUAGE_NAMES = {
   es: 'Spanish (neutral Latin American, es-419)',
   km: 'Khmer',
   zh: 'Simplified Chinese',
+  'zh-tw': 'Traditional Chinese (Taiwan)',
   tr: 'Turkish',
 };
 
@@ -50,6 +51,7 @@ const LOCALE_RULES = {
   es: '- Use neutral Latin-American Spanish (es-419), not Castilian.',
   km: '- Khmer has no inter-word spaces. Do not insert ASCII spaces between Khmer words.',
   zh: '- Use Simplified Chinese (Mainland conventions). Chinese has no inter-word spaces; use full-width punctuation outside HTML/JSON tokens.',
+  'zh-tw': '- Use Traditional Chinese characters (Taiwan conventions, 繁體中文), not Simplified. Chinese has no inter-word spaces; use full-width punctuation outside HTML/JSON tokens.',
   tr: '- Use modern, fluent Turkish marketing copy. Apply correct Turkish suffixation and vowel harmony; keep the dotted/dotless i distinction (İ/i, I/ı).',
 };
 

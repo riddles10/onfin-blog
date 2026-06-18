@@ -35,7 +35,12 @@ export default async function sitemap({
 
   const rows = await fetchRows()
   // Future: add an /authors index entry once the listing page exists.
-  return [indexEntry(locale), editorialEntry(locale), ...postEntries(rows, locale)]
+  return [
+    indexEntry(locale),
+    editorialEntry(locale),
+    faqEntry(locale),
+    ...postEntries(rows, locale),
+  ]
 }
 
 async function fetchRows(): Promise<SlugRow[]> {
@@ -101,6 +106,21 @@ function editorialEntry(locale: Locale): MetadataRoute.Sitemap[number] {
     lastModified: new Date(),
     changeFrequency: 'yearly',
     priority: 0.4,
+    alternates: { languages: alternates },
+  }
+}
+
+function faqEntry(locale: Locale): MetadataRoute.Sitemap[number] {
+  const alternates: Record<string, string> = {}
+  for (const loc of SUPPORTED_LOCALES) {
+    alternates[loc] = `${BASE_URL}/${loc}/faq`
+  }
+  alternates['x-default'] = `${BASE_URL}/${DEFAULT_LOCALE}/faq`
+  return {
+    url: `${BASE_URL}/${locale}/faq`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
     alternates: { languages: alternates },
   }
 }
