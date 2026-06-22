@@ -1,7 +1,7 @@
 # Email templates
 
 Reusable MailerLite email templates in the current OnFin brand styling
-(Unbounded headings, Montserrat body, lime `#9fce10` accent, white rounded
+(Montserrat headings and body, lime `#9fce10` accent, white rounded
 card on `#f7f7f7`). Derived from the June 2026 newsletter sends, which are
 the canonical styling reference.
 

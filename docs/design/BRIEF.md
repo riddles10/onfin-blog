@@ -60,7 +60,7 @@ The article page is where readers spend 5+ minutes, so legibility carries the mo
 The brand visual identity is already settled at `onfin.io`. The blog must read as part of that family. The design tokens are in `app/globals.css` and `tailwind.config.ts`:
 
 - **Colors**: `brand-lime` (#9fce10) is the only saturated accent — use it for CTAs, the active chip state, the blockquote rule, and accent underlines. Body backgrounds stay white or `ink-50`. Body text is `ink-600`. Headings are `brand-black`. `brand-coral` and `brand-blue` exist but use them sparingly — `brand-blue` is the link color in body prose.
-- **Fonts**: `font-display` (Unbounded) for h1/h2/h3, `font-sans` (Montserrat) for everything else.
+- **Fonts**: `font-display` (Montserrat) for h1/h2/h3, `font-sans` (Montserrat) for everything else. Unbounded has been retired — Montserrat is the only typeface.
 - **Container**: 1200px max via `.container-site` or `max-w-site`. The article body sits inside that container at 65–75ch reading width, centered.
 - **Border radius**: `rounded-pill` for chips, `rounded-2xl` for cards.
 

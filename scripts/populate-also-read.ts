@@ -95,7 +95,7 @@ function buildCard(item: FeedItem, isFirst: boolean, isLast: boolean): string {
   const border = isFirst ? '' : ' border-top:1px solid #eeeeee;'
   const excerpt = truncate(item.description, EXCERPT_MAX_CHARS)
   return `
-      <tr><td class="px-pad" style="padding: ${topPad} 40px ${botPad} 40px;${border}"><a href="${escHtml(item.link)}" target="_blank" style="text-decoration:none; color:inherit;"><p style="font-family:'Unbounded',Arial,sans-serif; font-size:15px; line-height:1.35; font-weight:500; color:#000000; margin:0 0 6px 0; letter-spacing:-0.005em;">${escHtml(item.title)}</p><p style="font-family:'Montserrat',Arial,sans-serif; font-size:13px; line-height:1.5; color:#666666; margin:0;">${escHtml(excerpt)}</p></a></td></tr>`
+      <tr><td class="px-pad" style="padding: ${topPad} 40px ${botPad} 40px;${border}"><a href="${escHtml(item.link)}" target="_blank" style="text-decoration:none; color:inherit;"><p style="font-family:'Montserrat',Arial,sans-serif; font-size:15px; line-height:1.35; font-weight:500; color:#000000; margin:0 0 6px 0; letter-spacing:-0.005em;">${escHtml(item.title)}</p><p style="font-family:'Montserrat',Arial,sans-serif; font-size:13px; line-height:1.5; color:#666666; margin:0;">${escHtml(excerpt)}</p></a></td></tr>`
 }
 
 function buildSection(items: FeedItem[]): string {

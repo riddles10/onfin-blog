@@ -10,7 +10,7 @@
  *   - brand-black #000000  (primary surface / text)
  *
  * Fonts:
- *   - Unbounded   (display / headings)
+ *   - Montserrat  (display / headings)
  *   - Montserrat  (body)
  *
  * Container: 1200px max
@@ -32,7 +32,7 @@
   --color-ink-700: #111111;
 
   --font-sans: "Montserrat", "Arial", "sans-serif";
-  --font-display: "Unbounded", "Arial", "sans-serif";
+  --font-display: "Montserrat", "Arial", "sans-serif";
 
   --radius-pill: 100px;
 

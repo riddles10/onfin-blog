@@ -39,9 +39,9 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['Montserrat', 'Arial', 'sans-serif'],
-        display: ['Unbounded', 'Arial', 'sans-serif'],
+        display: ['Montserrat', 'Arial', 'sans-serif'],
         // ba-cms admin uses these family aliases.
-        heading: ['Unbounded', 'Arial', 'sans-serif'],
+        heading: ['Montserrat', 'Arial', 'sans-serif'],
         body: ['Montserrat', 'Arial', 'sans-serif'],
       },
       borderRadius: {
