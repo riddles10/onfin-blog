@@ -86,6 +86,7 @@ async function fetchPosts(opts: {
       { count: 'exact' }
     )
     .eq('published', true)
+    .eq('post_type', 'article')                       // news notices live in /news, not the main feed
     .order('published_at', { ascending: false })
     .range(from, to)
 

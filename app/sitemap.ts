@@ -37,6 +37,7 @@ export default async function sitemap({
   // Future: add an /authors index entry once the listing page exists.
   return [
     indexEntry(locale),
+    newsEntry(locale),
     editorialEntry(locale),
     faqEntry(locale),
     ...postEntries(rows, locale),
@@ -121,6 +122,21 @@ function faqEntry(locale: Locale): MetadataRoute.Sitemap[number] {
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.6,
+    alternates: { languages: alternates },
+  }
+}
+
+function newsEntry(locale: Locale): MetadataRoute.Sitemap[number] {
+  const alternates: Record<string, string> = {}
+  for (const loc of SUPPORTED_LOCALES) {
+    alternates[loc] = `${BASE_URL}/${loc}/news`
+  }
+  alternates['x-default'] = `${BASE_URL}/${DEFAULT_LOCALE}/news`
+  return {
+    url: `${BASE_URL}/${locale}/news`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.7,
     alternates: { languages: alternates },
   }
 }

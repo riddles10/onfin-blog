@@ -1,5 +1,5 @@
 import { buildFeed } from '@/lib/rss'
-import { isLocale, SUPPORTED_LOCALES } from '@/lib/locales'
+import { isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@/lib/locales'
 
 // Per-locale RSS feed at /rss/<locale>.xml — e.g. /rss/ru.xml.
 // The dynamic segment captures the full filename ("ru.xml") so we can
@@ -9,7 +9,10 @@ import { isLocale, SUPPORTED_LOCALES } from '@/lib/locales'
 export const revalidate = 3600
 
 export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((loc) => ({ file: `${loc}.xml` }))
+  return [
+    ...SUPPORTED_LOCALES.map((loc) => ({ file: `${loc}.xml` })),
+    { file: 'news.xml' },
+  ]
 }
 
 export async function GET(
@@ -20,11 +23,17 @@ export async function GET(
   if (!file.endsWith('.xml')) {
     return new Response('Not found', { status: 404 })
   }
-  const locale = file.slice(0, -'.xml'.length)
-  if (!isLocale(locale)) {
+  const name = file.slice(0, -'.xml'.length)
+  // /rss/news.xml is the News section's own feed (English); /rss/<locale>.xml
+  // are the per-locale article feeds.
+  let xml: string
+  if (name === 'news') {
+    xml = await buildFeed(DEFAULT_LOCALE, 'news')
+  } else if (isLocale(name)) {
+    xml = await buildFeed(name)
+  } else {
     return new Response('Not found', { status: 404 })
   }
-  const xml = await buildFeed(locale)
   return new Response(xml, {
     headers: {
       'content-type': 'application/rss+xml; charset=utf-8',

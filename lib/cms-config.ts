@@ -32,6 +32,12 @@ export const POST_CATEGORIES = [
 ] as const
 export type PostCategory = (typeof POST_CATEGORIES)[number]
 
+// Content-type axis, orthogonal to category. 'article' = editorial content
+// (the main blog feed); 'news' = service / status notices shown in the
+// dedicated /news section and kept out of the main feed.
+export const POST_TYPES = ['article', 'news'] as const
+export type PostType = (typeof POST_TYPES)[number]
+
 export const EVENT_CATEGORIES = [
   'webinar',
   'workshop',

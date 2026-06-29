@@ -28,16 +28,25 @@ type Row = {
   published_at: string | null
 }
 
-export async function buildFeed(rawLocale: string): Promise<string> {
+export async function buildFeed(
+  rawLocale: string,
+  kind: 'article' | 'news' = 'article'
+): Promise<string> {
   const locale: Locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE
   const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io').replace(/\/$/, '')
   const feedUrl =
-    locale === DEFAULT_LOCALE
-      ? `${baseUrl}/rss.xml`
-      : `${baseUrl}/rss/${locale}.xml`
-  const indexUrl = `${baseUrl}/${locale}`
+    kind === 'news'
+      ? `${baseUrl}/rss/news.xml`
+      : locale === DEFAULT_LOCALE
+        ? `${baseUrl}/rss.xml`
+        : `${baseUrl}/rss/${locale}.xml`
+  const indexUrl = kind === 'news' ? `${baseUrl}/${locale}/news` : `${baseUrl}/${locale}`
+  const channelTitle =
+    kind === 'news' ? t(locale, 'news.metadata.title') : t(locale, 'blog.metadata.title')
+  const channelDesc =
+    kind === 'news' ? t(locale, 'news.metadata.description') : t(locale, 'blog.metadata.description')
 
-  const rows = await fetchRows()
+  const rows = await fetchRows(kind)
   const translations = isDemoMode()
     ? new Map()
     : await fetchTranslationsBatch(getServiceClient(), rows.map((r) => r.id), locale)
@@ -68,10 +77,10 @@ export async function buildFeed(rawLocale: string): Promise<string> {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
-    <title>${esc(t(locale, 'blog.metadata.title'))}</title>
+    <title>${esc(channelTitle)}</title>
     <link>${esc(indexUrl)}</link>
     <atom:link href="${esc(feedUrl)}" rel="self" type="application/rss+xml" />
-    <description>${esc(t(locale, 'blog.metadata.description'))}</description>
+    <description>${esc(channelDesc)}</description>
     <language>${BCP47[locale]}</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${items.join('\n')}
@@ -80,8 +89,9 @@ ${items.join('\n')}
 `
 }
 
-async function fetchRows(): Promise<Row[]> {
+async function fetchRows(kind: 'article' | 'news'): Promise<Row[]> {
   if (isDemoMode()) {
+    if (kind === 'news') return []
     return DEMO_POSTS.slice(0, ITEM_LIMIT).map((p) => ({
       id: p.id,
       slug: p.slug,
@@ -97,6 +107,7 @@ async function fetchRows(): Promise<Row[]> {
     .from('posts')
     .select('id, slug, title_en, excerpt_en, body_en, cover_image, published_at')
     .eq('published', true)
+    .eq('post_type', kind)
     .order('published_at', { ascending: false })
     .limit(ITEM_LIMIT)
   return (data ?? []) as Row[]

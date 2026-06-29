@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { POST_CATEGORIES } from '@/lib/cms-config'
+import { POST_CATEGORIES, POST_TYPES } from '@/lib/cms-config'
 import {
   SUPPORTED_LOCALES,
   LOCALE_NAMES,
@@ -54,6 +54,7 @@ type PostData = {
   excerpt_en: string
   excerpt_th: string
   category: string
+  post_type: string
   cover_image: string
   published: boolean
   published_at: string | null
@@ -86,6 +87,7 @@ const emptyPost: PostData = {
   excerpt_en: '',
   excerpt_th: '',
   category: POST_CATEGORIES[0],
+  post_type: 'article',
   cover_image: '',
   published: false,
   published_at: null,
@@ -110,7 +112,7 @@ export default function BlogEditor({ initialData }: { initialData?: PostData }) 
   const searchParams = useSearchParams()
   const isEditing = !!initialData?.id
   const [post, setPost] = useState<PostData>(() => {
-    if (initialData) return initialData
+    if (initialData) return { ...emptyPost, ...initialData }
     const category = searchParams?.get('category')
     return category ? { ...emptyPost, category } : emptyPost
   })
@@ -962,6 +964,25 @@ export default function BlogEditor({ initialData }: { initialData?: PostData }) 
                   </option>
                 ))}
               </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-sm font-semibold mb-1">Content type</label>
+              <select
+                value={post.post_type}
+                onChange={(e) => update('post_type', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              >
+                {POST_TYPES.map((pt) => (
+                  <option key={pt} value={pt}>
+                    {pt === 'news' ? 'News / notice (News section)' : 'Article (main blog)'}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-400 mt-1">
+                News items appear in /news, not the main blog feed.
+              </p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

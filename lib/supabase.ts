@@ -31,6 +31,7 @@ export type Post = {
     | 'regulation-news'
     | 'strategies'
     | 'general'
+  post_type: 'article' | 'news'                      // content-type axis (migration 0004)
   cover_image: string | null
   published: boolean
   published_at: string | null

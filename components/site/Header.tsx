@@ -68,6 +68,7 @@ export default function Header({ locale: localeProp }: { locale: string }) {
         { href: lp('/liquidity'), label: t(locale, 'nav.liquidity') },
         // Blog stays on the current domain — that's why we forked it.
         { href: localizedPath(locale, '/'), label: t(locale, 'nav.blog') },
+        { href: localizedPath(locale, '/news'), label: t(locale, 'news.nav') },
         { href: lp('/documents'), label: t(locale, 'nav.documents') },
         { href: lp('/contacts'), label: t(locale, 'nav.contacts') },
         { href: lp('/faq'), label: t(locale, 'nav.faq') },
