@@ -26,8 +26,8 @@ services:
     restart: unless-stopped
     pids_limit: 512
     cpus: "0.75"
-    mem_limit: "1024m"
-    memswap_limit: "1024m"
+    mem_limit: "2048m"
+    memswap_limit: "2048m"
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
       interval: 30s
