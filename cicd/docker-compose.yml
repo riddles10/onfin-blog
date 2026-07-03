@@ -11,6 +11,11 @@ services:
     hostname: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-app
     environment:
       PORT: "3000"
+      # Cap V8's old-space heap so it GCs before the 2 GiB cgroup limit.
+      # Node sizes its default heap from host RAM, not the container limit,
+      # so without this it can grow past mem_limit and get OOM-killed (137).
+      # ~75% of mem_limit leaves headroom for off-heap/RSS.
+      NODE_OPTIONS: "--max-old-space-size=1536"
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:?}
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:?}
@@ -47,6 +52,8 @@ services:
     container_name: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-cron-worker
     hostname: ${PROJECT_PREFIX:-}${PROJECT_PREFIX:+-}marketing-blog-cron-worker
     environment:
+      # ~75% of this service's 1 GiB mem_limit (see rationale on `app`).
+      NODE_OPTIONS: "--max-old-space-size=768"
       CRON_TARGET_BASE_URL: "http://app:3000" # The worker calls back into the app over the docker network
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:?}
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?}
