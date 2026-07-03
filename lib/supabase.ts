@@ -4,13 +4,36 @@ const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseUrl = rawUrl.startsWith('http') ? rawUrl : 'https://placeholder.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
 
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey)
+// These clients run only in the long-lived Next.js server process for stateless
+// renders and API routes — never for per-user browser auth (that path uses
+// lib/supabase-browser.ts). So GoTrue session persistence and token auto-refresh
+// are pure overhead: they register background timers/locks that keep each client
+// alive. Creating a fresh client per request (see getServiceClient below) leaked
+// those cumulatively and drove the container into OOM (kill 137) under traffic.
+const serverAuthOpts = {
+  auth: { persistSession: false, autoRefreshToken: false },
+}
 
-export function getServiceClient() {
-  return createClient(
-    supabaseUrl,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
-  )
+export const supabase: SupabaseClient = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  serverAuthOpts
+)
+
+// Cached across requests: the service client holds no per-user state (it uses the
+// service-role key), so a single process-wide instance is both safe and the
+// recommended pattern. Callers keep calling getServiceClient() unchanged.
+let serviceClient: SupabaseClient | null = null
+
+export function getServiceClient(): SupabaseClient {
+  if (!serviceClient) {
+    serviceClient = createClient(
+      supabaseUrl,
+      process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder',
+      serverAuthOpts
+    )
+  }
+  return serviceClient
 }
 
 export type Post = {
