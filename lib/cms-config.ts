@@ -343,7 +343,8 @@ export const SITE_MENTION_PATTERN: RegExp | null = /\bonfin\b/gi
 /** Bot username shown in Slack messages. */
 export const SLACK_BOT_NAME = `${SITE_NAME} Blog Bot`
 
-/** Preview URL pattern. {slug} placeholder. Locale-prefixed for blog.onfin.io. */
+/** Preview URL pattern. {slug} placeholder. Locale-prefixed for blog.onfin.io.
+ *  News posts preview at /en/news/{slug}?preview=1, articles at /en/{slug}?preview=1. */
 export const PREVIEW_URL_PATTERN = '/en/{slug}?preview=1'
 
 /** Edit URL pattern. {id} placeholder. */

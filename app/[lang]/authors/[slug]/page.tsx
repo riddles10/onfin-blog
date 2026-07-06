@@ -45,6 +45,7 @@ type AuthorPost = {
   category: string
   cover_image: string | null
   published_at: string | null
+  post_type: string
 }
 
 async function fetchAuthor(slug: string): Promise<AuthorRow | null> {
@@ -78,13 +79,14 @@ async function fetchAuthorPosts(
         category: p.category,
         coverImage: p.cover_image,
         publishedAt: p.published_at,
+        postType: (p as any).post_type as 'article' | 'news' | undefined,
       }))
   }
 
   const supabase = getServiceClient()
   const { data } = await supabase
     .from('posts')
-    .select('id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at')
+    .select('id, slug, title_en, excerpt_en, body_en, category, post_type, cover_image, published_at')
     .eq('published', true)
     .eq('blog_author_id', authorId)
     .order('published_at', { ascending: false })
@@ -113,6 +115,7 @@ async function fetchAuthorPosts(
       category: p.category,
       coverImage: p.cover_image,
       publishedAt: p.published_at,
+      postType: p.post_type as 'article' | 'news',
     }
   })
 }

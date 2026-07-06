@@ -18,6 +18,7 @@ export type DemoPost = {
   excerpt_en: string | null
   body_en: string
   category: PostCategory
+  post_type?: string
   cover_image: string | null
   published_at: string
   blog_author_id: string

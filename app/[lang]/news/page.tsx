@@ -3,6 +3,7 @@ import { getServiceClient } from '@/lib/supabase'
 import { isDemoMode } from '@/lib/demo-data'
 import { type Locale, isLocale, SUPPORTED_LOCALES, DEFAULT_LOCALE, BCP47, t } from '@/lib/locales'
 import { applyTranslation, fetchTranslationsBatch } from '@/lib/post-locale'
+import { postUrl } from '@/lib/post-path'
 import BlogHero from '@/components/blog/BlogHero'
 import PostCard from '@/components/blog/PostCard'
 import Pagination from '@/components/blog/Pagination'
@@ -26,6 +27,7 @@ type IndexPost = {
   category: string
   cover_image: string | null
   published_at: string | null
+  post_type: string
 }
 
 type LocalizedIndexPost = IndexPost & {
@@ -49,7 +51,7 @@ async function fetchNews(opts: {
   const { data, error, count } = await supabase
     .from('posts')
     .select(
-      'id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at',
+      'id, slug, title_en, excerpt_en, body_en, category, post_type, cover_image, published_at',
       { count: 'exact' }
     )
     .eq('published', true)
@@ -158,7 +160,7 @@ export default async function NewsIndexPage({
               itemListElement: posts.map((p, i) => ({
                 '@type': 'ListItem',
                 position: (page - 1) * POSTS_PER_PAGE + i + 1,
-                url: `${baseUrl}/${lang}/${p.slug}`,
+                url: postUrl(baseUrl, lang, p.slug, 'news'),
                 name: p.title,
               })),
             },
@@ -219,5 +221,6 @@ function toCardData(p: LocalizedIndexPost) {
     category: p.category,
     coverImage: p.cover_image,
     publishedAt: p.published_at,
+    postType: p.post_type as 'article' | 'news',
   }
 }

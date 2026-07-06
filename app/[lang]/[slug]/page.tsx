@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { categoryGradient, categoryLabel } from '@/lib/categories'
@@ -9,7 +9,6 @@ import { DEMO_POSTS, DEMO_AUTHOR_BY_ID, isDemoMode } from '@/lib/demo-data'
 import {
   type Locale,
   isLocale,
-  SUPPORTED_LOCALES,
   DEFAULT_LOCALE,
   BCP47,
   t,
@@ -20,6 +19,7 @@ import {
   fetchTranslationsBatch,
   type LocalizedPostView,
 } from '@/lib/post-locale'
+import { postPath, buildHreflangForPost } from '@/lib/post-path'
 import Breadcrumbs from '@/components/blog/Breadcrumbs'
 import AuthorByline from '@/components/blog/AuthorByline'
 import TableOfContents from '@/components/blog/TableOfContents'
@@ -43,6 +43,7 @@ type PostFull = {
   body_en: string
   excerpt_en: string | null
   category: string
+  post_type: string
   cover_image: string | null
   published_at: string | null
   updated_at?: string | null                        // real last-edit time (migration 0003); optional until applied
@@ -104,7 +105,7 @@ async function fetchArticle(
   const { data, error } = await supabase
     .from('posts')
     .select(
-      'id, slug, title_en, body_en, excerpt_en, category, cover_image, published_at, blog_author_id'
+      'id, slug, title_en, body_en, excerpt_en, category, post_type, cover_image, published_at, blog_author_id'
     )
     .eq('slug', slug)
     .eq('published', true)
@@ -160,7 +161,7 @@ async function fetchRelated(
   // aren't enough siblings yet.
   const { data: same } = await supabase
     .from('posts')
-    .select('id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at')
+    .select('id, slug, title_en, excerpt_en, body_en, category, post_type, cover_image, published_at')
     .eq('published', true)
     .eq('category', category)
     .neq('id', excludePostId)
@@ -172,7 +173,7 @@ async function fetchRelated(
   if (collected.length < limit) {
     const { data: fill } = await supabase
       .from('posts')
-      .select('id, slug, title_en, excerpt_en, body_en, category, cover_image, published_at')
+      .select('id, slug, title_en, excerpt_en, body_en, category, post_type, cover_image, published_at')
       .eq('published', true)
       .neq('id', excludePostId)
       .order('published_at', { ascending: false })
@@ -207,6 +208,7 @@ async function fetchRelated(
       category: p.category,
       coverImage: p.cover_image,
       publishedAt: p.published_at,
+      postType: p.post_type as 'article' | 'news',
     }
   })
 }
@@ -218,6 +220,7 @@ function toCardDataFromEnglish(row: {
   excerpt_en: string | null
   body_en: string
   category: string
+  post_type?: string
   cover_image: string | null
   published_at: string | null
 }): PostCardData {
@@ -230,20 +233,8 @@ function toCardDataFromEnglish(row: {
     category: row.category,
     coverImage: row.cover_image,
     publishedAt: row.published_at,
+    postType: (row.post_type ?? 'article') as 'article' | 'news',
   }
-}
-
-/**
- * Build the alternates.languages map for `<link rel="alternate" hreflang>`.
- * Every locale points to its own URL; x-default points at English.
- */
-function buildHreflang(slug: string): Record<string, string> {
-  const map: Record<string, string> = {}
-  for (const loc of SUPPORTED_LOCALES) {
-    map[loc] = `/${loc}/${slug}`
-  }
-  map['x-default'] = `/${DEFAULT_LOCALE}/${slug}`
-  return map
 }
 
 export async function generateMetadata({
@@ -259,13 +250,13 @@ export async function generateMetadata({
   const description = stripEmDashes(
     view.excerpt || htmlToExcerpt(view.body, 160)
   )
-  const canonical = `/${lang}/${post.slug}`
+  const canonical = postPath(lang, post.slug, 'article')
   return {
     title: view.title,
     description,
     alternates: {
       canonical,
-      languages: buildHreflang(post.slug),
+      languages: buildHreflangForPost(post.slug, 'article'),
     },
     openGraph: {
       type: 'article',
@@ -295,6 +286,11 @@ export default async function BlogArticlePage({
   const result = await fetchArticle(slug, locale)
   if (!result) notFound()
   const { post, view, author } = result
+
+  // News posts live at /news/[slug]; redirect old flat URLs permanently.
+  if (post.post_type === 'news') {
+    permanentRedirect(postPath(lang, post.slug, 'news'))
+  }
 
   const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io').replace(/\/$/, '')
   const canonicalPath = `/${lang}/${post.slug}`

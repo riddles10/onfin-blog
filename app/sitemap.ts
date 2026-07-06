@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getServiceClient } from '@/lib/supabase'
 import { DEMO_POSTS, isDemoMode } from '@/lib/demo-data'
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale } from '@/lib/locales'
+import { postUrl } from '@/lib/post-path'
 
 // Per-locale sitemaps + automatic sitemap index. Next 15's
 // `generateSitemaps` emits one /sitemap/<id>.xml file per shard (one
@@ -17,7 +18,7 @@ export const revalidate = 3600  // 1h — sitemap doesn't need to be hot
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://blog.onfin.io'
 
-type SlugRow = { slug: string; published_at: string | null }
+type SlugRow = { slug: string; published_at: string | null; post_type: string }
 
 export async function generateSitemaps() {
   // Numeric ids — Next.js maps these to /sitemap/<id>.xml. We index by
@@ -49,12 +50,13 @@ async function fetchRows(): Promise<SlugRow[]> {
     return DEMO_POSTS.map((p) => ({
       slug: p.slug,
       published_at: p.published_at,
+      post_type: (p as any).post_type ?? 'article',
     }))
   }
   const supabase = getServiceClient()
   const { data, error } = await supabase
     .from('posts')
-    .select('slug, published_at')
+    .select('slug, published_at, post_type')
     .eq('published', true)
     .order('published_at', { ascending: false })
 
@@ -65,24 +67,24 @@ async function fetchRows(): Promise<SlugRow[]> {
   return (data ?? []) as SlugRow[]
 }
 
-function buildAlternatesForSlug(slug: string | null): Record<string, string> {
+function buildAlternatesForSlug(slug: string | null, postType?: string): Record<string, string> {
   const out: Record<string, string> = {}
   for (const loc of SUPPORTED_LOCALES) {
-    out[loc] = slug ? `${BASE_URL}/${loc}/${slug}` : `${BASE_URL}/${loc}`
+    out[loc] = slug ? postUrl(BASE_URL, loc, slug, postType) : `${BASE_URL}/${loc}`
   }
   out['x-default'] = slug
-    ? `${BASE_URL}/${DEFAULT_LOCALE}/${slug}`
+    ? postUrl(BASE_URL, DEFAULT_LOCALE, slug, postType)
     : `${BASE_URL}/${DEFAULT_LOCALE}`
   return out
 }
 
 function postEntries(rows: SlugRow[], locale: Locale): MetadataRoute.Sitemap {
   return rows.map((r) => ({
-    url: `${BASE_URL}/${locale}/${r.slug}`,
+    url: postUrl(BASE_URL, locale, r.slug, r.post_type),
     lastModified: r.published_at ? new Date(r.published_at) : new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
-    alternates: { languages: buildAlternatesForSlug(r.slug) },
+    alternates: { languages: buildAlternatesForSlug(r.slug, r.post_type) },
   }))
 }
 

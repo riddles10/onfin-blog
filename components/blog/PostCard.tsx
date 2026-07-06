@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { categoryGradient, categoryLabel } from '@/lib/categories'
 import { formatDate, htmlToExcerpt } from '@/lib/format'
 import { t, type Locale } from '@/lib/locales'
+import { postPath } from '@/lib/post-path'
 
 // Single article tile. The whole card is one `<a>` so the entire surface
 // is clickable; nested elements use `pointer-events: none` for fine
@@ -17,6 +18,7 @@ export type PostCardData = {
   category: string
   coverImage?: string | null
   publishedAt: string | null
+  postType?: 'article' | 'news'       // content-type axis — drives URL path (/news/ prefix)
 }
 
 export default function PostCard({
@@ -41,7 +43,7 @@ export default function PostCard({
   return (
     <article className="group h-full">
       <Link
-        href={`/${locale}/${post.slug}`}
+        href={postPath(locale, post.slug, post.postType)}
         className={[
           'flex h-full flex-col overflow-hidden rounded-2xl border border-ink-100 bg-white transition',
           'hover:-translate-y-0.5 hover:border-brand-lime hover:shadow-[0_18px_36px_-24px_rgba(0,0,0,0.25)]',

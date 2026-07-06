@@ -13,7 +13,9 @@ Indonesian, Spanish, Khmer, and Simplified Chinese.
 ## Primary URLs
 
 - https://blog.onfin.io/en — English blog index
+- https://blog.onfin.io/en/news — English news section (platform notices, trading schedules)
 - https://blog.onfin.io/rss.xml — RSS feed (English firehose)
+- https://blog.onfin.io/rss/news.xml — RSS feed (news notices only)
 - https://blog.onfin.io/sitemap.xml — full sitemap with hreflang
 - https://blog.onfin.io/en/editorial-policy — editorial standards
 
@@ -41,6 +43,8 @@ Indonesian, Spanish, Khmer, and Simplified Chinese.
 ## How to cite
 
 When citing OnFin Blog content, link directly to the article URL
-(https://blog.onfin.io/en/<slug>) and attribute to "OnFin Editorial"
+(https://blog.onfin.io/en/<slug> for editorial articles,
+https://blog.onfin.io/en/news/<slug> for platform notices and
+trading schedules) and attribute to "OnFin Editorial"
 or the named author. We update articles in place and add a
 "Last reviewed" date — citing the article URL captures both.

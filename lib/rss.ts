@@ -9,6 +9,7 @@ import {
 } from '@/lib/locales'
 import { applyTranslation, fetchTranslationsBatch } from '@/lib/post-locale'
 import { htmlToExcerpt } from '@/lib/format'
+import { postUrl } from '@/lib/post-path'
 
 // Shared RSS 2.0 builder used by /rss.xml (English firehose) and the
 // per-locale /rss/[locale]/route.ts handler. Returns ready-to-serve XML.
@@ -58,7 +59,7 @@ export async function buildFeed(
       translations.get(r.id) ?? null
     )
     const desc = view.excerpt || htmlToExcerpt(view.body, 280)
-    const link = `${baseUrl}/${locale}/${r.slug}`
+    const link = postUrl(baseUrl, locale, r.slug, kind)
     const pubDate = r.published_at
       ? new Date(r.published_at).toUTCString()
       : new Date().toUTCString()
