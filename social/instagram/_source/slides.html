@@ -1,0 +1,254 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;src:url(m400.ttf);font-weight:400}
+@font-face{font-family:M;src:url(m500.ttf);font-weight:500}
+@font-face{font-family:M;src:url(m600.ttf);font-weight:600}
+@font-face{font-family:M;src:url(m700.ttf);font-weight:700}
+:root{--lime:#9fce10;--lime2:#B4E913;--ink200:#cccccc;--ink300:#999999;--ink400:#666666;--ink500:#444444;--ink600:#222222;--ink700:#111111}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#333;font-family:M,Arial,sans-serif;color:#fff}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;margin:0 0 40px;
+  background:linear-gradient(135deg,#222 0%,#111 55%,#000 100%)}
+.glow{position:absolute;width:900px;height:900px;border-radius:50%;
+  background:radial-gradient(circle,rgba(159,206,16,.28) 0%,rgba(159,206,16,.08) 45%,rgba(159,206,16,0) 70%);pointer-events:none}
+.pad{position:absolute;inset:0;padding:96px 88px 0}
+.logo{height:46px;display:block}
+.top{display:flex;justify-content:space-between;align-items:center}
+.count{font-size:24px;font-weight:600;color:var(--ink300);letter-spacing:.06em}
+.count b{color:var(--lime);font-weight:700}
+.foot{position:absolute;left:88px;right:88px;bottom:72px;display:flex;justify-content:space-between;align-items:center;font-size:24px;color:var(--ink300);font-weight:500}
+.swipe{display:flex;align-items:center;gap:14px;color:#fff;font-weight:600}
+.swipe .arr{width:56px;height:56px;border-radius:100px;background:var(--lime);color:#000;display:grid;place-items:center;font-size:30px;font-weight:700}
+.tag{display:inline-block;padding:12px 26px;border-radius:100px;border:2px solid var(--lime);color:var(--lime);font-size:22px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.tag.fill{background:var(--lime);color:#000;border-color:var(--lime)}
+h1{font-weight:600;letter-spacing:-.01em;line-height:1.04}
+h2{font-weight:600;font-size:80px;letter-spacing:-.01em;line-height:1.05;margin-top:36px}
+.lead{font-size:34px;line-height:1.45;color:var(--ink200);margin-top:30px;font-weight:400}
+.hl{color:var(--lime)}
+
+/* cover */
+.cover .photo{position:absolute;left:0;top:0;width:1080px;height:760px;background:url(cover.jpg) center/cover}
+.cover .photo:after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,.15) 55%,#0d0d0d 100%)}
+.cover .bar{position:absolute;left:0;right:0;top:0;padding:72px 88px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.cover .body{position:absolute;left:88px;right:88px;top:640px;z-index:2}
+.cover h1{font-size:96px;margin-top:34px}
+.cover .meta{margin-top:30px;font-size:26px;color:var(--ink300);font-weight:500}
+.cover .meta span{color:var(--lime)}
+.cover{background:#0d0d0d}
+
+/* list rows */
+.rows{margin-top:44px;display:flex;flex-direction:column;gap:18px}
+.row{display:flex;gap:28px;align-items:center;padding:24px 34px;border-radius:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.row .n{font-size:30px;font-weight:700;color:var(--lime);width:54px}
+.row .t{font-size:36px;font-weight:500}
+
+/* style slides */
+.chip{display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:16px 30px;border-radius:100px;background:rgba(159,206,16,.12);border:1px solid rgba(159,206,16,.4);font-size:30px;font-weight:600;color:#fff}
+.chip i{width:14px;height:14px;border-radius:50%;background:var(--lime);display:block}
+.pts{margin-top:60px;display:flex;flex-direction:column;gap:30px}
+.pt{display:flex;gap:26px;align-items:flex-start;font-size:36px;line-height:1.38;color:#eee}
+.pt:before{content:"";flex:none;width:16px;height:16px;border-radius:50%;background:var(--lime);margin-top:16px}
+.pt b{font-weight:600;color:#fff}
+.stats{position:absolute;left:88px;right:88px;bottom:200px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.stat{padding:28px 32px;border-radius:28px;background:#000;border:1px solid var(--ink500)}
+.stat .k{font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink300);font-weight:600}
+.stat .v{font-size:40px;font-weight:600;margin-top:10px;white-space:nowrap}
+.stat .v.l{color:var(--lime)}
+
+/* table */
+table{width:100%;border-collapse:separate;border-spacing:0;margin-top:56px;font-size:28px}
+th{font-size:21px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink300);font-weight:600;text-align:left;padding:0 18px 22px}
+td{padding:30px 18px;border-top:1px solid var(--ink500);font-weight:500;line-height:1.3}
+td:first-child{font-weight:700;color:var(--lime);font-size:30px}
+.note{margin-top:44px;padding:30px 34px;border-left:6px solid var(--lime);background:rgba(255,255,255,.04);border-radius:0 24px 24px 0;font-size:30px;line-height:1.45;color:#eee}
+
+/* match */
+.match{margin-top:50px;display:flex;flex-direction:column;gap:20px}
+.m{display:flex;justify-content:space-between;align-items:center;padding:30px 34px;border-radius:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:31px;line-height:1.3}
+.m .s{flex:none;margin-left:24px;padding:12px 26px;border-radius:100px;background:var(--lime);color:#000;font-weight:700;font-size:26px}
+.quote{margin-top:40px;font-size:44px;font-weight:600;line-height:1.25;letter-spacing:-.01em}
+
+/* cta */
+.cta{background:#000 url(glow.jpg) center/cover}
+.cta .center{position:absolute;left:88px;right:88px;top:330px}
+.cta h2{font-size:92px}
+.btn{display:inline-flex;align-items:center;gap:18px;margin-top:60px;padding:30px 52px;border-radius:100px;background:var(--lime);color:#000;font-size:40px;font-weight:700}
+.url{margin-top:30px;font-size:27px;color:var(--ink200);font-weight:500}
+.risk{position:absolute;left:88px;right:88px;bottom:72px;font-size:22px;color:var(--ink300);line-height:1.4}
+
+/* ===== LIGHT THEME ===== */
+body.light .slide{background:linear-gradient(135deg,#ffffff 0%,#f7f7f7 60%,#eeeeee 100%);color:#000}
+body.light .glow{background:radial-gradient(circle,rgba(159,206,16,.30) 0%,rgba(159,206,16,.10) 45%,rgba(159,206,16,0) 70%)}
+body.light .count{color:var(--ink400)} body.light .count b{color:#000}
+body.light .foot{color:var(--ink400)} body.light .swipe{color:#000}
+body.light .tag{border-color:#000;color:#000}
+body.light .tag.fill{background:var(--lime);border-color:var(--lime);color:#000}
+body.light .lead{color:var(--ink500)}
+body.light .hl{color:#000;background:linear-gradient(180deg,transparent 58%,var(--lime2) 58%,var(--lime2) 92%,transparent 92%)}
+body.light .cover{background:#fff}
+body.light .cover .photo:after{background:linear-gradient(180deg,rgba(255,255,255,.75) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,.1) 55%,#fff 100%)}
+body.light .cover .meta{color:var(--ink400)}
+body.light .row,body.light .m{background:#fff;border:1px solid var(--ink100);box-shadow:0 6px 24px rgba(0,0,0,.05)}
+body.light .row .n{color:#000;background:var(--lime);border-radius:100px;width:auto;min-width:64px;text-align:center;padding:4px 14px;font-size:26px}
+body.light .chip{background:#000;border-color:#000;color:#fff}
+body.light .pt{color:var(--ink600)} body.light .pt b{color:#000}
+body.light .stat{background:#fff;border:1px solid var(--ink100);box-shadow:0 6px 24px rgba(0,0,0,.05)}
+body.light .stat .k{color:var(--ink400)}
+body.light .stat .v.l{color:#000;background:linear-gradient(180deg,transparent 60%,var(--lime2) 60%,var(--lime2) 92%,transparent 92%);display:inline}
+body.light th{color:var(--ink400)}
+body.light td{border-top-color:var(--ink200)}
+body.light td:first-child{color:#000}
+body.light .note{background:#fff;color:var(--ink600);box-shadow:0 6px 24px rgba(0,0,0,.05)}
+body.light .cta{background:radial-gradient(circle at 80% 85%,rgba(180,233,19,.55) 0%,rgba(159,206,16,.18) 35%,rgba(255,255,255,0) 65%),linear-gradient(160deg,#fff 0%,#f7f7f7 100%)}
+body.light .cover .bar{padding:60px 76px}
+body.light .cover .bar .logo,body.light .cover .bar .count{background:#fff;border-radius:100px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+body.light .cover .bar .logo{height:76px;padding:15px 26px;box-sizing:border-box}
+body.light .cover .bar .count{padding:16px 26px}
+body.light .btn{background:#000;color:#fff}
+body.light .url{color:var(--ink500)} body.light .risk{color:var(--ink400)}
+</style></head><body>
+
+<!-- 1 COVER -->
+<section class="slide cover" id="s1">
+  <div class="photo"></div>
+  <div class="bar"><img class="logo" src="logo.svg"><span class="count"><b>1</b> / 8</span></div>
+  <div class="body">
+    <span class="tag fill">Trading guides</span>
+    <h1>Scalping vs Swing vs Position Trading</h1>
+    <p class="lead">Which style fits your schedule, your capital and your temperament?</p>
+  </div>
+  <div class="foot"><span>blog.onfin.io</span><span class="swipe">Swipe to read <span class="arr">→</span></span></div>
+</section>
+
+<!-- 2 INTRO -->
+<section class="slide" id="s2">
+  <div class="glow" style="right:-420px;top:-380px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>2</b> / 8</span></div>
+    <h2 style="margin-top:90px">It's not just the <span class="hl">chart timeframe</span></h2>
+    <p class="lead">Scalpers live on one-minute charts. Position traders hold through central bank decisions. The real difference runs deeper. Compare the three styles on:</p>
+    <div class="rows">
+      <div class="row"><span class="n">01</span><span class="t">Time commitment</span></div>
+      <div class="row"><span class="n">02</span><span class="t">Capital you need</span></div>
+      <div class="row"><span class="n">03</span><span class="t">Where the edge comes from</span></div>
+      <div class="row"><span class="n">04</span><span class="t">Risk per trade</span></div>
+      <div class="row"><span class="n">05</span><span class="t">Psychological load</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Scalping vs Swing vs Position</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 3 SCALPING -->
+<section class="slide" id="s3">
+  <div class="glow" style="left:-500px;bottom:-500px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>3</b> / 8</span></div>
+    <div style="margin-top:96px"><span class="tag">Style 01</span></div>
+    <h2>Scalping</h2>
+    <span class="chip"><i></i>Seconds to minutes per trade</span>
+    <div class="pts">
+      <div class="pt"><span>Collects <b>2 to 5 pips</b> at a time, dozens of times a session. Volume does the work.</span></div>
+      <div class="pt"><span>Sticks to the most liquid pairs: <b>EUR/USD, GBP/USD, USD/JPY</b>.</span></div>
+      <div class="pt"><span>Needs fast execution, raw spreads and a <span style="white-space:nowrap">low-latency</span> connection.</span></div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="k">Screen time</div><div class="v l">4 to 8+ hrs/day</div></div>
+    <div class="stat"><div class="k">Typical stop</div><div class="v">3 to 10 pips</div></div>
+  </div>
+  <div class="foot"><span>Scalping vs Swing vs Position</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 4 SWING -->
+<section class="slide" id="s4">
+  <div class="glow" style="right:-500px;bottom:-500px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>4</b> / 8</span></div>
+    <div style="margin-top:96px"><span class="tag">Style 02</span></div>
+    <h2>Swing trading</h2>
+    <span class="chip"><i></i>Days to a few weeks per trade</span>
+    <div class="pts">
+      <div class="pt"><span>Rides a move that unfolds over several sessions, using the <b>1H, 4H and daily</b> charts.</span></div>
+      <div class="pt"><span>Wider stops, but targets are often <b>2 to 3 times</b> the stop distance.</span></div>
+      <div class="pt"><span>Fits a 9-to-5. Watch for <b>overnight swaps</b> and weekend gaps.</span></div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="k">Screen time</div><div class="v l">0.5 to 2 hrs/day</div></div>
+    <div class="stat"><div class="k">Typical stop</div><div class="v">20 to 80 pips</div></div>
+  </div>
+  <div class="foot"><span>Scalping vs Swing vs Position</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 5 POSITION -->
+<section class="slide" id="s5">
+  <div class="glow" style="left:-500px;top:-450px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>5</b> / 8</span></div>
+    <div style="margin-top:96px"><span class="tag">Style 03</span></div>
+    <h2>Position trading</h2>
+    <span class="chip"><i></i>Weeks to months per trade</span>
+    <div class="pts">
+      <div class="pt"><span>Driven by macro themes: <b>interest rate cycles, carry and long-term trends</b>.</span></div>
+      <div class="pt"><span>Most analysis happens at the weekend. Daily checks take minutes.</span></div>
+      <div class="pt"><span>Needs real patience: trades often spend <b>more time underwater</b> than in profit.</span></div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="k">Screen time</div><div class="v l">10 to 20 min/day</div></div>
+    <div class="stat"><div class="k">Typical stop</div><div class="v">100+ pips</div></div>
+  </div>
+  <div class="foot"><span>Scalping vs Swing vs Position</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 6 TABLE -->
+<section class="slide" id="s6">
+  <div class="glow" style="right:-450px;top:-420px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>6</b> / 8</span></div>
+    <h2 style="margin-top:110px">The numbers, <span class="hl">side by side</span></h2>
+    <table>
+      <tr><th>Style</th><th>Typical stop</th><th>Trades / month</th><th>Account floor</th></tr>
+      <tr><td>Scalping</td><td>3 to 10 pips</td><td>200 to 1,000</td><td>$2K to $5K</td></tr>
+      <tr><td>Swing</td><td>20 to 80 pips</td><td>3 to 10</td><td>$10K</td></tr>
+      <tr><td>Position</td><td>100+ pips</td><td>1 to 3</td><td>$25K+</td></tr>
+    </table>
+    <div class="note">The wider the stop, the more capital you need to use it safely. Pick a style whose risk per trade fits your account, not the other way around.</div>
+  </div>
+  <div class="foot"><span>Figures are the article's illustrative ranges</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 7 MATCH -->
+<section class="slide" id="s7">
+  <div class="glow" style="left:-480px;bottom:-480px"></div>
+  <div class="pad">
+    <div class="top"><img class="logo" src="logo.svg"><span class="count"><b>7</b> / 8</span></div>
+    <div style="margin-top:96px"><span class="tag">Avoid the scalp trap</span></div>
+    <p class="quote">A full-time job, 30 spare minutes and one losing trade is not scalping. <span class="hl">It's gambling.</span></p>
+    <p class="lead" style="margin-top:34px">Match the style to the hours you actually have:</p>
+    <div class="match">
+      <div class="m"><span>Full sessions free, calm under pressure</span><span class="s">Scalping</span></div>
+      <div class="m"><span>Day job, can check charts in the evening</span><span class="s">Swing</span></div>
+      <div class="m"><span>Little time, lots of patience</span><span class="s">Position</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Scalping vs Swing vs Position</span><span class="swipe"><span class="arr">→</span></span></div>
+</section>
+
+<!-- 8 CTA -->
+<section class="slide cta" id="s8">
+  <div class="pad"><div class="top"><img class="logo" src="logo.svg"><span class="count"><b>8</b> / 8</span></div></div>
+  <div class="center">
+    <span class="tag">Keep reading</span>
+    <h2>Get the full guide on the OnFin blog</h2>
+    <p class="lead">The trader mindset for each style, how leverage changes the maths, and how to test your fit before going live.</p>
+    <span class="btn">blog.onfin.io</span>
+    <p class="url">Search "Scalping vs Swing vs Position Trading"</p>
+  </div>
+  <p class="risk">CFDs are high-risk; you may lose money. This content is educational and is not investment advice.</p>
+</section>
+
+<script>if(location.hash==='#light'){document.body.classList.add('light');document.querySelectorAll('img.logo').forEach(i=>i.src='logo-main.svg')}</script>
+</body></html>
