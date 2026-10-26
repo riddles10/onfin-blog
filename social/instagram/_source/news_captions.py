@@ -10,13 +10,12 @@ CHANNELS = {
     "es": {"id": "cmvjg3htg08k9lf0yunmvtsqu", "lang": "es", "hour": 14},
 }
 # Stories that must go out before 13:30 UTC (data released that day)
-HOUR_OVERRIDE = {"fed-december": {"ig": 11, "es": 12}}
+HOUR_OVERRIDE = {"fed-december": {"ig": 11, "es": 12}, "euro-shorts": {"ig": 11, "es": 12}}
 
 # US data release time after the US clock change (13:30 UTC), per channel
 T = {"ig": "13:30 UTC", "en": "13:30 UTC", "kh": "20:30 Cambodia time", "ms": "21:30 waktu Malaysia",
-     "ru": "16:30 МСК", "es": "8:30 (Bogotá y Lima)"}
-T_OLD = {"ig": "12:30 UTC", "en": "12:30 UTC", "kh": "19:30 Cambodia time", "ms": "20:30 waktu Malaysia",
-         "ru": "15:30 МСК", "es": "7:30 (Bogotá y Lima)"}
+     "ru": "16:30 МСК", "es": "8:30 en Bogotá y Lima"}
+T_OLD = {"ig": "12:30 UTC", "en": "12:30 UTC", "kh": "19:30", "ms": "20:30", "ru": "15:30", "es": "7:30"}
 
 CFD = {"en": "CFDs are high-risk; you may lose money.",
        "ms": "CFD berisiko tinggi; anda mungkin kehilangan wang.",
@@ -113,23 +112,23 @@ def cap(story, ch):
             "• Нью-Йоркская сессия открывается и закрывается на час позже", "• Разница между Лондоном и Нью-Йорком снова 5 часов (на этой неделе было 4)",
             "Проверьте алерты и свой торговый распорядок.", link(ch, "Гайд по сессиям", "forex-trading-hours-market-moves")],
      "es": ["Este domingo cambia la hora en EE. UU. ⏰", "Europa atrasó la hora el 25 de octubre. EE. UU. lo hace el domingo 1 de noviembre.",
-            "Qué cambia desde el lunes 2 de noviembre:", f"• Los datos de EE. UU. salen a las {t} (antes {told})",
+            "Qué cambia desde el lunes 2 de noviembre:", f"• Los datos de EE. UU. salen a las {t} (antes a las {told})",
             "• En UTC, la sesión de Nueva York abre y cierra una hora más tarde", "• La diferencia entre Londres y Nueva York vuelve a 5 horas (esta semana fue de 4)",
             "Revisa tus alertas y tu rutina de trading.", link(ch, "Guía de sesiones", "forex-trading-hours-market-moves")],
     }
     # 5. gold
     S["gold"] = {
      "en": ["Gold is $1,300+ off its record 🪙", "Gold hit a record above $5,300 an ounce in January. In late October it was trading near $4,000, more than $1,300 below that peak.",
-            "It slipped about 3% over the past month as markets braced for this week's Fed decision, yet it's still roughly flat on a year ago.",
+            "In the month before the Fed's 28 October decision it slipped about 3%, yet it's still roughly flat on a year ago.",
             "A reminder that even safe-haven assets can swing hard.", LEV["en"]],
      "ms": ["Emas $1,300+ di bawah rekodnya 🪙", "Emas mencatat rekod melebihi $5,300 seauns pada Januari. Pada akhir Oktober ia didagangkan sekitar $4,000, lebih $1,300 di bawah puncak itu.",
-            "Harganya turun kira-kira 3% sepanjang sebulan lalu menjelang keputusan Fed minggu ini, namun masih hampir sama berbanding setahun lalu.",
+            "Dalam sebulan menjelang keputusan Fed pada 28 Oktober, harganya turun kira-kira 3%, namun masih hampir sama berbanding setahun lalu.",
             "Peringatan bahawa aset selamat pun boleh berayun dengan kuat.", LEV["ms"]],
      "ru": ["Золото на $1 300+ ниже рекорда 🪙", "В январе золото обновило рекорд выше $5 300 за унцию. В конце октября оно торговалось около $4 000, более чем на $1 300 ниже пика.",
-            "За последний месяц цена снизилась примерно на 3% в ожидании решения ФРС, но год к году золото почти не изменилось.",
+            "За месяц до решения ФРС 28 октября цена снизилась примерно на 3%, но год к году золото почти не изменилось.",
             "Напоминание: даже защитные активы могут сильно колебаться.", LEV["ru"]],
      "es": ["El oro, $1,300+ por debajo de su récord 🪙", "El oro marcó un récord por encima de $5,300 la onza en enero. A finales de octubre cotizaba cerca de $4,000, más de $1,300 por debajo de ese pico.",
-            "Bajó cerca de un 3% en el último mes a la espera de la decisión de la Fed, aunque sigue prácticamente igual que hace un año.",
+            "En el mes previo a la decisión de la Fed del 28 de octubre bajó cerca de un 3%, aunque sigue prácticamente igual que hace un año.",
             "Un recordatorio de que incluso los activos refugio pueden moverse con fuerza.", LEV["es"]],
     }
     # 6. week ahead 1
