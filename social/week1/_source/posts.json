@@ -1,0 +1,833 @@
+[
+ {
+  "key": "flash-btc",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin slips below $80,000",
+   "Bitcoin fell as low as about $79,280 on Monday, failing to follow stocks higher.",
+   "Investors pulled $772.4 million from US spot Bitcoin ETFs on Thursday and Friday, after more than $1 billion of inflows earlier in the week.",
+   "Crypto can move fast around big macro events, and the Fed decides on Wednesday.",
+   "Source: Bloomberg",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-en.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin slips below $80,000",
+   "Bitcoin fell as low as about $79,280 on Monday, failing to follow stocks higher.",
+   "Investors pulled $772.4 million from US spot Bitcoin ETFs on Thursday and Friday, after more than $1 billion of inflows earlier in the week.",
+   "Crypto can move fast around big macro events, and the Fed decides on Wednesday.",
+   "Source: Bloomberg",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-en.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin jatuh bawah $80,000",
+   "Bitcoin jatuh serendah kira-kira $79,280 pada Isnin, tidak mengikut kenaikan pasaran saham.",
+   "Pelabur menarik keluar $772.4 juta daripada ETF Bitcoin spot AS pada Khamis dan Jumaat, selepas aliran masuk melebihi $1 bilion awal minggu itu.",
+   "Kripto boleh bergerak pantas ketika peristiwa makro besar, dan Fed membuat keputusan pada Rabu.",
+   "Sumber: Bloomberg",
+   "CFD berisiko tinggi; anda mungkin kehilangan wang."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-ms.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin ушёл ниже $80 000",
+   "В понедельник Bitcoin опускался примерно до $79 280 и не поддержал рост фондового рынка.",
+   "В четверг и пятницу из спотовых Bitcoin ETF в США вывели $772,4 млн, хотя в начале недели приток превысил $1 млрд.",
+   "Крипта может резко двигаться вокруг крупных макрособытий, а ФРС принимает решение в среду.",
+   "Источник: Bloomberg",
+   "CFD относятся к высокорисковым инструментам; вы можете потерять деньги."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-ru.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin cae por debajo de $80,000",
+   "El lunes, Bitcoin llegó a tocar cerca de $79,280 y no acompañó la subida de las bolsas.",
+   "Los inversores retiraron $772.4 millones de los ETF de Bitcoin al contado en EE. UU. el jueves y el viernes, tras entradas de más de $1,000 millones a principios de semana.",
+   "Las cripto pueden moverse rápido en torno a grandes eventos macro, y la Fed decide el miércoles.",
+   "Fuente: Bloomberg",
+   "Los CFD son de alto riesgo; puedes perder dinero."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-es.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-10-27T13:00:00Z",
+  "story": false,
+  "lines": [
+   "Bitcoin slips below $80,000",
+   "Bitcoin fell as low as about $79,280 on Monday, failing to follow stocks higher.",
+   "Investors pulled $772.4 million from US spot Bitcoin ETFs on Thursday and Friday, after more than $1 billion of inflows earlier in the week.",
+   "Crypto can move fast around big macro events, and the Fed decides on Wednesday.",
+   "Source: Bloomberg",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-en.png"
+  ]
+ },
+ {
+  "key": "flash-btc",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-10-27T13:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-btc-story.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "The AI trade's biggest week",
+   "Anthropic filed for an IPO, reporting more than $16 billion in first-half revenue alongside substantial losses. The Nasdaq rose about 0.9% on Monday and the Philadelphia Semiconductor Index more than 3%.",
+   "This week roughly a third of S&P 500 companies report, including Alphabet, Microsoft and Amazon. Investors want to know whether AI spending is paying off.",
+   "Expect bigger moves in US indices around each release.",
+   "Source: Reuters",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-en.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "The AI trade's biggest week",
+   "Anthropic filed for an IPO, reporting more than $16 billion in first-half revenue alongside substantial losses. The Nasdaq rose about 0.9% on Monday and the Philadelphia Semiconductor Index more than 3%.",
+   "This week roughly a third of S&P 500 companies report, including Alphabet, Microsoft and Amazon. Investors want to know whether AI spending is paying off.",
+   "Expect bigger moves in US indices around each release.",
+   "Source: Reuters",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-en.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Minggu terbesar dagangan AI",
+   "Anthropic memfailkan IPO, melaporkan hasil melebihi $16 bilion bagi separuh pertama tahun bersama kerugian yang besar. Nasdaq naik kira-kira 0.9% pada Isnin dan Indeks Semikonduktor Philadelphia lebih 3%.",
+   "Minggu ini kira-kira satu pertiga syarikat S&P 500 melaporkan pendapatan, termasuk Alphabet, Microsoft dan Amazon. Pelabur mahu tahu sama ada perbelanjaan AI membuahkan hasil.",
+   "Jangkakan pergerakan lebih besar pada indeks AS ketika setiap laporan.",
+   "Sumber: Reuters",
+   "CFD berisiko tinggi; anda mungkin kehilangan wang."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-ms.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Главная неделя для AI-сектора",
+   "Anthropic подала заявку на IPO: выручка за первое полугодие превысила $16 млрд при значительных убытках. В понедельник Nasdaq вырос примерно на 0,9%, а индекс полупроводников Philadelphia более чем на 3%.",
+   "На этой неделе отчитывается около трети компаний S&P 500, включая Alphabet, Microsoft и Amazon. Инвесторы хотят понять, окупаются ли расходы на AI.",
+   "Вокруг каждого отчёта возможны более сильные движения индексов США.",
+   "Источник: Reuters",
+   "CFD относятся к высокорисковым инструментам; вы можете потерять деньги."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-ru.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "La semana clave de la IA",
+   "Anthropic presentó su salida a bolsa, con ingresos de más de $16,000 millones en el primer semestre y pérdidas importantes. El Nasdaq subió cerca de un 0.9% el lunes y el índice de semiconductores de Filadelfia más de un 3%.",
+   "Esta semana publica resultados cerca de un tercio de las empresas del S&P 500, entre ellas Alphabet, Microsoft y Amazon. El mercado quiere saber si el gasto en IA da frutos.",
+   "Espera movimientos más fuertes en los índices de EE. UU. en cada publicación.",
+   "Fuente: Reuters",
+   "Los CFD son de alto riesgo; puedes perder dinero."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-es.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-10-28T06:00:00Z",
+  "story": false,
+  "lines": [
+   "The AI trade's biggest week",
+   "Anthropic filed for an IPO, reporting more than $16 billion in first-half revenue alongside substantial losses. The Nasdaq rose about 0.9% on Monday and the Philadelphia Semiconductor Index more than 3%.",
+   "This week roughly a third of S&P 500 companies report, including Alphabet, Microsoft and Amazon. Investors want to know whether AI spending is paying off.",
+   "Expect bigger moves in US indices around each release.",
+   "Source: Reuters",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-en.png"
+  ]
+ },
+ {
+  "key": "flash-ai",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-10-28T06:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/flash-ai-story.png"
+  ]
+ },
+ {
+  "key": "story-fed",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/story-fed-countdown.png"
+  ]
+ },
+ {
+  "key": "story-thursday",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-10-29T07:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/story-thursday.png"
+  ]
+ },
+ {
+  "key": "story-telegram",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-10-31T12:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/story-telegram-invite.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-11-01T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Position sizing, without the guesswork",
+   "Most traders obsess over the entry, then guess the lot size. That guess decides whether a losing streak is a setback or the end of the account.",
+   "Swipe for the formula, a worked EUR/USD example and the drawdown table every trader should know.",
+   "Join our Telegram channel for more guides: t.me/onfinkm",
+   "Full guide on blog.onfin.io",
+   "#forextrading #riskmanagement #positionsizing #tradingeducation #onfin",
+   "Risk warning: trading forex and CFDs on margin carries a high level of risk and may not be suitable for all investors. You may lose more than your initial investment."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-08.png"
+  ]
+ },
+ {
+  "key": "story-alert-ps",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-11-01T12:30:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/story-alert-ps.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Fed decision today",
+   "The Federal Reserve announces its rate decision at 18:00 UTC, with Jerome Powell's press conference at 18:30 UTC.",
+   "Markets expect a hold, so the focus is on what the Fed signals for December. Expect wider spreads and fast moves in USD pairs and gold around the release.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-en.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Fed decision tonight",
+   "The Federal Reserve announces its rate decision at 01:00 Cambodia time (Thursday), with the press conference at 01:30.",
+   "Markets expect a hold, so the focus is on what the Fed signals for December. Expect wider spreads and fast moves in USD pairs and gold around the release.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-kh.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Fed decision tonight",
+   "The Federal Reserve announces its rate decision at 01:00 Cambodia time (Thursday), with the press conference at 01:30.",
+   "Markets expect a hold, so the focus is on what the Fed signals for December. Expect wider spreads and fast moves in USD pairs and gold around the release.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-kh.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Keputusan Fed malam ini",
+   "Federal Reserve mengumumkan keputusan kadar faedah jam 02:00 waktu Malaysia (Khamis), diikuti sidang media jam 02:30.",
+   "Pasaran menjangkakan kadar dikekalkan, jadi tumpuan ialah isyarat Fed untuk Disember. Jangkakan spread lebih lebar dan pergerakan pantas pada pasangan USD dan emas.",
+   "Bukan nasihat pelaburan. Untuk maklumat sahaja.",
+   "CFD berisiko tinggi; anda mungkin kehilangan wang."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-ms.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Решение ФРС сегодня",
+   "ФРС объявит решение по ставке в 21:00 МСК, пресс-конференция начнётся в 21:30 МСК.",
+   "Рынок ждёт сохранения ставки, поэтому главное: сигналы ФРС на декабрь. Возможны расширенные спреды и резкие движения в парах с USD и золоте.",
+   "Не является инвестиционной рекомендацией. Только для информации.",
+   "CFD относятся к высокорисковым инструментам; вы можете потерять деньги."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-ru.png"
+  ]
+ },
+ {
+  "key": "fed-today",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-10-28T12:00:00Z",
+  "story": false,
+  "lines": [
+   "Decisión de la Fed hoy",
+   "La Reserva Federal anuncia su decisión de tipos a las 13:00 en Bogotá y Lima, con la conferencia de prensa a las 13:30.",
+   "El mercado espera que mantenga los tipos, así que la atención está en lo que la Fed deje ver para diciembre. Espera spreads más amplios y movimientos rápidos en pares con USD y en el oro.",
+   "No es asesoramiento de inversión. Solo con fines informativos.",
+   "Los CFD son de alto riesgo; puedes perder dinero."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/fed-es.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Thursday is stacked",
+   "12:30 UTC: US Q3 GDP and September PCE inflation",
+   "13:15 UTC: ECB rate decision",
+   "13:45 UTC: ECB press conference",
+   "Three market movers in 75 minutes, a day after the Fed. Expect EUR/USD and gold to be busy.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-en.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Thursday is stacked",
+   "19:30 Cambodia time: US Q3 GDP and September PCE inflation",
+   "20:15: ECB rate decision",
+   "20:45: ECB press conference",
+   "Three market movers in 75 minutes, a day after the Fed. Expect EUR/USD and gold to be busy.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-kh.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Thursday is stacked",
+   "19:30 Cambodia time: US Q3 GDP and September PCE inflation",
+   "20:15: ECB rate decision",
+   "20:45: ECB press conference",
+   "Three market movers in 75 minutes, a day after the Fed. Expect EUR/USD and gold to be busy.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-kh.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Khamis yang padat",
+   "20:30 waktu Malaysia: KDNK AS suku ketiga dan inflasi PCE September",
+   "21:15: Keputusan kadar ECB",
+   "21:45: Sidang media ECB",
+   "Tiga penggerak pasaran dalam 75 minit, sehari selepas Fed. Jangkakan EUR/USD dan emas aktif.",
+   "Bukan nasihat pelaburan. Untuk maklumat sahaja.",
+   "CFD berisiko tinggi; anda mungkin kehilangan wang."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-ms.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Насыщенный четверг",
+   "15:30 МСК: ВВП США за III квартал и инфляция PCE за сентябрь",
+   "16:15 МСК: решение ЕЦБ по ставке",
+   "16:45 МСК: пресс-конференция ЕЦБ",
+   "Три важных события за 75 минут, на следующий день после ФРС. EUR/USD и золото могут быть активны.",
+   "Не является инвестиционной рекомендацией. Только для информации.",
+   "CFD относятся к высокорисковым инструментам; вы можете потерять деньги."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-ru.png"
+  ]
+ },
+ {
+  "key": "thursday-stacked",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-10-29T06:00:00Z",
+  "story": false,
+  "lines": [
+   "Un jueves cargado",
+   "7:30 (Bogotá y Lima): PIB de EE. UU. del 3T e inflación PCE de septiembre",
+   "8:15: decisión de tipos del BCE",
+   "8:45: conferencia de prensa del BCE",
+   "Tres eventos clave en 75 minutos, un día después de la Fed. Espera movimiento en el EUR/USD y el oro.",
+   "No es asesoramiento de inversión. Solo con fines informativos.",
+   "Los CFD son de alto riesgo; puedes perder dinero."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/thursday-es.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-11-01T08:00:00Z",
+  "story": false,
+  "lines": [
+   "Position sizing, without the guesswork",
+   "Most traders obsess over the entry, then guess the lot size. That guess decides whether a losing streak is a setback or the end of the account.",
+   "Swipe for the formula, a worked EUR/USD example and the drawdown table every trader should know.",
+   "Full guide: https://blog.onfin.io/en/position-sizing-forex-math-beginners-skip",
+   "Follow us on Instagram: instagram.com/onfin.io",
+   "Risk warning: trading forex and CFDs on margin carries a high level of risk and may not be suitable for all investors. You may lose more than your initial investment."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-en-08-instagram.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-11-01T08:00:00Z",
+  "story": false,
+  "lines": [
+   "Position sizing, without the guesswork",
+   "Most traders obsess over the entry, then guess the lot size. That guess decides whether a losing streak is a setback or the end of the account.",
+   "Swipe for the formula, a worked EUR/USD example and the drawdown table every trader should know.",
+   "Full guide: https://blog.onfin.io/en/position-sizing-forex-math-beginners-skip",
+   "Follow us on Instagram: instagram.com/onfin.io",
+   "Risk warning: trading forex and CFDs on margin carries a high level of risk and may not be suitable for all investors. You may lose more than your initial investment."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-en-08-instagram.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-11-01T08:00:00Z",
+  "story": false,
+  "lines": [
+   "Saiz posisi, tanpa meneka",
+   "Kebanyakan pedagang terlalu fokus pada harga masuk, kemudian meneka saiz lot. Tekaan itu menentukan sama ada siri kerugian hanya halangan kecil atau penamat akaun.",
+   "Lihat formula, contoh EUR/USD dan jadual drawdown yang perlu diketahui setiap pedagang.",
+   "Panduan penuh: https://blog.onfin.io/ms/position-sizing-forex-math-beginners-skip",
+   "Ikuti kami di Instagram: instagram.com/onfin.io",
+   "Amaran risiko: dagangan forex dan CFD atas margin membawa risiko tinggi dan mungkin tidak sesuai untuk semua pelabur. Anda mungkin kehilangan lebih daripada pelaburan awal anda."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ms-08.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-11-01T09:00:00Z",
+  "story": false,
+  "lines": [
+   "Размер позиции без догадок",
+   "Большинство трейдеров тщательно выбирают точку входа, а объём лота берут наугад. Именно это решает, станет ли серия убытков неприятностью или концом счёта.",
+   "Внутри: формула, пример по EUR/USD и таблица просадок, которую стоит знать каждому трейдеру.",
+   "Полный гайд: https://blog.onfin.io/ru/position-sizing-forex-math-beginners-skip",
+   "Подписывайтесь в Instagram: instagram.com/onfin.io",
+   "Предупреждение о рисках: торговля форекс и CFD с использованием маржи сопряжена с высоким риском и подходит не всем инвесторам. Вы можете потерять больше первоначальных вложений."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-ru-08.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-11-01T14:00:00Z",
+  "story": false,
+  "lines": [
+   "Tamaño de posición, sin adivinar",
+   "Muchos traders se obsesionan con la entrada y luego adivinan el tamaño del lote. Esa decisión define si una racha perdedora es un tropiezo o el final de la cuenta.",
+   "Desliza para ver la fórmula, un ejemplo con EUR/USD y la tabla de drawdown que todo trader debería conocer.",
+   "Guía completa: https://blog.onfin.io/es/position-sizing-forex-math-beginners-skip",
+   "Síguenos en Instagram: instagram.com/onfin.io",
+   "Advertencia de riesgo: operar forex y CFD con margen conlleva un alto nivel de riesgo y puede no ser adecuado para todos los inversores. Puedes perder más que tu inversión inicial."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-es-08.png"
+  ]
+ },
+ {
+  "key": "carousel-position-sizing",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-11-01T08:00:00Z",
+  "story": false,
+  "lines": [
+   "Position sizing, without the guesswork",
+   "Most traders obsess over the entry, then guess the lot size. That guess decides whether a losing streak is a setback or the end of the account.",
+   "Swipe for the formula, a worked EUR/USD example and the drawdown table every trader should know.",
+   "Full guide: https://blog.onfin.io/en/position-sizing-forex-math-beginners-skip",
+   "Join our Telegram channel: https://t.me/onfinkm",
+   "Risk warning: trading forex and CFDs on margin carries a high level of risk and may not be suitable for all investors. You may lose more than your initial investment."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-01.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-02.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-03.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-04.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-05.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-06.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-07.png",
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/ps-08.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "en",
+  "integrationId": "cmuv1mlcb001dmo0ylwenjxe1",
+  "platform": "telegram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "RBA decides tomorrow",
+   "The Reserve Bank of Australia announces its rate decision on Tuesday 3 November at 03:30 UTC, together with its quarterly Statement on Monetary Policy.",
+   "Watch AUD/USD and AUD/JPY: the statement's tone on inflation and growth can move the Australian dollar as much as the decision itself.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-en.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "kh",
+  "integrationId": "cmvjfl0ed087glf0yuoz284sa",
+  "platform": "telegram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "RBA decides tomorrow",
+   "The Reserve Bank of Australia announces its rate decision on Tuesday 3 November at 10:30 Cambodia time, together with its quarterly Statement on Monetary Policy.",
+   "Watch AUD/USD and AUD/JPY: the statement's tone on inflation and growth can move the Australian dollar as much as the decision itself.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-kh.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "fb",
+  "integrationId": "cmvjg1etr08j7lf0yde4p29lr",
+  "platform": "facebook",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "RBA decides tomorrow",
+   "The Reserve Bank of Australia announces its rate decision on Tuesday 3 November at 10:30 Cambodia time, together with its quarterly Statement on Monetary Policy.",
+   "Watch AUD/USD and AUD/JPY: the statement's tone on inflation and growth can move the Australian dollar as much as the decision itself.",
+   "Not investment advice. For information only.",
+   "CFDs are high-risk; you may lose money."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-kh.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "ms",
+  "integrationId": "cmuv1oz5o002gql0y49vluhy3",
+  "platform": "telegram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "RBA buat keputusan esok",
+   "Reserve Bank of Australia mengumumkan keputusan kadar faedah pada Selasa, 3 November jam 11:30 waktu Malaysia, bersama Penyata Dasar Monetari suku tahunan.",
+   "Pantau AUD/USD dan AUD/JPY: nada kenyataan tentang inflasi dan pertumbuhan boleh menggerakkan dolar Australia sama kuat dengan keputusan itu sendiri.",
+   "Bukan nasihat pelaburan. Untuk maklumat sahaja.",
+   "CFD berisiko tinggi; anda mungkin kehilangan wang."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-ms.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "ru",
+  "integrationId": "cmuv1nud2001qmo0y7xgzq68r",
+  "platform": "telegram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "RBA принимает решение завтра",
+   "Резервный банк Австралии объявит решение по ставке во вторник, 3 ноября, в 06:30 МСК вместе с квартальным докладом о денежно-кредитной политике.",
+   "Следите за AUD/USD и AUD/JPY: тон доклада по инфляции и росту может двигать австралийский доллар не меньше самого решения.",
+   "Не является инвестиционной рекомендацией. Только для информации.",
+   "CFD относятся к высокорисковым инструментам; вы можете потерять деньги."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-ru.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "es",
+  "integrationId": "cmvjg3htg08k9lf0yunmvtsqu",
+  "platform": "telegram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": false,
+  "lines": [
+   "El RBA decide esta noche",
+   "El Banco de la Reserva de Australia anuncia su decisión de tipos el lunes 2 de noviembre a las 22:30 en Bogotá y Lima, junto a su informe trimestral de política monetaria.",
+   "Vigila AUD/USD y AUD/JPY: el tono sobre inflación y crecimiento puede mover el dólar australiano tanto como la propia decisión.",
+   "No es asesoramiento de inversión. Solo con fines informativos.",
+   "Los CFD son de alto riesgo; puedes perder dinero."
+  ],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/rba-es.png"
+  ]
+ },
+ {
+  "key": "rba-preview",
+  "ch": "ig",
+  "integrationId": "cmvl4rmgd12ctmk0yjjk9x6kd",
+  "platform": "instagram",
+  "date": "2026-11-02T10:00:00Z",
+  "story": true,
+  "lines": [],
+  "images": [
+   "/tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/w1/out/story-rba.png"
+  ]
+ }
+]

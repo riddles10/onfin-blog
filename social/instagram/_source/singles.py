@@ -84,7 +84,7 @@ POSTS = [
     '<img class="s-ill" src="ill-gold-bars-sm.png" style="top:150px;width:440px;right:-30px">'
     + li(["Up to 1:3000 on the first $40K of XAUUSD notional", "Tiers step down gradually as your position grows",
           "New positions may be capped at 1:200 around major news and weekends"])
-    + cta("onfin.io/leverage", "<b>MT5 accounts only</b>Up from 1:1000", LEV)},
+    + cta("onfin.io/leverage", "<b>MT5 accounts only</b>Leverage by position size", LEV)},
  {"id": "trader-levels", "theme": "dark", "glow": "right:-420px;top:-380px",
   "html": '<div class="s-tag"><span class="tag">Halfway point</span></div>'
     '<h2 class="s-h" style="max-width:none">Six levels. Which one is yours?</h2>'
@@ -110,16 +110,14 @@ POSTS = [
  {"id": "final-week", "theme": "dark", "glow": "right:-420px;bottom:-420px",
   "html": '<div class="s-tag"><span class="tag fill">Final week</span></div>'
     '<p class="s-big">6 days<small>left to reach your next level</small></p>'
-    '<div class="s-duo">'
-    '<div class="stat"><div class="k">Trader Growth Rewards</div><div class="v l">$3,000</div><div class="d">Top cash reward for traders</div></div>'
-    '<div class="stat"><div class="k">Network Growth Rewards</div><div class="v l">$6,000</div><div class="d">Top payment for partners</div></div></div>'
-    + cta("onfin.io/en/promotions", "<b>Ends 20 November</b>Both campaigns", TC)},
+    + li(["$10,000 net deposit + 120 lots = $600", "$50,000 net deposit + 600 lots = up to $3,000"])
+    + cta("onfin.io/en/promotions", "<b>Ends 20 November</b>Trader Growth Rewards", TC)},
  {"id": "ends-tomorrow", "theme": "light", "glow": "left:-420px;bottom:-420px",
   "html": '<div class="s-tag"><span class="tag fill">Last chance</span></div>'
-    '<p class="s-big" style="font-size:176px;margin-top:50px"><span>Ends</span><br><span>tomorrow</span><small style="font-size:46px">Growth Rewards close on 20 November</small></p>'
+    '<p class="s-big" style="font-size:176px;margin-top:50px"><span>Ends</span><br><span>tomorrow</span><small style="font-size:46px">Trader Growth Rewards closes on 20 November</small></p>'
     + li(["Trades must open and close by 20 November",
           "Withdrawals up to 27 November reduce your NET"])
-    + cta("onfin.io/en/promotions", "<b>Up to $3,000</b>Up to $6,000 for partners", TC)},
+    + cta("onfin.io/en/promotions", "<b>Up to $3,000</b>Paid after validation", TC)},
 ]
 
 
