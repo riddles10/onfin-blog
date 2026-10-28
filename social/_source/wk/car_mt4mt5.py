@@ -61,7 +61,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'MT4 vs MT5:\nwhi
         'end': {'kicker': 'Instagram',
                 'heading': 'Follow us on\n*Instagram*.',
                 'body': 'A new trading guide every Sunday, plus market news during the week.',
-                'actions': ['Save', 'Share', 'Follow @onfin.io']}},
+                'actions': ['Save', 'Share', 'Follow @onfinkm']}},
  'ru': {'cover': {'kicker': 'Гайд по трейдингу', 'title': 'MT4 или MT5:\nкакая *подходит вам*.', 'subtitle': 'Факты о платформах, а не мнения с форумов.'},
         's2': ('CarouselCompare',
                {'kicker': 'Архитектура',
@@ -153,7 +153,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'MT4 vs MT5:\nwhi
         'end': {'kicker': 'Instagram',
                 'heading': 'Síguenos en\n*Instagram*.',
                 'body': 'Una guía nueva cada domingo y noticias del mercado durante la semana.',
-                'actions': ['Guardar', 'Compartir', 'Seguir @onfin.io']}},
+                'actions': ['Guardar', 'Compartir', 'Seguir @onfinkm']}},
  'ms': {'cover': {'kicker': 'Panduan dagangan', 'title': 'MT4 vs MT5:\nmana yang *sesuai anda*.', 'subtitle': 'Fakta platform, bukan pendapat forum.'},
         's2': ('CarouselCompare',
                {'kicker': 'Seni bina',
@@ -199,4 +199,4 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'MT4 vs MT5:\nwhi
         'end': {'kicker': 'Instagram',
                 'heading': 'Ikuti kami di\n*Instagram*.',
                 'body': 'Panduan dagangan baharu setiap Ahad, serta berita pasaran sepanjang minggu.',
-                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfin.io']}}}
+                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfinkm']}}}

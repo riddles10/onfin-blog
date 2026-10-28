@@ -72,7 +72,7 @@ SL = {
              footnote="Break-even win rate = 1 ÷ (1 + reward/risk), before spreads and commissions. Source: OnFin Editorial calculations."),
   myth=dict(kicker="Common mistake", myth="Widening the stop gives the trade room to work.", fact="It turns a defined risk into an open-ended one.",
             body="If you weren't willing to risk 80 pips at entry, don't accept it after the fact. Set the stop and leave it.", mythLabel="Myth", factLabel="Fact"),
-  end=dict(kicker="Instagram", heading="Follow us on\n*Instagram*.", body="A new trading guide every Sunday, plus market news during the week.", actions=["Save", "Share", "Follow @onfin.io"]),
+  end=dict(kicker="Instagram", heading="Follow us on\n*Instagram*.", body="A new trading guide every Sunday, plus market news during the week.", actions=["Save", "Share", "Follow @onfinkm"]),
  ),
  "ru": dict(
   cover=dict(kicker="Гайд по трейдингу", title="Стоп-лосс и тейк-профит:\n*как ставить*.", subtitle="Где фиксировать убыток, а где забирать прибыль.", meta="Гайд 002"),
@@ -116,7 +116,7 @@ SL = {
              footnote="Aciertos para breakeven = 1 ÷ (1 + beneficio/riesgo), sin contar spreads ni comisiones. Fuente: cálculos de OnFin Editorial."),
   myth=dict(kicker="Error común", myth="Ampliar el stop le da espacio a la operación.", fact="Convierte un riesgo definido en uno abierto.",
             body="Si no estabas dispuesto a arriesgar 80 pips al entrar, no lo aceptes después. Pon el stop y déjalo.", mythLabel="Mito", factLabel="Realidad"),
-  end=dict(kicker="Instagram", heading="Síguenos en\n*Instagram*.", body="Una guía nueva cada domingo y noticias del mercado durante la semana.", actions=["Guardar", "Compartir", "Seguir @onfin.io"]),
+  end=dict(kicker="Instagram", heading="Síguenos en\n*Instagram*.", body="Una guía nueva cada domingo y noticias del mercado durante la semana.", actions=["Guardar", "Compartir", "Seguir @onfinkm"]),
  ),
  "ms": dict(
   cover=dict(kicker="Panduan dagangan", title="Stop loss vs take profit,\n*dengan betul*.", subtitle="Di mana memotong kerugian, di mana mengunci keuntungan.", meta="Panduan 002"),
@@ -138,7 +138,7 @@ SL = {
              footnote="Kadar menang pulang modal = 1 ÷ (1 + ganjaran/risiko), sebelum spread dan komisen. Sumber: pengiraan OnFin Editorial."),
   myth=dict(kicker="Kesilapan biasa", myth="Meluaskan stop memberi ruang kepada dagangan.", fact="Ia menukar risiko yang jelas kepada risiko terbuka.",
             body="Jika anda tidak sanggup mengambil risiko 80 pip semasa masuk, jangan terimanya kemudian. Letak stop dan biarkan.", mythLabel="Mitos", factLabel="Fakta"),
-  end=dict(kicker="Instagram", heading="Ikuti kami di\n*Instagram*.", body="Panduan dagangan baharu setiap Ahad, serta berita pasaran sepanjang minggu.", actions=["Simpan", "Kongsi", "Ikuti @onfin.io"]),
+  end=dict(kicker="Instagram", heading="Ikuti kami di\n*Instagram*.", body="Panduan dagangan baharu setiap Ahad, serta berita pasaran sepanjang minggu.", actions=["Simpan", "Kongsi", "Ikuti @onfinkm"]),
  ),
 }
 
@@ -172,10 +172,10 @@ SL_CAP = {
         "Lihat stop berasaskan struktur, tiga cara ambil untung dan matematik pulang modal di sebalik risiko ganjaran."],
 }
 GUIDE = {"en": "Full guide", "ru": "Полный гайд", "es": "Guía completa", "ms": "Panduan penuh"}
-FOLLOW = {"en": "Follow us on Instagram: instagram.com/onfin.io", "ru": "Подписывайтесь в Instagram: instagram.com/onfin.io",
-          "es": "Síguenos en Instagram: instagram.com/onfin.io", "ms": "Ikuti kami di Instagram: instagram.com/onfin.io"}
+FOLLOW = {"en": "Follow us on Instagram: instagram.com/onfinkm", "ru": "Подписывайтесь в Instagram: instagram.com/onfinkm",
+          "es": "Síguenos en Instagram: instagram.com/onfinkm", "ms": "Ikuti kami di Instagram: instagram.com/onfinkm"}
 W.post("carousel-sltp", "ig", "2026-11-08T12:00:00Z",
-       SL_CAP["en"] + ["Follow @onfin.io for a new guide every Sunday.", "Full guide on blog.onfin.io",
+       SL_CAP["en"] + ["Follow @onfinkm for a new guide every Sunday.", "Full guide on blog.onfin.io",
                        "#forextrading #stoploss #takeprofit #riskmanagement #tradingeducation #onfin", FULL_RISK["en"]], sl["en"])
 W.post("carousel-sltp", "fb", "2026-11-08T08:00:00Z",
        SL_CAP["en"] + [f"{GUIDE['en']}: {BLOG.format('en')}", "Join our Telegram channel: https://t.me/onfinkm", FULL_RISK["en"]], sl_fb)

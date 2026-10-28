@@ -19,8 +19,8 @@ from common import S, FULL_RISK
 M = f"file://{S}/w1/media"
 META = {"en": "Guide {:03d}", "ru": "Гайд {:03d}", "es": "Guía {:03d}", "ms": "Panduan {:03d}"}
 GUIDE_LBL = {"en": "Full guide", "ru": "Полный гайд", "es": "Guía completa", "ms": "Panduan penuh"}
-FOLLOW = {"en": "Follow us on Instagram: instagram.com/onfin.io", "ru": "Подписывайтесь в Instagram: instagram.com/onfin.io",
-          "es": "Síguenos en Instagram: instagram.com/onfin.io", "ms": "Ikuti kami di Instagram: instagram.com/onfin.io"}
+FOLLOW = {"en": "Follow us on Instagram: instagram.com/onfinkm", "ru": "Подписывайтесь в Instagram: instagram.com/onfinkm",
+          "es": "Síguenos en Instagram: instagram.com/onfinkm", "ms": "Ikuti kami di Instagram: instagram.com/onfinkm"}
 TG_TIME = {"en": 8, "kh": 8, "ms": 8, "ru": 9, "es": 14, "fb": 8}
 TOT = 8
 
@@ -56,7 +56,7 @@ def build(W, mod, day, ig_cta):
     fb_imgs = en_tg if fb_cta == "telegram" else sets["en"]
     cta_line = {"telegram": "Join our Telegram channel: https://t.me/onfinkm", "instagram": FOLLOW["en"]}
     W.post(f"carousel-{mod.KEY}", "ig", f"{day}T12:00:00Z",
-           mod.CAP["en"] + (["Join our Telegram channel for more guides: t.me/onfinkm"] if ig_cta == "telegram" else ["Follow @onfin.io for a new guide every Sunday."])
+           mod.CAP["en"] + (["Join our Telegram channel for more guides: t.me/onfinkm"] if ig_cta == "telegram" else ["Follow @onfinkm for a new guide every Sunday."])
            + ["Full guide on blog.onfin.io", mod.TAGS, FULL_RISK["en"]], ig_imgs)
     W.post(f"carousel-{mod.KEY}", "fb", f"{day}T08:00:00Z", mod.CAP["en"] + [f"{GUIDE_LBL['en']}: {blog('en')}", cta_line[fb_cta], FULL_RISK["en"]], fb_imgs)
     for ch, l in [("en", "en"), ("kh", "en"), ("ms", "ms"), ("ru", "ru"), ("es", "es")]:

@@ -63,7 +63,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'Lot size in fore
         'end': {'kicker': 'Instagram',
                 'heading': 'Follow us on\n*Instagram*.',
                 'body': 'A new trading guide every Sunday, plus market news during the week.',
-                'actions': ['Save', 'Share', 'Follow @onfin.io']}},
+                'actions': ['Save', 'Share', 'Follow @onfinkm']}},
  'ru': {'cover': {'kicker': 'Гайд по трейдингу', 'title': 'Размер лота на Форексе:\n*объяснение*.', 'subtitle': 'Стандартный, мини, микро и нано: сколько стоит пункт.'},
         's2': ('CarouselText',
                {'kicker': 'Основы',
@@ -159,7 +159,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'Lot size in fore
         'end': {'kicker': 'Instagram',
                 'heading': 'Síguenos en\n*Instagram*.',
                 'body': 'Una guía nueva cada domingo y noticias del mercado durante la semana.',
-                'actions': ['Guardar', 'Compartir', 'Seguir @onfin.io']}},
+                'actions': ['Guardar', 'Compartir', 'Seguir @onfinkm']}},
  'ms': {'cover': {'kicker': 'Panduan dagangan', 'title': 'Saiz lot dalam forex,\n*diterangkan*.', 'subtitle': 'Standard, mini, mikro dan nano, serta nilai setiap pip.'},
         's2': ('CarouselText',
                {'kicker': 'Asas',
@@ -207,4 +207,4 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'Lot size in fore
         'end': {'kicker': 'Instagram',
                 'heading': 'Ikuti kami di\n*Instagram*.',
                 'body': 'Panduan dagangan baharu setiap Ahad, serta berita pasaran sepanjang minggu.',
-                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfin.io']}}}
+                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfinkm']}}}

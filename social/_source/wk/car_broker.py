@@ -60,7 +60,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'How to choose a 
         'end': {'kicker': 'Instagram',
                 'heading': 'Follow us on\n*Instagram*.',
                 'body': 'A new trading guide every Sunday, plus market news during the week.',
-                'actions': ['Save', 'Share', 'Follow @onfin.io']}},
+                'actions': ['Save', 'Share', 'Follow @onfinkm']}},
  'ru': {'cover': {'kicker': 'Гайд по трейдингу', 'title': 'Как выбрать брокера:\n*чек-лист 2026*.', 'subtitle': 'Пять фильтров, которые стоит пройти до депозита.'},
         's2': ('CarouselText',
                {'kicker': 'Регулирование',
@@ -150,7 +150,7 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'How to choose a 
         'end': {'kicker': 'Instagram',
                 'heading': 'Síguenos en\n*Instagram*.',
                 'body': 'Una guía nueva cada domingo y noticias del mercado durante la semana.',
-                'actions': ['Guardar', 'Compartir', 'Seguir @onfin.io']}},
+                'actions': ['Guardar', 'Compartir', 'Seguir @onfinkm']}},
  'ms': {'cover': {'kicker': 'Panduan dagangan', 'title': 'Cara memilih broker:\n*senarai semak 2026*.', 'subtitle': 'Lima penapis sebelum anda membuat deposit.'},
         's2': ('CarouselText',
                {'kicker': 'Kawal selia',
@@ -195,4 +195,4 @@ SLIDES = {'en': {'cover': {'kicker': 'Trading guide', 'title': 'How to choose a 
         'end': {'kicker': 'Instagram',
                 'heading': 'Ikuti kami di\n*Instagram*.',
                 'body': 'Panduan dagangan baharu setiap Ahad, serta berita pasaran sepanjang minggu.',
-                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfin.io']}}}
+                'actions': ['Simpan', 'Kongsi', 'Ikuti @onfinkm']}}}
