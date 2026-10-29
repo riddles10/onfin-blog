@@ -11,5 +11,10 @@ window.R = {
   eligible: "Cambodia residents 18+ only",
   handle: "@onfinkm",
   disclaimer: "No purchase, account or deposit needed. Not investment advice. Not sponsored by or associated with Instagram. Full rules in the caption. CFDs are high-risk; you may lose money.",
-  cover: "Win *$50 USDT*.\nPredict the\ngold price."
+  cover: "Win *$50 USDT*.\nPredict the\ngold price.",
+  fb: {
+    steps: ["Follow our page", "Comment your gold price prediction for Tue 3 Nov, 20:00 Cambodia time", "Entries close Sun 1 Nov, 23:59 Cambodia time"],
+    handle: "onfin.io",
+    disclaimer: "No purchase, account or deposit needed. Not investment advice. Not sponsored by or associated with Facebook. Full rules in the post. CFDs are high-risk; you may lose money."
+  }
 };

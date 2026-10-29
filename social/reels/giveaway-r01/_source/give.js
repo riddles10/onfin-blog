@@ -1,6 +1,8 @@
 /* Weekly giveaway reel: prize, this week's question, how to enter, closest price wins, outro.
    Copy comes from window.R (round.js), the chart from window.GOLD (normalised daily closes). window.setT(seconds) renders one frame. */
-var h = React.createElement, OF = window.OF;
+var h = React.createElement, OF = window.OF, Q = new URLSearchParams(location.search);
+/* ?p=fb swaps in the Facebook copy (follow step, handle, disclaimer) from R.fb */
+if (Q.get("p") === "fb" && R.fb) Object.assign(R, R.fb);
 var clamp = function (x) { return Math.max(0, Math.min(1, x)); };
 var ease = function (x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); };
 var p = function (t, s, d) { return ease((t - s) / (d || 0.55)); };
@@ -107,7 +109,7 @@ function Reel(props) {
 }
 
 var root = ReactDOM.createRoot(document.getElementById("root"));
-var cover = new URLSearchParams(location.search).get("cover");
+var cover = Q.get("cover");
 window.REEL_DUR = DUR;
 window.setT = function (t) {
   return new Promise(function (res) {

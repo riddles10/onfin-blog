@@ -1,8 +1,8 @@
-// node render_g.js <out_dir> [t1,t2,...]   (no list: every frame at 30fps)   |   node render_g.js cover <out.png>
+// node render_g.js <out_dir> [t1,t2,...] [query]   (no list or '-': every frame at 30fps)   |   node render_g.js cover <out.png>
 const {chromium}=require('playwright');const fs=require('fs');const path=require('path');
-(async()=>{const [a,b]=process.argv.slice(2);const br=await chromium.launch();const p=await br.newPage({viewport:{width:1080,height:1920}});
+(async()=>{const [a,b0,qs]=process.argv.slice(2);const b=b0==='-'?undefined:b0;const br=await chromium.launch();const p=await br.newPage({viewport:{width:1080,height:1920}});
 p.on('pageerror',e=>console.error('pageerror',e.message));
-const cov=a==='cover';await p.goto('file://'+path.join(__dirname,'give.html')+(cov?'?cover=1':''));await p.evaluate(()=>window.REEL_READY);
+const cov=a==='cover';await p.goto('file://'+path.join(__dirname,'give.html')+(cov?'?cover=1':(qs?'?'+qs:'')));await p.evaluate(()=>window.REEL_READY);
 if(cov){await p.evaluate(()=>window.setT(0));await p.screenshot({path:b});await br.close();return;}
 fs.mkdirSync(a,{recursive:true});const dur=await p.evaluate(()=>window.REEL_DUR);
 const ts=b?b.split(',').map(Number):Array.from({length:Math.round(dur*30)},(_,i)=>i/30);
