@@ -84,9 +84,22 @@ def main():
     wd = os.path.join(HERE, "work", sid); os.makedirs(wd, exist_ok=True); os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
     src = spec["src"] if os.path.isabs(spec["src"]) else os.path.join(HERE, spec["src"])
     clip, wav = os.path.join(wd, "clip.mp4"), os.path.join(wd, "clip16k.wav")
-    t0, t1 = float(spec["in"]), float(spec["out"])
-    sh("ffmpeg", "-v", "error", "-y", "-ss", str(t0), "-to", str(t1), "-i", src, "-c:v", "libx264", "-crf", "16", "-preset", "fast",
-       "-c:a", "aac", "-b:a", "256k", clip)
+    # one window ("in"/"out") or several jump-cut windows ("segments": [[in, out], ...]) joined in order
+    segs = spec.get("segments") or [[spec["in"], spec["out"]]]
+    parts = []
+    for i, (t0, t1) in enumerate(segs):
+        part = os.path.join(wd, "part%d.mp4" % i)
+        d = float(t1) - float(t0)  # short audio fades so jump cuts don't click
+        sh("ffmpeg", "-v", "error", "-y", "-ss", str(t0), "-to", str(t1), "-i", src, "-vf", "fps=30",
+           "-af", "afade=t=in:d=0.04,afade=t=out:st=%.3f:d=0.04" % (d - 0.04), "-c:v", "libx264", "-crf", "16",
+           "-preset", "fast", "-c:a", "aac", "-b:a", "256k", "-ar", "48000", part)
+        parts.append(part)
+    if len(parts) == 1:
+        os.replace(parts[0], clip)
+    else:
+        lst = os.path.join(wd, "parts.txt")
+        open(lst, "w").write("".join("file '%s'\n" % p for p in parts))
+        sh("ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", clip)
     sh("ffmpeg", "-v", "error", "-y", "-i", clip, "-ac", "1", "-ar", "16000", wav)
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", clip]))
     fixed = os.path.join(wd, "words_fixed.txt")
@@ -94,6 +107,12 @@ def main():
         words = [[l.split()[0], float(l.split()[1]), float(l.split()[2])] for l in open(fixed, encoding="utf-8") if l.strip()]
     else:
         words = transcribe(wav, os.path.join(wd, "words.json"))
+    # drop fillers from captions and apply spelling fixes from the spec, e.g. "fix": {"Kernan": "Kernen"}
+    fixes = spec.get("fix", {})
+    words = [[" ".join(fixes.get(t, t) for t in w[0].split()), w[1], w[2]] for w in words
+             if not re.fullmatch(r"(um|uh|uhm|erm)[,.]?", w[0].lower())]
+    for k, v in fixes.items():
+        words = [[w[0].replace(k, v), w[1], w[2]] for w in words]
     card, wm = os.path.join(wd, "card.png"), os.path.join(wd, "wm.png")
     geo = render_card(spec["hook"], box_h, card, wm)
     vy = geo["video_y"]; cap_y = vy + int(box_h * 0.66)
