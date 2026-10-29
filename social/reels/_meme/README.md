@@ -1,6 +1,6 @@
 # Meme-style clip reels (news slots)
 
-White hook card (OnFin avatar, @onfinkm, one-line hook), the real clip full width, burned-in word captions, a light "onfin" watermark. Original audio, no voiceover.
+White hook card (OnFin bolt avatar from `logo/avatar-bolt.jpg`, @onfinkm, one-line hook), the real clip full width, burned-in word captions near the bottom of the clip (`cap_pos`, default 0.86). No watermark. Original audio, no voiceover.
 
 1. Put the source video in `raw/`.
 2. Write a spec: `{"id": "flash-crash", "src": "raw/flash.mp4", "in": 95, "out": 130, "hook": "...", "crop": 0.5, "box_h": 660}`.

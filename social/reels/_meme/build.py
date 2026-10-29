@@ -1,4 +1,4 @@
-"""Meme-style clip reel (hook card on white, real clip, burned-in captions, OnFin watermark).
+"""Meme-style clip reel (hook card on white with the OnFin bolt avatar, real clip, burned-in captions).
 
 Run with the faster-whisper venv:  /tmp/claude-0/fw/bin/python build.py spec.json
 spec.json:
@@ -115,16 +115,16 @@ def main():
         words = [[w[0].replace(k, v), w[1], w[2]] for w in words]
     card, wm = os.path.join(wd, "card.png"), os.path.join(wd, "wm.png")
     geo = render_card(spec["hook"], box_h, card, wm)
-    vy = geo["video_y"]; cap_y = vy + int(box_h * 0.66)
+    vy = geo["video_y"]; cap_y = vy + int(box_h * spec.get("cap_pos", 0.86))  # caption centre, as a fraction of the video box
     ass = os.path.join(wd, "captions.ass")
     write_ass(words, ass, cap_y, dur, spec.get("censor", []))
     cx = float(spec.get("crop", 0.5))
     out = os.path.join(HERE, "out", sid + ".mp4")
     fc = ("[1:v]fps=30,scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d:(iw-%d)*%.3f:(ih-%d)/2,setsar=1[v];"
-          "[0:v][v]overlay=0:%d:shortest=1[a];[a][2:v]overlay=0:0:shortest=1[b];"
+          "[0:v][v]overlay=0:%d:shortest=1[b];"
           "[b]subtitles=%s:fontsdir=%s[out];[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[au]") % (
         W, box_h, W, box_h, W, cx, box_h, vy, ass, os.path.join(HERE, "fonts"))
-    sh("ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", card, "-i", clip, "-loop", "1", "-i", wm, "-filter_complex", fc,
+    sh("ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", card, "-i", clip, "-filter_complex", fc,
        "-map", "[out]", "-map", "[au]", "-t", "%.3f" % dur, "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
        "-r", "30", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out)
     print(json.dumps({"out": out, "dur": round(dur, 2), "video_y": vy, "words": len(words)}))
