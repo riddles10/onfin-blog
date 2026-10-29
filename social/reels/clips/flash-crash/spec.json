@@ -1,0 +1,27 @@
+{
+ "id": "flash-crash",
+ "src": "raw/v6Pa6i-EKmk.webm",
+ "segments": [
+  [
+   186.3,
+   203.15
+  ],
+  [
+   225.5,
+   231.95
+  ],
+  [
+   277.7,
+   285.35
+  ]
+ ],
+ "box_h": 820,
+ "fix": {
+  "bit": "bid",
+  "bit.": "bid.",
+  "Operate": "Offered at",
+  "itself": "to sell",
+  "us": "it"
+ },
+ "hook": "Live squawk audio as S&P 500 futures crashed on 6 May 2010:"
+}

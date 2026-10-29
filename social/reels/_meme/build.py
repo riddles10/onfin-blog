@@ -6,6 +6,7 @@ spec.json:
    "hook": "When the Fed chair gets asked about rate cuts:",
    "crop": 0.5,            # horizontal centre of the crop when the clip is wider than the box (0 left, 1 right)
    "box_h": 660,           # height of the video box (full width 1080)
+   "zoom": [0.3, 0.2, 0.4], # optional pre-crop of the source: left, top, width as fractions (height follows the box aspect)
    "censor": ["word"]}     # optional words to mask in captions
 Writes out/<id>.mp4 plus work/<id>/ (trimmed clip, words.json, captions.ass, card.png).
 If work/<id>/words_fixed.txt exists ("word start end" per line), it replaces the transcript.
@@ -127,10 +128,14 @@ def main():
     write_ass(words, ass, cap_y, dur, spec.get("censor", []))
     cx = float(spec.get("crop", 0.5))
     out = os.path.join(HERE, "out", sid + ".mp4")
-    fc = ("[1:v]fps=30,scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d:(iw-%d)*%.3f:(ih-%d)/2,setsar=1[v];"
+    zoom = ""
+    if spec.get("zoom"):  # punch in on a wide shot before filling the box
+        zx, zy, zw = spec["zoom"]
+        zoom = "crop=iw*%.4f:iw*%.4f:iw*%.4f:ih*%.4f," % (zw, zw * box_h / W, zx, zy)
+    fc = ("[1:v]fps=30,%sscale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d:(iw-%d)*%.3f:(ih-%d)/2,setsar=1[v];"
           "[0:v][v]overlay=0:%d:shortest=1[b];"
           "[b]subtitles=%s:fontsdir=%s[out];[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[au]") % (
-        W, box_h, W, box_h, W, cx, box_h, vy, ass, os.path.join(HERE, "fonts"))
+        zoom, W, box_h, W, box_h, W, cx, box_h, vy, ass, os.path.join(HERE, "fonts"))
     sh("ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", card, "-i", clip, "-filter_complex", fc,
        "-map", "[out]", "-map", "[au]", "-t", "%.3f" % dur, "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
        "-r", "30", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out)
