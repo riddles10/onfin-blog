@@ -1,4 +1,4 @@
-// node render_c.js <out_prefix> [p=fb]  -> <out_prefix>-1.png .. -5.png (1080x1350)
+// node render_c.js <out_prefix> [query, e.g. p=fb or r=02&p=fb]  -> <out_prefix>-1.png .. -5.png (1080x1350)
 const {chromium}=require('playwright');const path=require('path');
 (async()=>{const [pre,qs]=process.argv.slice(2);const br=await chromium.launch();const p=await br.newPage({viewport:{width:1080,height:1350}});
 p.on('pageerror',e=>console.error('pageerror',e.message));

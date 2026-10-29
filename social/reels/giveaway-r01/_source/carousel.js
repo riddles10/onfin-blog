@@ -1,4 +1,5 @@
-/* Giveaway round 1 as a 5-slide carousel (1080x1350). ?s=1..5 picks the slide, ?p=fb swaps in the Facebook copy. */
+/* Weekly giveaway as a 5-slide carousel (1080x1350). ?s=1..5 picks the slide, ?p=fb swaps in the Facebook copy,
+   ?r=02 loads round02.js + car02.js (default: round 1, round.js + car.js). */
 var h = React.createElement, OF = window.OF, Q = new URLSearchParams(location.search);
 var S = +(Q.get("s") || 1), FB = Q.get("p") === "fb", N = 5;
 var C = {
@@ -28,35 +29,35 @@ function Cover() {
     h("h1", { key: "w", style: Object.assign(title(130), { marginTop: 70 }) }, "Win"),
     h("h1", { key: "n", style: Object.assign(title(260), { color: "var(--accent)" }) }, "$50"),
     h("div", { key: "u", style: Object.assign({}, mono, { fontSize: 60, color: "var(--accent)", marginTop: 8 }) }, "USDT"),
-    h("p", { key: "s", style: { margin: "64px 0 0", fontSize: 50, fontWeight: 600, lineHeight: 1.2, whiteSpace: "pre-line" } }, rich("Predict the *gold* price.\nThe closest guess wins.")),
+    h("p", { key: "s", style: { margin: "64px 0 0", fontSize: 50, fontWeight: 600, lineHeight: 1.2, whiteSpace: "pre-line" } }, rich("Predict the *" + CAR.asset + "* price.\nThe closest guess wins.")),
     h("div", { key: "sw", style: Object.assign({}, mono, { position: "absolute", left: 0, bottom: 0, fontSize: 26, color: "var(--text-secondary)" }) }, "Swipe to enter  →")
   ]);
 }
 
 function Question() {
-  var G = window.GOLD, n = G.length, W = 904, H = 470;
+  var G = (window.R && R.series) || window.GOLD, n = G.length, W = 904, H = 470;
   var X = function (i) { return i / (n - 1) * W * 0.66; }, Y = function (v) { return 40 + (1 - v) * (H - 80); };
   var d = G.map(function (v, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); }).join(" ");
   var lx = X(n - 1), ly = Y(G[n - 1]), qx = W * 0.9;
   return Frame([
     h(OF.Kicker, { key: "k", size: 26 }, "This week's question"),
-    h("h1", { key: "t", style: Object.assign(title(72), { marginTop: 50 }) }, rich("Where will gold be\non *Tuesday 3 Nov*,\n20:00 Cambodia time?")),
+    h("h1", { key: "t", style: Object.assign(title(72), { marginTop: 50 }) }, rich(CAR.question)),
     h("div", { key: "c", style: { position: "relative", width: W, height: H, marginTop: 50 } }, [
       h("svg", { key: "s", width: W, height: H, style: { position: "absolute", left: 0, top: 0, overflow: "visible" } }, [
         h("path", { key: "l", d: d, fill: "none", stroke: "#fff", strokeWidth: 5, strokeLinejoin: "round" }),
         h("line", { key: "d", x1: lx, y1: ly, x2: qx, y2: ly, stroke: "var(--accent)", strokeWidth: 4, strokeDasharray: "12 12" }),
         h("circle", { key: "n", cx: lx, cy: ly, r: 11, fill: "#fff", stroke: "#0b0b0b", strokeWidth: 4 })
       ]),
-      h("div", { key: "pl", style: Object.assign({}, mono, { position: "absolute", left: 0, top: -6, fontSize: 24, color: "var(--text-secondary)" }) }, "XAU/USD, last 3 months"),
+      h("div", { key: "pl", style: Object.assign({}, mono, { position: "absolute", left: 0, top: -6, fontSize: 24, color: "var(--text-secondary)" }) }, CAR.chartLabel),
       h("div", { key: "td", style: Object.assign({}, mono, { position: "absolute", left: lx - 50, top: ly + 34, fontSize: 24 }) }, "Today"),
       h("div", { key: "q", style: { position: "absolute", left: qx - 60, top: ly - 60, width: 120, height: 120, borderRadius: 120, background: "var(--accent)", color: "#0b0b0b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 76, fontWeight: 800 } }, "?"),
-      h("div", { key: "tg", style: Object.assign({}, mono, { position: "absolute", right: 0, top: ly + 80, fontSize: 26, color: "var(--accent)" }) }, "Tue 3 Nov, 20:00")
+      h("div", { key: "tg", style: Object.assign({}, mono, { position: "absolute", right: 0, top: ly + 80, fontSize: 26, color: "var(--accent)" }) }, CAR.target)
     ])
   ]);
 }
 
 function Enter() {
-  var steps = [C.follow, "Comment your gold price prediction, e.g. 4052.75", "Enter by Sun 1 Nov, 23:59 Cambodia time"];
+  var steps = [C.follow, CAR.step2, CAR.step3];
   return Frame([
     h(OF.Kicker, { key: "k", size: 26 }, "How to enter"),
     h("div", { key: "f", style: { marginTop: 56 } }, steps.map(function (s, i) {
@@ -69,9 +70,9 @@ function Enter() {
 function Rules() {
   var items = [
     ["The closest prediction wins", "$50 USDT, one winner in total."],
-    ["The price that decides it", "XAU/USD bid on OnFin MT5 at 20:00 Cambodia time on Tue 3 Nov, from the opening price of that one-minute candle. We'll post a screenshot."],
+    ["The price that decides it", CAR.source],
     ["A tie?", "The earlier comment wins."],
-    ["Winner announced Thu 5 Nov", "Paid in USDT (TRC-20) within 7 days of confirming."]
+    [CAR.winner, "Paid in USDT (TRC-20) within 7 days of confirming."]
   ];
   return Frame([
     h(OF.Kicker, { key: "k", size: 26 }, "How we pick the winner"),
