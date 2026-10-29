@@ -113,6 +113,13 @@ def main():
              if not re.fullmatch(r"(um|uh|uhm|erm)[,.]?", w[0].lower())]
     for k, v in fixes.items():
         words = [[w[0].replace(k, v), w[1], w[2]] for w in words]
+    merged = []  # whisper splits hyphenated words ("low", "-cost"): join them back
+    for w in words:
+        if merged and w[0].startswith("-"):
+            merged[-1] = [merged[-1][0] + w[0], merged[-1][1], w[2]]
+        else:
+            merged.append(w)
+    words = merged
     card, wm = os.path.join(wd, "card.png"), os.path.join(wd, "wm.png")
     geo = render_card(spec["hook"], box_h, card, wm)
     vy = geo["video_y"]; cap_y = vy + int(box_h * spec.get("cap_pos", 0.86))  # caption centre, as a fraction of the video box
