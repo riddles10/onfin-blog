@@ -6,7 +6,7 @@ Source: Lex Fridman Podcast #413 with Bill Ackman, https://www.youtube.com/watch
 
 Bill Ackman bet against Herbalife. Carl Icahn took the other side, got on the company's board and squeezed him.
 
-When you buy, the most you can lose is what you paid. When you short, a price you sold at 10 can go to 100, and the loss has no ceiling.
+When you buy a stock outright, the most it can fall is to zero. When you short, a price you sold at 10 can go to 100, and the loss has no ceiling.
 
 "He made a billion, we lost a billion."
 
