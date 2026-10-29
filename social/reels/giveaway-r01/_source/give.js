@@ -35,7 +35,7 @@ function Prize(t) {
 }
 
 function Ask(t) {
-  var s = M.ask, W = 842, H = 470, G = window.GOLD, n = G.length;
+  var s = M.ask, W = 842, H = 470, G = R.series || window.GOLD, n = G.length;
   var X = function (i) { return i / (n - 1) * W * 0.64; }, Y = function (v) { return 40 + (1 - v) * (H - 80); };
   var k = p(t, s + 0.6, 1.8), m = Math.max(1, Math.round(k * (n - 1)));
   var d = G.slice(0, m + 1).map(function (v, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); }).join(" ");
