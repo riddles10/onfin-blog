@@ -1,0 +1,23 @@
+{
+ "id": "powell-last",
+ "src": "raw/UR2yFg--1jY.webm",
+ "segments": [
+  [
+   225.1,
+   241.3
+  ],
+  [
+   374.2,
+   392.15
+  ]
+ ],
+ "zoom": [
+  0.15,
+  0.08,
+  0.7
+ ],
+ "fix": {
+  "Walsh": "Warsh"
+ },
+ "hook": "Jerome Powell's last press conference as Fed chair:"
+}
