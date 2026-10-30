@@ -135,7 +135,7 @@ def main():
     fc = ("[1:v]fps=30,%sscale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d:(iw-%d)*%.3f:(ih-%d)/2,setsar=1[v];"
           "[0:v][v]overlay=0:%d:shortest=1[b];"
           "[b]subtitles=%s:fontsdir=%s[out];[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[au]") % (
-        zoom, W, box_h, W, box_h, W, cx, box_h, vy, ass, os.path.join(HERE, "fonts"))
+        zoom, W, box_h, W, box_h, W, cx, box_h, vy, ass, os.environ.get("FONTS_DIR", os.path.join(HERE, "fonts")))
     sh("ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", card, "-i", clip, "-filter_complex", fc,
        "-map", "[out]", "-map", "[au]", "-t", "%.3f" % dur, "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
        "-r", "30", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out)

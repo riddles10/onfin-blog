@@ -5,8 +5,9 @@ await p.goto('file://'+path.join(__dirname,'card.html'));await p.evaluate(()=>do
 const geo=await p.evaluate(({hook,box_h})=>{
   document.getElementById('hook').textContent=hook;
   const card=document.getElementById('card');const ch=card.getBoundingClientRect().height;
-  const gap=44,total=ch+gap+box_h;const top=Math.max(300,Math.round((1920-total)/2)-30);
-  card.style.top=top+'px';return {video_y:top+Math.round(ch)+gap};
+  // video box sits dead centre of the 1920 frame; the hook card sits directly above it
+  const gap=44,vy=Math.round((1920-box_h)/2);const top=Math.max(60,vy-gap-Math.round(ch));
+  card.style.top=top+'px';return {video_y:Math.max(vy,top+Math.round(ch)+gap)};
 },{hook:o.hook,box_h:o.box_h});
 await p.screenshot({path:o.card});
 await p.evaluate(({vy,box_h})=>{document.body.className='wm';document.documentElement.style.background='transparent';document.getElementById('card').style.display='none';
