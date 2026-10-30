@@ -11,23 +11,23 @@ Verdicts:
 
 Sources: Bloomberg, "Trump Made 29,000 Securities Trades, More Than All of Congress" (Sep 2026); ABC News, "Trump discloses 21,000 securities trades during first year in office"; Fortune (2012) on Obama's holdings; Snopes on Biden's holdings; OGE Form 278e filings.
 
+Design v2 (photo-led, 30 Oct): official White House portraits from Wikimedia Commons, public domain.
+
 Files: carousel-01..08.jpg (Instagram), infographic-en.jpg (Facebook, Telegram EN and Cambodia), infographic-ms/ru/es.jpg (Telegram MS, RU, ES).
 
 ## instagram
 
-Do US presidents trade stocks while in office? A viral post says Clinton, Bush, Obama and Biden made zero trades, Trump made 431 in his first term and 28,700 since 2025. We checked each claim.
+Do US presidents trade stocks while in office? A viral post made six claims. We checked each one.
 
-Clinton and George W. Bush: misleading. Their assets sat in blind trusts run by independent trustees. Trading could happen inside the trust, but the presidents had no say and the trades were not disclosed one by one.
+Clinton and Bush, "zero trades": misleading. Their money sat in blind trusts run by independent trustees.
 
-Obama and Biden: mostly true. Neither held individual stocks. Obama kept his money in Treasuries and index funds (Fortune), and Biden's disclosures show no stocks owned directly (Snopes).
+Obama and Biden, "zero trades": mostly true. No individual stocks.
 
-Trump, 2017 to 2021: unverified. ABC News reports his 2017 disclosure listed 86 stock transactions. We found no source for 431.
+Trump 2017 to 2021, "431 trades": unverified. ABC News reports 86 stock trades on his 2017 filing.
 
-Trump, since January 2025: true. Bloomberg counted nearly 28,700 trades by Trump or his money managers through June 2026, more than the roughly 22,200 reported by all members of Congress over the same period. The White House says outside managers run the accounts through automated portfolios.
+Trump since 2025, "28,700 trades": true. That is Bloomberg's count for Trump or his money managers through June 2026, more than all of Congress combined (about 22,200).
 
-These filings arrive up to 45 days after a trade and show values in broad ranges, so they tell you what already happened, not what comes next.
-
-Sources: Bloomberg (Sep 2026), ABC News, Fortune, Snopes, US Office of Government Ethics filings.
+Sources: Bloomberg, ABC News, Fortune, Snopes, OGE filings. Photos: official White House portraits (public domain).
 
 Not investment advice. CFDs are high-risk; you may lose money.
 
