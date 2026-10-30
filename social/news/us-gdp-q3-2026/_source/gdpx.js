@@ -75,3 +75,40 @@
           h("span", { style: { fontSize: 22, fontWeight: 600, color: "rgba(255,255,255,0.9)" } }, p.source))));
   };
 })();
+/* PeakChartSlide: closes line chart that marks the peak and the last close. */
+(function () {
+  var h = React.createElement, OF = window.OF;
+  var SH = "0 2px 18px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.6)";
+  function rich(t) { var parts = String(t).split("*"); return parts.map(function (s, i) { return i % 2 ? h("span", { key: i, style: { color: "var(--accent)" } }, s) : s; }); }
+  window.OF.PeakChartSlide = function (p) {
+    var W = 880, H = 500, pad = 34, xs = p.closes.length, mn = Math.min.apply(null, p.closes), mx = Math.max.apply(null, p.closes);
+    var lo = mn - (mx - mn) * 0.15, hi = mx + (mx - mn) * 0.2, pk = p.closes.indexOf(mx);
+    function X(i) { return pad + i * (W - 2 * pad) / (xs - 1); } function Y(v) { return pad + (hi - v) * (H - 2 * pad) / (hi - lo); }
+    var pts = p.closes.map(function (v, i) { return X(i) + "," + Y(v); });
+    return h(OF.Canvas, { format: "post" },
+      h("img", { src: p.bg, style: { position: "absolute", inset: -40, width: "calc(100% + 80px)", height: "calc(100% + 80px)", objectFit: "cover", objectPosition: p.bgpos || "50% 50%", filter: "blur(26px) brightness(0.45) saturate(1.1)" } }),
+      h("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55))" } }),
+      h("div", { style: { position: "absolute", left: 48, top: 46, zIndex: 3, display: "flex", alignItems: "center", gap: 14 } },
+        h("img", { src: p.avatar, style: { width: 56, height: 56, borderRadius: "50%", boxShadow: "0 2px 10px rgba(0,0,0,0.35)" } }),
+        h("span", { style: { fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 26, color: "#fff", textShadow: SH } }, "@onfinkm")),
+      h("div", { style: { position: "absolute", left: 60, right: 60, top: 150, bottom: 70, zIndex: 2, display: "flex", flexDirection: "column", gap: 30, justifyContent: "center" } },
+        h("p", { style: { margin: 0, fontFamily: "var(--font-display)", fontWeight: 800, fontSize: p.lsize || 60, lineHeight: 1.08, letterSpacing: "-0.015em", color: "#fff", textShadow: SH, textWrap: "balance" } }, rich(p.line)),
+        h("div", { style: { borderRadius: 26, background: "#111", border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 24px 60px rgba(0,0,0,0.55)", padding: "26px 30px 18px" } },
+          h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "baseline" } },
+            h("span", { style: { fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 40, color: "#fff" } }, p.symbol),
+            h("span", { style: { fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 44, color: "var(--down)" } }, p.change)),
+          h("span", { style: { fontSize: 22, color: "rgba(255,255,255,0.6)" } }, p.sub),
+          h("svg", { width: W - 60, height: H, viewBox: "0 0 " + W + " " + H, style: { display: "block", marginTop: 8 } },
+            h("polyline", { points: pts.slice(0, pk + 1).join(" "), fill: "none", stroke: "rgba(255,255,255,0.85)", strokeWidth: 5, strokeLinejoin: "round" }),
+            h("polyline", { points: pts.slice(pk).join(" "), fill: "none", stroke: "#ff5c5c", strokeWidth: 6, strokeLinejoin: "round" }),
+            h("circle", { cx: X(pk), cy: Y(mx), r: 11, fill: "var(--accent)" }),
+            h("circle", { cx: X(xs - 1), cy: Y(p.closes[xs - 1]), r: 11, fill: "#ff5c5c" }),
+            h("text", { x: X(pk), y: Y(mx) - 24, fill: "var(--accent)", fontSize: 30, fontWeight: 800, textAnchor: "middle", fontFamily: "Montserrat" }, p.peakLabel),
+            h("text", { x: X(xs - 1) - 10, y: Y(p.closes[xs - 1]) + 84, fill: "#ff5c5c", fontSize: 30, fontWeight: 800, textAnchor: "end", fontFamily: "Montserrat" }, p.lastLabel)),
+          h("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 20, color: "rgba(255,255,255,0.5)", marginTop: 4 } },
+            h("span", null, p.startLabel), h("span", null, p.endLabel))),
+        h("div", { style: { alignSelf: "flex-start", display: "flex", alignItems: "center", gap: 10, padding: "10px 18px", borderRadius: 999, background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)" } },
+          h("span", { style: { width: 10, height: 10, borderRadius: 999, background: "var(--accent)" } }),
+          h("span", { style: { fontSize: 22, fontWeight: 600, color: "rgba(255,255,255,0.9)" } }, p.source))));
+  };
+})();
