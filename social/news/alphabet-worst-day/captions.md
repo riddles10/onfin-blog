@@ -5,7 +5,7 @@ Facts:
 - Yahoo Finance (Q3 2026): revenue $127.58B vs $127.93B expected; advertising $82.01B vs $83.5B expected; EPS $2.12 vs $3.01 expected; Cloud $30.71B vs $29.1B expected, +103%; free cash flow -$9.06B (from -$5.85B in Q2).
 - Photo: "Googleplex HQ (cropped).jpg", Asoundd (original by The Pancake of Heaven!), CC BY-SA 4.0, Wikimedia Commons.
 
-Files: carousel-01..05.jpg (Instagram), card-en.jpg (Facebook, Telegram EN and Cambodia), card-ms/ru/es.jpg (Telegram MS, RU, ES).
+Files: evidence/alpha-{en,ms,ru,es}-01..07.jpg, the evidence-led carousel (approved replacement, 30 Oct 2026). EN goes to Instagram, Facebook, Telegram EN and Cambodia; MS, RU, ES go to their Telegram channels. The earlier carousel-01..05.jpg and card-*.jpg are superseded. Source: _source/alphabet_evid.py.
 
 ## instagram
 
