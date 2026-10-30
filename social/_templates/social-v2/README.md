@@ -13,6 +13,8 @@ Rules agreed on 30 Oct 2026.
 - If a slide states a number or explains something, the same slide shows the evidence that supports it (a highlighted screenshot, the data chart, or the filing), plus a source pill (outlet and date).
 - One short line on top of each evidence card, at most about 8 words.
 - Highlight the key phrase or figure inside the screenshot (lime marker) instead of retyping it.
+- Video slides are allowed: a short real clip (the person saying it, the event footage) with a simple burned-in caption, in the same style as the clip reel template. Credit the footage on the slide and in the caption.
+- This is the default for every carousel unless a brief says otherwise.
 
 ## Branding and close
 - Small bolt avatar and @onfinkm in the top-left corner only. No header bar, no slide counter.
