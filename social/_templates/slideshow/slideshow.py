@@ -49,8 +49,9 @@ def main():
     for i, (s, L) in enumerate(zip(slides, lens)):
         p = os.path.join(wd, "p%02d.mp4" % i)
         vf = "scale=%d:%d:force_original_aspect_ratio=decrease,pad=%d:%d:(ow-iw)/2:(oh-ih)/2:color=white,fps=30,format=yuv420p,setsar=1" % (BOX_W, BOX_H, BOX_W, BOX_H)
-        if vids[i]:
-            sh("ffmpeg", "-v", "error", "-y", "-i", s, "-t", "%.3f" % (L + XF), "-vf", vf, "-an", "-c:v", "libx264", "-crf", "16", "-preset", "fast", p)
+        if vids[i]:  # hold the last frame so a clip shorter than its slot still covers the crossfade
+            sh("ffmpeg", "-v", "error", "-y", "-i", s, "-t", "%.3f" % (L + XF), "-vf", vf + ",tpad=stop_mode=clone:stop_duration=1", "-an",
+               "-c:v", "libx264", "-crf", "16", "-preset", "fast", p)
         else:
             sh("ffmpeg", "-v", "error", "-y", "-loop", "1", "-t", "%.3f" % (L + XF), "-i", s, "-vf", vf, "-c:v", "libx264", "-crf", "16", "-preset", "fast", p)
         parts.append(p)
