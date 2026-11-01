@@ -1,0 +1,65 @@
+{
+ "total": 1192.2091436017975,
+ "top": [
+  {
+   "t": "NVDA",
+   "name": "Nvidia",
+   "pct": -4.22,
+   "loss": 217.4
+  },
+  {
+   "t": "INTC",
+   "name": "Intel",
+   "pct": -28.58,
+   "loss": 139.8
+  },
+  {
+   "t": "AMD",
+   "name": "AMD",
+   "pct": -10.88,
+   "loss": 100.6
+  },
+  {
+   "t": "AVGO",
+   "name": "Broadcom",
+   "pct": -5.48,
+   "loss": 90.3
+  },
+  {
+   "t": "AAPL",
+   "name": "Apple",
+   "pct": -1.23,
+   "loss": 62.5
+  },
+  {
+   "t": "MSFT",
+   "name": "Microsoft",
+   "pct": -1.55,
+   "loss": 61.1
+  },
+  {
+   "t": "MU",
+   "name": "Micron",
+   "pct": -5.3,
+   "loss": 56.0
+  },
+  {
+   "t": "GOOGL",
+   "name": "Alphabet",
+   "pct": -1.4,
+   "loss": 48.8
+  },
+  {
+   "t": "AMZN",
+   "name": "Amazon",
+   "pct": -1.41,
+   "loss": 37.2
+  },
+  {
+   "t": "DELL",
+   "name": "Dell",
+   "pct": -10.77,
+   "loss": 33.0
+  }
+ ]
+}
