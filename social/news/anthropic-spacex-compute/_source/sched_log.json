@@ -1,0 +1,44 @@
+{
+ "fb": {
+  "id": "cmvxx3mi801dcqs07sgxf3cz8",
+  "date": "2026-11-05T09:30:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-kh": {
+  "id": "cmvxx3mss0241nk07q3r7qu64",
+  "date": "2026-11-05T09:30:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-en": {
+  "id": "cmvxx3n2q01deqs07u9kgywfi",
+  "date": "2026-11-05T12:00:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-ms": {
+  "id": "cmvxx3nc101dfqs073r6a1hrv",
+  "date": "2026-11-05T12:30:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-ru": {
+  "id": "cmvxx3nlc0242nk074dusdcrc",
+  "date": "2026-11-05T13:30:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-es": {
+  "id": "cmvxx3nvp0244nk07k7hy2cop",
+  "date": "2026-11-05T16:30:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "ig": {
+  "id": "cmvxx3zjq024ank07z846spyg",
+  "date": "2026-11-08T12:00:00.000Z",
+  "state": "QUEUE",
+  "n": 10
+ }
+}
