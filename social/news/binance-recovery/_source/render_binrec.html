@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="./styles.css">
+<style>html,body{margin:0;background:#0b0b0b}</style>
+<script src="./react.production.min.js"></script>
+<script src="./react-dom.production.min.js"></script>
+<script src="./dist/onfin.iife.js"></script>
+<script src="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/prestrades/facttable.js"></script>
+<script src="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/prestrades/pres.js"></script>
+<script src="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/hack/hack.js"></script>
+<script src="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/social2/social.js"></script>
+<script src="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/binrec/binrec.js"></script>
+</head><body><div id="root"></div>
+<script>
+  var ofRoot = null;
+  window.ofRender = function (name, props) {
+    var C = window.OF && window.OF[name];
+    if (!C) throw new Error("Unknown template: " + name);
+    ofRoot = ofRoot || ReactDOM.createRoot(document.getElementById("root"));
+    ofRoot.render(React.createElement(C, props || {}));
+    return new Promise(function (res) { requestAnimationFrame(function () { requestAnimationFrame(function () { document.fonts.ready.then(res); }); }); });
+  };
+  window.OF_READY = !!window.OF;
+</script>
+</body></html>
