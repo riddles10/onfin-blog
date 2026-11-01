@@ -1,0 +1,394 @@
+{
+ "en": {
+  "cover_tag": "Market explainer",
+  "cover_h1": "About <em>$1.2T</em> gone in a day: the 10 biggest losers",
+  "cover_size": 96,
+  "cover_sub": "US tech stocks, Friday 30 Oct 2026. Where each one stands now, and what comes next.",
+  "cover_src": "Prices: Yahoo Finance. Shares: SEC filings. Logos: Wikimedia Commons",
+  "ov_tag": "Friday 30 Oct",
+  "ov_big": "-$1.2T",
+  "ov_label": "lost by 42 large US tech stocks in one session (OnFin calculation)",
+  "ov_stats": [
+   [
+    "-2.9%",
+    "Nasdaq Composite"
+   ],
+   [
+    "-28.6%",
+    "Intel, its worst day since the 1970s"
+   ]
+  ],
+  "ov_whyH": "What happened",
+  "ov_why": "Intel's weak outlook and fresh worries about AI spending hit chip stocks",
+  "ov_chinaH": "Before that",
+  "ov_china": "China fell first: CATL plunged about 10% on 21 Oct, pushing the Hang Seng to its lowest since July",
+  "ov_src": "Yahoo Finance · CNBC · Investopedia · Trading Economics",
+  "ov_note": "Value lost = price change × shares outstanding (SEC filings). Viral posts said $1.3T; adding US-listed TSMC, ASML, Arm and Shopify gives about $1.4T.",
+  "rank": "Biggest loss #%d",
+  "dayLabel": "lost on Fri 30 Oct",
+  "recLabel": "Record %s, %s",
+  "lastLabel": "%s on %s",
+  "belowLabel": "below its record",
+  "atRecord": "0%",
+  "atRecordLabel": "at its record",
+  "ytdLabel": "this year",
+  "cmpLabel": "$ lost vs the other 9",
+  "nextH": "What's next",
+  "viewH": "Analyst view",
+  "src_prefix": "Prices to %s: Yahoo Finance · ",
+  "q": "Which of these 10 will you watch this week?",
+  "follow": "Follow @onfinkm for daily market stories.",
+  "risk": "Not investment advice. CFDs are high-risk; you may lose money.",
+  "hook": "About $1.2 trillion vanished from US tech in one day:",
+  "co": {
+   "NVDA": {
+    "next": "Q3 results on Tue 17 Nov, after the close",
+    "viewH": "Strategist view",
+    "view": "\"I don't think this is a moment of reckoning\" for the AI trade: Matt Orton, Raymond James",
+    "src": "Nvidia · CNBC"
+   },
+   "INTC": {
+    "next": "CEO Lip-Bu Tan expects foundry customers to be announced over \"the next two quarters\"",
+    "view": "BofA's Vivek Arya cut Intel to Neutral, target $100 from $145",
+    "src": "CNBC · Benzinga"
+   },
+   "AMD": {
+    "next": "Q3 results on Tue 3 Nov, after the close",
+    "view": "Susquehanna's Christopher Rolland expects \"better\" results and guidance; target $650",
+    "src": "AMD · TipRanks"
+   },
+   "AVGO": {
+    "next": "Q4 results expected around 10 Dec (date not yet confirmed)",
+    "viewH": "Analyst consensus",
+    "view": "28 of 30 analysts tracked by TipRanks rate it Buy (22 Oct)",
+    "src": "earnings calendars · TipRanks"
+   },
+   "AAPL": {
+    "next": "Q4 results on Mon 2 Nov, after the close",
+    "view": "JPMorgan raised its target to $360, saying iPhone 18 Pro demand is running slightly ahead of iPhone 17 Pro",
+    "src": "AppleInsider · iThinkDiff"
+   },
+   "MSFT": {
+    "next": "Ignite conference, 17 to 20 Nov in San Francisco",
+    "view": "\"Further validation of Microsoft's AI-led growth opportunity\": Thomas Blakey, Cantor",
+    "src": "Moscone Center · CNBC"
+   },
+   "MU": {
+    "next": "Q1 results expected around 16 Dec (date not yet confirmed)",
+    "viewH": "Analyst consensus",
+    "view": "27 of 28 analysts tracked by TipRanks rate it Buy, none Sell (22 Oct)",
+    "src": "Wall Street Horizon · TipRanks"
+   },
+   "GOOGL": {
+    "next": "Q4 results, usually in early February (date not yet set)",
+    "view": "JPMorgan analysts called the slowdown in Google's search business \"steeper than expected\"",
+    "src": "NBC News"
+   },
+   "AMZN": {
+    "next": "AWS re:Invent, 30 Nov to 4 Dec in Las Vegas",
+    "viewH": "Analyst moves",
+    "view": "Morgan Stanley cut its target to $335 from $350, Cantor to $280 from $310 (30 Oct)",
+    "src": "AWS · MarketBeat"
+   },
+   "DELL": {
+    "next": "Q3 results expected around 24 Nov (date not yet confirmed)",
+    "view": "Barclays downgraded Dell on 14 Oct, saying enterprise sales reflect \"memory costs\" more than a move to AI",
+    "src": "earnings calendars · CNBC"
+   }
+  }
+ },
+ "ms": {
+  "cover_tag": "Penjelasan pasaran",
+  "cover_h1": "Kira-kira <em>$1.2T</em> lenyap dalam sehari: 10 kerugian terbesar",
+  "cover_size": 88,
+  "cover_sub": "Saham teknologi AS, Jumaat 30 Okt 2026. Kedudukan setiap satu kini, dan apa seterusnya.",
+  "cover_src": "Harga: Yahoo Finance. Saham: fail SEC. Logo: Wikimedia Commons",
+  "ov_tag": "Jumaat 30 Okt",
+  "ov_big": "-$1.2T",
+  "ov_label": "hilang daripada 42 saham teknologi besar AS dalam satu sesi (kiraan OnFin)",
+  "ov_stats": [
+   [
+    "-2.9%",
+    "Nasdaq Composite"
+   ],
+   [
+    "-28.6%",
+    "Intel, hari terburuk sejak 1970-an"
+   ]
+  ],
+  "ov_whyH": "Apa yang berlaku",
+  "ov_why": "Unjuran lemah Intel dan kebimbangan baharu tentang perbelanjaan AI memukul saham cip",
+  "ov_chinaH": "Sebelum itu",
+  "ov_china": "China jatuh dahulu: CATL menjunam kira-kira 10% pada 21 Okt, menolak Hang Seng ke paras terendah sejak Julai",
+  "ov_src": "Yahoo Finance · CNBC · Investopedia · Trading Economics",
+  "ov_note": "Nilai hilang = perubahan harga × saham beredar (fail SEC). Hantaran tular menyebut $1.3T; termasuk TSMC, ASML, Arm dan Shopify yang tersenarai di AS, jumlahnya kira-kira $1.4T.",
+  "rank": "Kerugian terbesar #%d",
+  "dayLabel": "hilang pada Jumaat 30 Okt",
+  "recLabel": "Rekod %s, %s",
+  "lastLabel": "%s pada %s",
+  "belowLabel": "di bawah rekodnya",
+  "atRecord": "0%",
+  "atRecordLabel": "pada paras rekod",
+  "ytdLabel": "tahun ini",
+  "cmpLabel": "$ hilang vs 9 lagi",
+  "nextH": "Seterusnya",
+  "viewH": "Pandangan penganalisis",
+  "src_prefix": "Harga hingga %s: Yahoo Finance · ",
+  "q": "Yang mana antara 10 ini akan anda pantau minggu ini?",
+  "follow": "Ikuti @onfinkm untuk berita pasaran harian.",
+  "risk": "Bukan nasihat pelaburan. CFD berisiko tinggi; anda mungkin kehilangan wang.",
+  "hook": "Kira-kira $1.2 trilion lenyap dari saham teknologi AS dalam sehari:",
+  "co": {
+   "NVDA": {
+    "next": "Keputusan S3 pada Selasa 17 Nov, selepas pasaran tutup",
+    "viewH": "Pandangan strategis",
+    "view": "\"Saya tidak fikir ini detik perhitungan\" bagi dagangan AI: Matt Orton, Raymond James",
+    "src": "Nvidia · CNBC"
+   },
+   "INTC": {
+    "next": "CEO Lip-Bu Tan menjangka pelanggan faundri diumumkan dalam \"dua suku akan datang\"",
+    "view": "Vivek Arya dari BofA menurunkan Intel ke Neutral, sasaran $100 daripada $145",
+    "src": "CNBC · Benzinga"
+   },
+   "AMD": {
+    "next": "Keputusan S3 pada Selasa 3 Nov, selepas pasaran tutup",
+    "view": "Christopher Rolland dari Susquehanna menjangka keputusan dan panduan \"lebih baik\"; sasaran $650",
+    "src": "AMD · TipRanks"
+   },
+   "AVGO": {
+    "next": "Keputusan S4 dijangka sekitar 10 Dis (tarikh belum disahkan)",
+    "viewH": "Konsensus penganalisis",
+    "view": "28 daripada 30 penganalisis yang dijejak TipRanks menilai Beli (22 Okt)",
+    "src": "kalendar pendapatan · TipRanks"
+   },
+   "AAPL": {
+    "next": "Keputusan S4 pada Isnin 2 Nov, selepas pasaran tutup",
+    "view": "JPMorgan menaikkan sasaran ke $360, berkata permintaan iPhone 18 Pro sedikit mendahului iPhone 17 Pro",
+    "src": "AppleInsider · iThinkDiff"
+   },
+   "MSFT": {
+    "next": "Persidangan Ignite, 17 hingga 20 Nov di San Francisco",
+    "view": "\"Pengesahan lanjut peluang pertumbuhan Microsoft yang dipacu AI\": Thomas Blakey, Cantor",
+    "src": "Moscone Center · CNBC"
+   },
+   "MU": {
+    "next": "Keputusan S1 dijangka sekitar 16 Dis (tarikh belum disahkan)",
+    "viewH": "Konsensus penganalisis",
+    "view": "27 daripada 28 penganalisis yang dijejak TipRanks menilai Beli, tiada Jual (22 Okt)",
+    "src": "Wall Street Horizon · TipRanks"
+   },
+   "GOOGL": {
+    "next": "Keputusan S4, biasanya awal Februari (tarikh belum ditetapkan)",
+    "view": "Penganalisis JPMorgan menyifatkan kelembapan perniagaan carian Google \"lebih curam daripada jangkaan\"",
+    "src": "NBC News"
+   },
+   "AMZN": {
+    "next": "AWS re:Invent, 30 Nov hingga 4 Dis di Las Vegas",
+    "viewH": "Tindakan penganalisis",
+    "view": "Morgan Stanley menurunkan sasaran ke $335 daripada $350, Cantor ke $280 daripada $310 (30 Okt)",
+    "src": "AWS · MarketBeat"
+   },
+   "DELL": {
+    "next": "Keputusan S3 dijangka sekitar 24 Nov (tarikh belum disahkan)",
+    "view": "Barclays menurunkan penarafan Dell pada 14 Okt, berkata jualan perusahaan lebih mencerminkan \"kos memori\" berbanding peralihan ke AI",
+    "src": "kalendar pendapatan · CNBC"
+   }
+  }
+ },
+ "ru": {
+  "cover_tag": "Разбор рынка",
+  "cover_h1": "Около <em>$1,2 трлн</em> за день: 10 главных потерь",
+  "cover_size": 92,
+  "cover_sub": "Техкомпании США, пятница, 30 окт 2026. Где каждая сейчас и что дальше.",
+  "cover_src": "Цены: Yahoo Finance. Акции: отчёты SEC. Логотипы: Wikimedia Commons",
+  "ov_tag": "Пятница, 30 окт",
+  "ov_big": "-$1,2 трлн",
+  "ov_label": "потеряли 42 крупные техкомпании США за одну сессию (расчёт OnFin)",
+  "ov_stats": [
+   [
+    "-2,9%",
+    "Nasdaq Composite"
+   ],
+   [
+    "-28,6%",
+    "Intel, худший день с 1970-х"
+   ]
+  ],
+  "ov_whyH": "Что произошло",
+  "ov_why": "Слабый прогноз Intel и новые опасения насчёт расходов на ИИ ударили по чипмейкерам",
+  "ov_chinaH": "До этого",
+  "ov_china": "Первым упал Китай: CATL обвалилась примерно на 10% 21 окт, и Hang Seng опустился к минимуму с июля",
+  "ov_src": "Yahoo Finance · CNBC · Investopedia · Trading Economics",
+  "ov_note": "Потеря = изменение цены × число акций (отчёты SEC). В вирусных постах писали о $1,3 трлн; с TSMC, ASML, Arm и Shopify, торгующимися в США, выходит около $1,4 трлн.",
+  "rank": "Потеря №%d",
+  "dayLabel": "потеряно в пт, 30 окт",
+  "recLabel": "Рекорд %s, %s",
+  "lastLabel": "%s, %s",
+  "belowLabel": "ниже рекорда",
+  "atRecord": "0%",
+  "atRecordLabel": "на рекорде",
+  "ytdLabel": "с начала года",
+  "cmpLabel": "потери против 9 других",
+  "nextH": "Что дальше",
+  "viewH": "Мнение аналитиков",
+  "src_prefix": "Цены на %s: Yahoo Finance · ",
+  "q": "За какой из этих 10 компаний вы будете следить на этой неделе?",
+  "follow": "Подписывайтесь на @onfinkm: рыночные новости каждый день.",
+  "risk": "Не является инвестиционной рекомендацией. CFD относятся к высокорисковым инструментам; вы можете потерять деньги.",
+  "hook": "Техкомпании США потеряли $1,2 трлн за один день:",
+  "co": {
+   "NVDA": {
+    "next": "Отчёт за III квартал во вт, 17 ноя, после закрытия",
+    "viewH": "Мнение стратега",
+    "view": "«Не думаю, что это момент расплаты» для ИИ-торговли: Мэтт Ортон, Raymond James",
+    "src": "Nvidia · CNBC"
+   },
+   "INTC": {
+    "next": "CEO Лип-Бу Тан ждёт объявлений о клиентах фабрик в «ближайшие два квартала»",
+    "view": "Вивек Арья из BofA понизил Intel до Neutral, цель $100 вместо $145",
+    "src": "CNBC · Benzinga"
+   },
+   "AMD": {
+    "next": "Отчёт за III квартал во вт, 3 ноя, после закрытия",
+    "view": "Кристофер Ролланд из Susquehanna ждёт «более сильных» результатов и прогноза; цель $650",
+    "src": "AMD · TipRanks"
+   },
+   "AVGO": {
+    "next": "Отчёт за IV квартал ожидается около 10 дек (дата не подтверждена)",
+    "viewH": "Консенсус аналитиков",
+    "view": "28 из 30 аналитиков в выборке TipRanks дают рейтинг Buy (22 окт)",
+    "src": "календари отчётности · TipRanks"
+   },
+   "AAPL": {
+    "next": "Отчёт за IV квартал в пн, 2 ноя, после закрытия",
+    "view": "JPMorgan повысил цель до $360: спрос на iPhone 18 Pro немного выше, чем был на iPhone 17 Pro",
+    "src": "AppleInsider · iThinkDiff"
+   },
+   "MSFT": {
+    "next": "Конференция Ignite, с 17 по 20 ноя в Сан-Франциско",
+    "view": "«Ещё одно подтверждение возможностей роста Microsoft за счёт ИИ»: Томас Блейки, Cantor",
+    "src": "Moscone Center · CNBC"
+   },
+   "MU": {
+    "next": "Отчёт за I квартал ожидается около 16 дек (дата не подтверждена)",
+    "viewH": "Консенсус аналитиков",
+    "view": "27 из 28 аналитиков в выборке TipRanks дают рейтинг Buy, ни одного Sell (22 окт)",
+    "src": "Wall Street Horizon · TipRanks"
+   },
+   "GOOGL": {
+    "next": "Отчёт за IV квартал, обычно в начале февраля (дата не назначена)",
+    "view": "Аналитики JPMorgan назвали замедление поискового бизнеса Google «более резким, чем ожидалось»",
+    "src": "NBC News"
+   },
+   "AMZN": {
+    "next": "AWS re:Invent, с 30 ноя по 4 дек в Лас-Вегасе",
+    "viewH": "Решения аналитиков",
+    "view": "Morgan Stanley снизил цель до $335 с $350, Cantor до $280 с $310 (30 окт)",
+    "src": "AWS · MarketBeat"
+   },
+   "DELL": {
+    "next": "Отчёт за III квартал ожидается около 24 ноя (дата не подтверждена)",
+    "view": "Barclays понизил рейтинг Dell 14 окт: корпоративные продажи отражают скорее «стоимость памяти», чем переход на ИИ",
+    "src": "календари отчётности · CNBC"
+   }
+  }
+ },
+ "es": {
+  "cover_tag": "Explicación del mercado",
+  "cover_h1": "Cerca de <em>$1.2 billones</em> en un día: las 10 mayores pérdidas",
+  "cover_size": 84,
+  "cover_sub": "Tecnológicas de EE. UU., viernes 30 oct 2026. Dónde está cada una ahora y qué sigue.",
+  "cover_src": "Precios: Yahoo Finance. Acciones: informes a la SEC. Logos: Wikimedia Commons",
+  "ov_tag": "Viernes 30 oct",
+  "ov_big": "-$1.2 bill.",
+  "ov_label": "perdieron 42 grandes tecnológicas de EE. UU. en una sesión (cálculo de OnFin)",
+  "ov_stats": [
+   [
+    "-2.9%",
+    "Nasdaq Composite"
+   ],
+   [
+    "-28.6%",
+    "Intel, su peor día desde los años 70"
+   ]
+  ],
+  "ov_whyH": "Qué pasó",
+  "ov_why": "El débil pronóstico de Intel y nuevas dudas sobre el gasto en IA golpearon a los fabricantes de chips",
+  "ov_chinaH": "Antes",
+  "ov_china": "China cayó primero: CATL se desplomó cerca de 10% el 21 oct y llevó al Hang Seng a su mínimo desde julio",
+  "ov_src": "Yahoo Finance · CNBC · Investopedia · Trading Economics",
+  "ov_note": "Valor perdido = cambio de precio × acciones en circulación (informes a la SEC). Publicaciones virales hablaron de $1.3 billones; sumando TSMC, ASML, Arm y Shopify, que cotizan en EE. UU., son cerca de $1.4 billones.",
+  "rank": "Pérdida #%d",
+  "dayLabel": "perdidos el vie 30 oct",
+  "recLabel": "Récord %s, %s",
+  "lastLabel": "%s el %s",
+  "belowLabel": "bajo su récord",
+  "atRecord": "0%",
+  "atRecordLabel": "en su récord",
+  "ytdLabel": "en el año",
+  "cmpLabel": "vs. las otras 9",
+  "nextH": "Qué sigue",
+  "viewH": "Visión de analistas",
+  "src_prefix": "Precios al %s: Yahoo Finance · ",
+  "q": "¿Cuál de estas 10 vas a seguir esta semana?",
+  "follow": "Sigue a @onfinkm para noticias del mercado cada día.",
+  "risk": "No es asesoramiento de inversión. Los CFD son de alto riesgo; puedes perder dinero.",
+  "hook": "Cerca de $1.2 billones se esfumaron de las tecnológicas de EE. UU. en un día:",
+  "co": {
+   "NVDA": {
+    "next": "Resultados del 3T el mar 17 nov, tras el cierre",
+    "viewH": "Visión de un estratega",
+    "view": "\"No creo que este sea un momento de ajuste de cuentas\" para la apuesta por la IA: Matt Orton, Raymond James",
+    "src": "Nvidia · CNBC"
+   },
+   "INTC": {
+    "next": "El CEO Lip-Bu Tan espera anunciar clientes de fundición en \"los próximos dos trimestres\"",
+    "view": "Vivek Arya, de BofA, bajó Intel a Neutral, con objetivo de $100 desde $145",
+    "src": "CNBC · Benzinga"
+   },
+   "AMD": {
+    "next": "Resultados del 3T el mar 3 nov, tras el cierre",
+    "view": "Christopher Rolland, de Susquehanna, espera resultados y previsiones \"mejores\"; objetivo de $650",
+    "src": "AMD · TipRanks"
+   },
+   "AVGO": {
+    "next": "Resultados del 4T previstos hacia el 10 dic (fecha sin confirmar)",
+    "viewH": "Consenso de analistas",
+    "view": "28 de 30 analistas que sigue TipRanks la califican como Compra (22 oct)",
+    "src": "calendarios de resultados · TipRanks"
+   },
+   "AAPL": {
+    "next": "Resultados del 4T el lun 2 nov, tras el cierre",
+    "view": "JPMorgan subió su objetivo a $360 y dice que la demanda del iPhone 18 Pro va algo por delante de la del iPhone 17 Pro",
+    "src": "AppleInsider · iThinkDiff"
+   },
+   "MSFT": {
+    "next": "Conferencia Ignite, del 17 al 20 nov en San Francisco",
+    "view": "\"Una validación más de la oportunidad de crecimiento de Microsoft impulsada por la IA\": Thomas Blakey, Cantor",
+    "src": "Moscone Center · CNBC"
+   },
+   "MU": {
+    "next": "Resultados del 1T previstos hacia el 16 dic (fecha sin confirmar)",
+    "viewH": "Consenso de analistas",
+    "view": "27 de 28 analistas que sigue TipRanks la califican como Compra y ninguno como Venta (22 oct)",
+    "src": "Wall Street Horizon · TipRanks"
+   },
+   "GOOGL": {
+    "next": "Resultados del 4T, normalmente a principios de febrero (fecha sin fijar)",
+    "view": "Analistas de JPMorgan calificaron la desaceleración de la búsqueda de Google como \"más pronunciada de lo esperado\"",
+    "src": "NBC News"
+   },
+   "AMZN": {
+    "next": "AWS re:Invent, del 30 nov al 4 dic en Las Vegas",
+    "viewH": "Movimientos de analistas",
+    "view": "Morgan Stanley bajó su objetivo a $335 desde $350; Cantor, a $280 desde $310 (30 oct)",
+    "src": "AWS · MarketBeat"
+   },
+   "DELL": {
+    "next": "Resultados del 3T previstos hacia el 24 nov (fecha sin confirmar)",
+    "view": "Barclays rebajó a Dell el 14 oct: dice que las ventas a empresas reflejan más el \"costo de la memoria\" que un salto a la IA",
+    "src": "calendarios de resultados · CNBC"
+   }
+  }
+ }
+}

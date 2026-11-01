@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="file:///tmp/claude-0/-home-user-onfin-blog/42b2fa22-784d-52c4-a9a8-6ec4971d0812/scratchpad/iglib/library/tokens/fonts.css">
+<style>
+:root{--lime:#9fce10;--coral:#fa876b;--ink:#0b0b0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;color:#fff;width:1080px;height:1350px;position:relative;overflow:hidden;
+ background:radial-gradient(1100px 650px at 90% -10%, rgba(159,206,16,.12), transparent 60%),radial-gradient(900px 600px at -10% 110%, rgba(250,135,107,.10), transparent 60%),var(--ink)}
+.handle{position:absolute;left:56px;top:48px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:24px;color:rgba(255,255,255,.9)}
+.handle img{width:46px;height:46px;border-radius:50%}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.08);font-size:19px;font-weight:600;color:rgba(255,255,255,.82)}
+.pill i{width:9px;height:9px;border-radius:50%;background:var(--lime);display:inline-block;flex:none}
+.tag{display:inline-block;padding:9px 18px;border-radius:999px;background:var(--lime);color:#000;font-weight:800;font-size:22px}
+.wrap{position:absolute;left:56px;right:56px;top:128px;bottom:56px;display:flex;flex-direction:column}
+h1{font-weight:800;line-height:1.06;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--lime)}
+.coral{color:var(--coral)}
+.small{font-size:16px;color:rgba(255,255,255,.5);font-weight:500;line-height:1.35}
+/* company */
+.top{display:flex;align-items:center;gap:26px}
+.logo{width:150px;height:150px;border-radius:32px;background:#fff;display:flex;align-items:center;justify-content:center;padding:22px;flex:none}
+.logo img{max-width:100%;max-height:100%}
+.rank{font-weight:800;font-size:30px;color:var(--lime)}
+.nm{font-weight:800;font-size:58px;line-height:1.02}
+.tk{font-weight:600;font-size:30px;color:rgba(255,255,255,.55)}
+.day{margin-top:30px;display:flex;align-items:baseline;gap:26px}
+.day .pct{font-weight:800;font-size:96px;color:var(--coral);letter-spacing:-2px}
+.day .usd{font-weight:800;font-size:52px}
+.day .lbl{font-weight:600;font-size:24px;color:rgba(255,255,255,.6)}
+.card{margin-top:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:26px;padding:22px 24px}
+.stats{display:flex;gap:14px;margin-top:20px}
+.stat{flex:1;background:rgba(255,255,255,.06);border-radius:20px;padding:16px 20px}
+.stat b{display:block;font-size:40px;font-weight:800}
+.stat span{font-size:21px;font-weight:600;color:rgba(255,255,255,.65)}
+.box{margin-top:16px;border-radius:20px;padding:18px 22px;background:rgba(159,206,16,.10);border:1px solid rgba(159,206,16,.35)}
+.box h3{font-size:19px;font-weight:800;color:var(--lime);letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+.box p{font-size:27px;font-weight:700;line-height:1.25}
+.box.q{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.box.q h3{color:rgba(255,255,255,.7)}
+.box.q p{font-weight:600;font-size:25px}
+.foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.cmp{display:flex;align-items:flex-end;gap:7px;height:60px}
+.cmp div{flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.18)}
+.cmp div.on{background:var(--coral)}
+</style></head><body><div class="handle"><img src="avatar-bolt.jpg">@onfinkm</div><div id="root"></div>
+<script>
+const D=JSON.parse(decodeURIComponent(location.hash.slice(1)));
+const R=document.getElementById('root');
+function chart(rows,rec,w,h){
+  const v=rows.map(r=>r[1]);const lo=Math.min(...v)*0.97,hi=Math.max(...v,rec.p)*1.02;
+  const X=i=>i/(rows.length-1)*(w-20)+10,Y=p=>h-10-(p-lo)/(hi-lo)*(h-40);
+  const pts=rows.map((r,i)=>X(i).toFixed(1)+','+Y(r[1]).toFixed(1)).join(' ');
+  const n=rows.length;const ri=rows.findIndex(r=>r[0]===rec.d);
+  const lastx=X(n-1),lasty=Y(v[n-1]);
+  let s=`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+  s+=`<line x1="10" x2="${w-10}" y1="${Y(rec.p)}" y2="${Y(rec.p)}" stroke="#9fce10" stroke-width="2" stroke-dasharray="7 7" opacity=".8"/>`;
+  s+=`<polyline points="${pts}" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round" opacity=".92"/>`;
+  if(ri>=0) s+=`<circle cx="${X(ri)}" cy="${Y(rec.p)}" r="9" fill="#9fce10"/>`;
+  s+=`<circle cx="${lastx}" cy="${lasty}" r="10" fill="#fa876b"/>`;
+  s+=`<text x="16" y="${Math.max(26,Y(rec.p)-12)}" fill="#9fce10" font-size="21" font-weight="700" font-family="Montserrat">${rec.label}</text>`;
+  const ly = lasty < h*0.55 ? h-14 : lasty+7, lx = lasty < h*0.55 ? w-12 : lastx-20;
+  s+=`<text x="${lx}" y="${ly}" text-anchor="end" fill="#fa876b" font-size="21" font-weight="700" font-family="Montserrat" paint-order="stroke" stroke="#151515" stroke-width="6">${D.lastLabel}</text>`;
+  return s+'</svg>';
+}
+if(D.kind==='company'){
+  R.innerHTML=`<div class="wrap">
+   <div class="top"><div class="logo"><img src="${D.logo}"></div><div><div class="rank">${D.rankLabel}</div><div class="nm">${D.name}</div><div class="tk">$${D.t}</div></div></div>
+   <div class="day"><span class="pct">${D.pct}</span><div><div class="usd">${D.usd}</div><div class="lbl">${D.dayLabel}</div></div></div>
+   <div class="card">${chart(D.rows,D.rec,920,260)}</div>
+   <div class="stats"><div class="stat"><b class="coral">${D.below}</b><span>${D.belowLabel}</span></div><div class="stat"><b>${D.ytd}</b><span>${D.ytdLabel}</span></div><div class="stat"><div class="cmp">${D.cmp.map(c=>`<div class="${c.on?'on':''}" style="height:${Math.max(6,c.h*100)}%"></div>`).join('')}</div><span>${D.cmpLabel}</span></div></div>
+   <div class="box"><h3>${D.nextH}</h3><p>${D.next}</p></div>
+   <div class="box q"><h3>${D.viewH}</h3><p>${D.view}</p></div>
+   <div class="foot"><div class="pill"><i></i>${D.src}</div></div></div>`;
+} else if(D.kind==='cover'){
+  R.innerHTML=`<div class="wrap" style="top:150px">
+   <div><span class="tag">${D.tag}</span></div>
+   <h1 style="font-size:${D.h1size||104}px;margin-top:30px">${D.h1}</h1>
+   <div style="margin-top:26px;font-size:34px;font-weight:600;color:rgba(255,255,255,.75);line-height:1.3">${D.sub}</div>
+   <div style="margin-top:46px;display:grid;grid-template-columns:repeat(5,1fr);gap:18px">${D.logos.map(l=>`<div class="logo" style="width:auto;height:150px;border-radius:26px;padding:24px"><img src="${l}"></div>`).join('')}</div>
+   <div class="foot"><div class="pill"><i></i>${D.src}</div></div></div>`;
+} else if(D.kind==='overview'){
+  R.innerHTML=`<div class="wrap" style="top:150px">
+   <div><span class="tag">${D.tag}</span></div>
+   <div style="margin-top:34px;font-weight:800;font-size:150px;line-height:1;color:var(--coral);letter-spacing:-3px">${D.big}</div>
+   <div style="margin-top:14px;font-weight:700;font-size:38px;line-height:1.2">${D.bigLabel}</div>
+   <div style="margin-top:30px;display:flex;gap:14px">${D.stats.map(s=>`<div class="stat"><b class="coral">${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+   <div class="box" style="margin-top:28px"><h3>${D.whyH}</h3><p>${D.why}</p></div>
+   <div class="box q"><h3>${D.chinaH}</h3><p>${D.china}</p></div>
+   <div class="foot"><div class="pill"><i></i>${D.src}</div><div class="small">${D.note}</div></div></div>`;
+} else if(D.kind==='close'){
+  R.innerHTML=`<div class="wrap" style="top:300px">
+   <h1 style="font-size:84px">${D.q}</h1>
+   <div style="margin-top:36px;font-size:34px;font-weight:600;color:rgba(255,255,255,.75);line-height:1.35">${D.follow}</div>
+   <div class="foot"><div class="small" style="font-size:20px">${D.risk}</div></div></div>`;
+}
+</script></body></html>
