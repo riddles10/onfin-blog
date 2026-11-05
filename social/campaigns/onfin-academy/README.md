@@ -14,8 +14,8 @@ Every Khmer string is my own translation and is waiting on review by a native sp
 | `copy/ads.md` | The Meta ad copy deck (EN and KM): 2 primary texts, 2 headlines, a description and a CTA for each of 14 creatives.<br>Also the campaign structure, targeting, UTM scheme, A/B test angles, and what has to happen before ads can run. |
 | `accounts/README.md` | **Account setup:** @onfinacademy bios, renaming the Facebook page to OnFin Academy, and the pinned welcome posts (EN and KM, with "we never DM you first").<br>**Launch support:** the plan for Collab posts with @onfinkm and OnFin Cambodia, and Telegram launch posts for KH, EN, MS, RU and ES. |
 | `organic.md` | The first-week posting plan, within the posting caps, plus the carousel captions. |
-| `reels/` | Lesson clip reels and the 30-second trailer, made by the video fork. |
-| `_source/` | The build scripts: `lockup.py`, `build.py`, `render.js`, `sheet.py` and `ads_copy.py`, plus the lesson frame picks and crops. |
+| `reels/`, `trailer/` | 6 lesson clip reels, 23 to 30 seconds, in EN and KM, with their captions in `reels/captions.md`.<br>The 30-second trailer in 9:16 and 16:9, EN and KM. It also fits the hero slot on the Academy landing page. |
+| `_source/` | The build scripts: `lockup.py`, `build.py`, `render.js`, `sheet.py` and `ads_copy.py`, plus the lesson frame picks and crops.<br>`_source/video/` builds the reels and the trailer. |
 
 ## Static ad hooks
 

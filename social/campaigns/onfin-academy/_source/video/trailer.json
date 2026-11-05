@@ -1,0 +1,230 @@
+{
+ "total": 30.0,
+ "end": {
+  "en": [
+   "12 free lessons.<br>About 3 minutes each.",
+   "Start free at academy.onfin.io"
+  ],
+  "km": [
+   "មេរៀនឥតគិតថ្លៃចំនួន 12។<br>ប្រហែល 3 នាទីក្នុងមួយមេរៀន។",
+   "ចាប់ផ្តើមឥតគិតថ្លៃនៅ academy.onfin.io"
+  ]
+ },
+ "vo": [
+  {
+   "s0": 0.1,
+   "s1": 2.66,
+   "at": 0.45
+  },
+  {
+   "s0": 2.76,
+   "s1": 4.1,
+   "at": 3.55
+  },
+  {
+   "s0": 4.12,
+   "s1": 6.52,
+   "at": 5.55
+  },
+  {
+   "s0": 6.52,
+   "s1": 8.68,
+   "at": 8.55
+  },
+  {
+   "s0": 8.68,
+   "s1": 10.52,
+   "at": 11.35
+  },
+  {
+   "s0": 10.54,
+   "s1": 17.42,
+   "at": 14.25
+  },
+  {
+   "s0": 17.46,
+   "s1": 20.68,
+   "at": 22.2
+  }
+ ],
+ "shots": [
+  {
+   "t0": 0.0,
+   "t1": 3.45,
+   "src": "currency-pairs-1",
+   "src_t": 6.6,
+   "chip": {
+    "en": "Forex basics · 12 lessons",
+    "km": "មូលដ្ឋានគ្រឹះ Forex · 12 មេរៀន"
+   }
+  },
+  {
+   "t0": 3.45,
+   "t1": 5.45,
+   "src": "pips-1",
+   "src_t": 12.6,
+   "chip": {
+    "en": "Lesson 4 · Pips",
+    "km": "មេរៀនទី 4 · Pips"
+   }
+  },
+  {
+   "t0": 5.45,
+   "t1": 8.45,
+   "src": "bid-ask-and-the-spread-2",
+   "src_t": 3.6,
+   "chip": {
+    "en": "Lesson 3 · Bid, ask and the spread",
+    "km": "មេរៀនទី 3 · Bid, ask និង spread"
+   }
+  },
+  {
+   "t0": 8.45,
+   "t1": 11.25,
+   "src": "leverage-2",
+   "src_t": 25.0,
+   "chip": {
+    "en": "Lesson 7 · Leverage",
+    "km": "មេរៀនទី 7 · Leverage"
+   }
+  },
+  {
+   "t0": 11.25,
+   "t1": 14.15,
+   "src": "margin-call-and-stop-out-2",
+   "src_t": 12.8,
+   "chip": {
+    "en": "Lesson 9 · Margin call and stop-out",
+    "km": "មេរៀនទី 9 · Margin call និង stop-out"
+   }
+  },
+  {
+   "t0": 14.15,
+   "t1": 16.65,
+   "src": "trading-sessions-3",
+   "src_t": 9.8,
+   "chip": {
+    "en": "Lesson 10 · Trading sessions",
+    "km": "មេរៀនទី 10 · វគ្គជួញដូរ"
+   }
+  },
+  {
+   "t0": 16.65,
+   "t1": 18.65,
+   "src": "orders-stop-loss-and-take-profit-3",
+   "src_t": 31.8,
+   "chip": {
+    "en": "Lesson 11 · Stop loss and take profit",
+    "km": "មេរៀនទី 11 · Stop loss និង take profit"
+   }
+  },
+  {
+   "t0": 18.65,
+   "t1": 20.4,
+   "src": "pip-value-3",
+   "src_t": 16.0,
+   "chip": {
+    "en": "Lesson 6 · Pip value",
+    "km": "មេរៀនទី 6 · តម្លៃ pip"
+   }
+  },
+  {
+   "t0": 20.4,
+   "t1": 22.15,
+   "src": "a-trade-step-by-step-2",
+   "src_t": 24.5,
+   "chip": {
+    "en": "Lesson 12 · A trade, step by step",
+    "km": "មេរៀនទី 12 · ការជួញដូរមួយ ជំហានម្តងៗ"
+   }
+  },
+  {
+   "t0": 22.15,
+   "t1": 25.6,
+   "src": "how-the-forex-market-works-3",
+   "src_t": 12.6,
+   "chip": {
+    "en": "Lesson 2 · How the forex market works",
+    "km": "មេរៀនទី 2 · របៀបដែលទីផ្សារ forex ដំណើរការ"
+   }
+  }
+ ],
+ "subs": [
+  {
+   "t0": 0.45,
+   "t1": 1.7,
+   "en": "New to forex?",
+   "km": "ទើបស្គាល់ forex?"
+  },
+  {
+   "t0": 1.7,
+   "t1": 3.45,
+   "en": "Start with the basics.",
+   "km": "ចាប់ផ្តើមពីមូលដ្ឋានគ្រឹះ។"
+  },
+  {
+   "t0": 3.55,
+   "t1": 5.45,
+   "en": "What a pip is.",
+   "km": "Pip ជាអ្វី។"
+  },
+  {
+   "t0": 5.55,
+   "t1": 8.45,
+   "en": "Why the spread is your first cost.",
+   "km": "ហេតុអ្វី spread ជាថ្លៃដើមដំបូងរបស់អ្នក។"
+  },
+  {
+   "t0": 8.55,
+   "t1": 11.25,
+   "en": "How leverage cuts both ways.",
+   "km": "របៀបដែល leverage ពង្រីកទាំងចំណេញ និងខាត។"
+  },
+  {
+   "t0": 11.35,
+   "t1": 14.15,
+   "en": "What a margin call means.",
+   "km": "Margin call មានន័យដូចម្តេច។"
+  },
+  {
+   "t0": 14.25,
+   "t1": 15.35,
+   "en": "OnFin Academy",
+   "km": "OnFin Academy"
+  },
+  {
+   "t0": 15.35,
+   "t1": 16.65,
+   "en": "12 free lessons",
+   "km": "មេរៀនឥតគិតថ្លៃ 12",
+   "offer": true
+  },
+  {
+   "t0": 16.65,
+   "t1": 17.8,
+   "en": "About 3 minutes each",
+   "km": "ប្រហែល 3 នាទីក្នុងមួយមេរៀន",
+   "offer": true
+  },
+  {
+   "t0": 17.8,
+   "t1": 19.55,
+   "en": "A quiz after every lesson",
+   "km": "មានកម្រងសំណួរខ្លី ក្រោយមេរៀននីមួយៗ",
+   "offer": true
+  },
+  {
+   "t0": 19.55,
+   "t1": 21.4,
+   "en": "Your progress saved",
+   "km": "រក្សាទុកវឌ្ឍនភាពរបស់អ្នក",
+   "offer": true
+  },
+  {
+   "t0": 22.2,
+   "t1": 25.5,
+   "en": "Start free at academy.onfin.io",
+   "km": "ចាប់ផ្តើមឥតគិតថ្លៃនៅ academy.onfin.io"
+  }
+ ]
+}
