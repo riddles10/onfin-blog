@@ -1,0 +1,83 @@
+{
+ "_uploads": {
+  "fb/liq-fb-en.mp4": {
+   "id": "709c8696-658a-48bd-b23b-97375b3c55b4",
+   "path": "https://uploads.postiz.com/wDExjxOH3z.mp4"
+  },
+  "tg/liq-tg-en.jpg": {
+   "id": "2b58f566-6c4d-408e-b3ce-3e2751a32a0a",
+   "path": "https://uploads.postiz.com/pTYVFrXZ99.jpg"
+  },
+  "tg/liq-tg-ms.jpg": {
+   "id": "2d03ee8c-768b-4ead-b3be-f5a7146154a1",
+   "path": "https://uploads.postiz.com/JDqUvermZx.jpg"
+  },
+  "tg/liq-tg-ru.jpg": {
+   "id": "a928c94d-01aa-45f1-9859-d35ebb10ccff",
+   "path": "https://uploads.postiz.com/wdSRJxkc9l.jpg"
+  },
+  "tg/liq-tg-es.jpg": {
+   "id": "5930364e-dd46-4b48-890e-333c84209c51",
+   "path": "https://uploads.postiz.com/KBta6whlTZ.jpg"
+  },
+  "evidence/liq-en-01.jpg": {
+   "id": "2d6ee99e-101e-4e4f-80cf-aa5e444e508b",
+   "path": "https://uploads.postiz.com/09CWgpJtiv.jpg"
+  },
+  "evidence/liq-en-02.jpg": {
+   "id": "524f07b1-dacc-403c-b171-8a33b6b1ebef",
+   "path": "https://uploads.postiz.com/mDJXUn7yiu.jpg"
+  },
+  "evidence/liq-en-03.jpg": {
+   "id": "f50c6b29-36a2-4090-839a-5ad003c0729a",
+   "path": "https://uploads.postiz.com/p6LlJCnZOQ.jpg"
+  }
+ },
+ "fb": {
+  "id": "cmw9053h901bxme06a39ecpc1",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-kh": {
+  "id": "cmw9054aw01byme06i4c76tys",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-en": {
+  "id": "cmw9054n201cet708eaqnuqn3",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-ms": {
+  "id": "cmw9055c701cft7084xqgg3of",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-ru": {
+  "id": "cmw90561901cgt708wyl545tf",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "tg-es": {
+  "id": "cmw9056qd01cht70868jfv902",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "QUEUE",
+  "n": 1
+ },
+ "ig": {
+  "id": "cmw9058bj01cit708qnl27nr0",
+  "date": "2026-11-09T08:32:00.000Z",
+  "state": "ERROR: Instagram blocked your request (carousel)",
+  "n": 3
+ },
+ "ig-reel": {
+  "id": "cmw90691i01chme06xp0q5ue0",
+  "date": "2026-11-09T08:33:00.000Z",
+  "note": "reel fallback after the carousel was blocked"
+ }
+}
