@@ -1,0 +1,23 @@
+{
+ "id": "warsh-cbdc",
+ "src": "raw/lp8iT04clIM.webm",
+ "segments": [
+  [
+   9873.8,
+   9887.75
+  ],
+  [
+   9889.9,
+   9902.95
+  ]
+ ],
+ "zoom": [
+  0.2,
+  0.05,
+  0.6
+ ],
+ "fix": {
+  "explorer": "explore"
+ },
+ "hook": "Kevin Warsh on a US central bank digital currency, at his confirmation hearing:"
+}

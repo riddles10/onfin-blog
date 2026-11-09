@@ -1,0 +1,28 @@
+{
+ "id": "powell-fog",
+ "src": "raw/gZsAKn1UtH4.webm",
+ "segments": [
+  [
+   1637.7,
+   1642.9
+  ],
+  [
+   1645.9,
+   1657.85
+  ],
+  [
+   1663.3,
+   1670.0
+  ],
+  [
+   1673.85,
+   1677.95
+  ]
+ ],
+ "zoom": [
+  0.15,
+  0.08,
+  0.7
+ ],
+ "hook": "Jerome Powell on setting rates when the data goes dark:"
+}

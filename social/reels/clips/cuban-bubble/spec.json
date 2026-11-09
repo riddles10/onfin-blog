@@ -1,0 +1,17 @@
+{
+ "id": "cuban-bubble",
+ "src": "raw/0cn3VBjfN8g.webm",
+ "segments": [
+  [
+   2405.85,
+   2419.8
+  ],
+  [
+   2431.95,
+   2451.5
+  ]
+ ],
+ "crop": 0.5,
+ "box_h": 660,
+ "hook": "Mark Cuban's test for spotting a stock market bubble:"
+}

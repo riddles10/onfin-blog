@@ -1,0 +1,28 @@
+{
+ "id": "warsh-paycheck",
+ "src": "raw/ELU3u2Ny7r0.webm",
+ "segments": [
+  [
+   1059.7,
+   1064.85
+  ],
+  [
+   1085.9,
+   1103.75
+  ],
+  [
+   1124.6,
+   1139.6
+  ]
+ ],
+ "zoom": [
+  0.15,
+  0.08,
+  0.7
+ ],
+ "fix": {
+  "wall": "well",
+  "-off": "-off"
+ },
+ "hook": "Who gets hurt most when the Fed raises rates? Kevin Warsh's answer:"
+}

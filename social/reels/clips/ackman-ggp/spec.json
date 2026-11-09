@@ -1,0 +1,29 @@
+{
+ "id": "ackman-ggp",
+ "src": "raw/PgGKhsWhUu8.webm",
+ "segments": [
+  [
+   3393.2,
+   3400.7
+  ],
+  [
+   3403.25,
+   3406.95
+  ],
+  [
+   3409.2,
+   3413.15
+  ],
+  [
+   3507.35,
+   3517.25
+  ],
+  [
+   3530.7,
+   3537.6
+  ]
+ ],
+ "crop": 0.5,
+ "box_h": 660,
+ "hook": "Bill Ackman on the stock that fell from $63 to 34 cents:"
+}
