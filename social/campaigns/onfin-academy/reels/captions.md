@@ -2,7 +2,7 @@
 
 The Khmer below, and in every Khmer video (hooks, burned-in captions, end cards, trailer supers and subtitles), is my own translation. A native speaker should review it before any ad runs. The Khmer videos keep the English lesson audio, so their end cards say "មេរៀនជាភាសាអង់គ្លេស" (lessons in English).
 
-Publishing: post reels on Instagram only. Instagram cross-posts them to the Facebook page automatically. While the @onfinkm feed block is open, post them from @onfinacademy as Collab reels with @onfinkm (see `../organic.md`).
+Publishing: schedule each reel on Instagram and on Facebook separately; Instagram's automatic cross-post to Facebook stopped working after 30 Oct. While the @onfinkm feed block is open, post them from @onfinacademy as Collab reels with @onfinkm (see `../organic.md`).
 
 Risk line, used on every video and in every caption:
 - EN: High risk: most retail CFD accounts lose money. Education, not investment advice.

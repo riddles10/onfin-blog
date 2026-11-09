@@ -12,4 +12,4 @@ Instagram carousels don't look native on Facebook or Telegram: Facebook crops a 
 - Text rewritten for Telegram: a bold headline, 3 to 5 scannable bullets with figures and sources, sources as clickable links, then the risk line. One message per language channel.
 
 ## Instagram
-- Unchanged: the evidence-led carousel (social-v2 README). Reels go to Instagram only; Facebook gets them through the automatic cross-post.
+- Unchanged: the evidence-led carousel (social-v2 README). Reels go to both Instagram and Facebook, scheduled separately (the automatic cross-post stopped working after 30 Oct).
