@@ -1,0 +1,70 @@
+{
+ "_uploads": {
+  "cards/tg-en-post.jpg": {
+   "id": "d0eba70f-567c-4f8c-b4b7-30101ac160eb",
+   "path": "https://uploads.postiz.com/tlsZyGgrn8.jpg"
+  },
+  "cards/tg-ms-post.jpg": {
+   "id": "8a6919c5-357d-4df1-af75-87de40bab219",
+   "path": "https://uploads.postiz.com/1PqaYcVy2r.jpg"
+  },
+  "cards/tg-ru-post.jpg": {
+   "id": "53efa490-4a28-4690-8f38-6897c5317d45",
+   "path": "https://uploads.postiz.com/HVel3mAmBD.jpg"
+  },
+  "cards/tg-es-post.jpg": {
+   "id": "0b9841c6-2d56-4bb5-aa07-247edc009df5",
+   "path": "https://uploads.postiz.com/Pl7b9WUA1Z.jpg"
+  },
+  "cards/tg-en-story.jpg": {
+   "id": "4e7b875a-f043-4994-8209-1a2df046b467",
+   "path": "https://uploads.postiz.com/qnBgR7D1BN.jpg"
+  }
+ },
+ "fb": {
+  "id": "cmwau9ugu0fa0pq07ojybumxb",
+  "date": "2026-11-23T08:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "tg-kh": {
+  "id": "cmwau9uq30fa1pq07uoija7y4",
+  "date": "2026-11-23T08:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "tg-en": {
+  "id": "cmwau9uz40e7yn306w4r0qviv",
+  "date": "2026-11-23T08:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "tg-ms": {
+  "id": "cmwau9vw00e7zn3060cmja2bt",
+  "date": "2026-11-23T08:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "tg-ru": {
+  "id": "cmwau9wqr0fa2pq07prggnl7g",
+  "date": "2026-11-23T09:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "tg-es": {
+  "id": "cmwau9xff0fa3pq079kopcc5p",
+  "date": "2026-11-23T14:00:00.000Z",
+  "state": "QUEUE"
+ },
+ "ig-story-23": {
+  "id": "cmwau9y3m0fa4pq07cnlxkxbz",
+  "date": "2026-11-23T12:30:00.000Z",
+  "state": "QUEUE"
+ },
+ "ig-story-25": {
+  "id": "cmwau9yd70fa5pq07fy9j1ha1",
+  "date": "2026-11-25T12:30:00.000Z",
+  "state": "QUEUE"
+ },
+ "deleted_cmvpdt4qv1fftn31c2erk5llf": true,
+ "deleted_cmvpd9yr71f56n31cn7qyn0o4": true,
+ "deleted_cmvpd9z151f58n31c8th4xu69": true,
+ "deleted_cmvpd9yvn1f57n31cxtvr77bs": true,
+ "deleted_cmvpd9z5w1f59n31cm7hm2myq": true,
+ "deleted_cmvpd9zbt1f5cn31c2zfqkwjf": true
+}
