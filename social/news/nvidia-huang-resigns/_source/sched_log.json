@@ -1,0 +1,59 @@
+{
+ "_uploads": {
+  "tg/h3-tg-en.jpg": {
+   "id": "1ee2d3e8-2162-44ab-b656-13e970cfbb62",
+   "path": "https://uploads.postiz.com/nbdPL7FbEd.jpg"
+  },
+  "tg/h3-tg-ms.jpg": {
+   "id": "bf493f2d-d173-4f1b-a964-1d347ef9a8d1",
+   "path": "https://uploads.postiz.com/idbu82VW7p.jpg"
+  },
+  "tg/h3-tg-ru.jpg": {
+   "id": "05ce2a2e-1957-4f44-a9da-a4025b492cdc",
+   "path": "https://uploads.postiz.com/KV3gEz0Tn1.jpg"
+  },
+  "tg/h3-tg-es.jpg": {
+   "id": "7c8240e6-14a5-41f7-a0e0-cab77a166f75",
+   "path": "https://uploads.postiz.com/5nOXfeQFQp.jpg"
+  }
+ },
+ "fb": {
+  "id": "cmwdngpxd015qp907vudfcyut",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "tg-kh": {
+  "id": "cmwdngq2x015rp9078tcb7oe9",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "tg-en": {
+  "id": "cmwdngq7v015sp907h773oi0o",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "tg-ms": {
+  "id": "cmwdngqtp01b9pj06jfazgu4f",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "tg-ru": {
+  "id": "cmwdngrh501bbpj06lpdtrljw",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "tg-es": {
+  "id": "cmwdngs2x01bcpj06yuar6hvj",
+  "date": "2026-11-12T14:36:00.000Z"
+ },
+ "ig": {
+  "id": "cmwdngs8901bdpj062avwiw92",
+  "date": "2026-11-12T14:36:00.000Z",
+  "state": "ERROR: Instagram blocked your request (photo)"
+ },
+ "ig-story": {
+  "id": "cmwdnhkpn01c5pj06wmld19sk",
+  "date": "2026-11-12T14:36:00.000Z",
+  "note": "fallback after the photo was blocked"
+ },
+ "ig-reel": {
+  "id": "cmwdnhlc601c6pj061kyn95wk",
+  "date": "2026-11-12T14:36:00.000Z",
+  "note": "fallback after the photo was blocked"
+ }
+}
