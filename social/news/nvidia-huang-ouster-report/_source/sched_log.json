@@ -1,0 +1,66 @@
+{
+ "_uploads": {
+  "tg/h2-tg-en.jpg": {
+   "id": "3b8bb2b5-9c4d-4853-8133-a8ca2999898d",
+   "path": "https://uploads.postiz.com/CJSCZWvBOY.jpg"
+  },
+  "tg/h2-tg-ms.jpg": {
+   "id": "98ef2e0b-802e-498d-8eb9-8f3a70d915f0",
+   "path": "https://uploads.postiz.com/TWJ5KFJTkX.jpg"
+  },
+  "tg/h2-tg-ru.jpg": {
+   "id": "59aecce7-c600-4e93-ac0c-d1cb42a6a955",
+   "path": "https://uploads.postiz.com/ghdRRDTxwe.jpg"
+  },
+  "tg/h2-tg-es.jpg": {
+   "id": "abfe4ff5-7a87-4a1b-9aaf-5f564f172729",
+   "path": "https://uploads.postiz.com/b7XvLmODh8.jpg"
+  },
+  "evidence/h2-en-01.jpg": {
+   "id": "4fb8187a-527f-42b8-a72c-90a96729e9f0",
+   "path": "https://uploads.postiz.com/zHUNNd1q4E.jpg"
+  },
+  "evidence/h2-en-02.jpg": {
+   "id": "e4224aa2-23f4-43e5-8734-17389d2ae43f",
+   "path": "https://uploads.postiz.com/LfPm3FVtxo.jpg"
+  },
+  "evidence/h2-en-03.jpg": {
+   "id": "914044e1-424a-417a-babd-3bc1b003ecc1",
+   "path": "https://uploads.postiz.com/X3KxZiUPnw.jpg"
+  }
+ },
+ "fb": {
+  "id": "cmwdk6s060123pg08x35ibjo6",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "tg-kh": {
+  "id": "cmwdk6s5l0124pg08neyzoskt",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "tg-en": {
+  "id": "cmwdk6sau0126pg08tfjzga2n",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "tg-ms": {
+  "id": "cmwdk6sxu0140nu085jsmq51l",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "tg-ru": {
+  "id": "cmwdk6tjd0147nu08sv1m6tu2",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "tg-es": {
+  "id": "cmwdk6u8k014cnu08mlq347da",
+  "date": "2026-11-12T13:04:00.000Z"
+ },
+ "ig": {
+  "id": "cmwdk6vow014knu08gjdkc2cj",
+  "date": "2026-11-12T13:04:00.000Z",
+  "state": "ERROR: Instagram blocked your request (carousel)"
+ },
+ "ig-reel": {
+  "id": "cmwdk9ou90180pg08i8fgij6d",
+  "date": "2026-11-12T13:06:00.000Z",
+  "note": "reel fallback after the carousel was blocked"
+ }
+}
