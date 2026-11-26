@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:MX;src:url(file:///home/user/onfin-blog/social/reels/_meme/fonts/Montserrat-ExtraBold.ttf)}
+@font-face{font-family:MS;src:url(file:///home/user/onfin-blog/social/reels/_meme/fonts/Montserrat-SemiBold.ttf)}
+@font-face{font-family:SI;src:url(file:///usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf)}
+html,body{margin:0;width:1080px;height:1920px;background:#050505;overflow:hidden}
+#c{position:relative;width:1080px;height:1920px;background:radial-gradient(90% 55% at 50% 42%,#14170d 0%,#070707 60%,#030303 100%)}
+.h{position:absolute;left:0;right:0;top:330px;display:flex;justify-content:center;align-items:center;gap:16px}
+.h img{width:64px;height:64px;border-radius:50%} .h span{font-family:MS;font-size:30px;color:rgba(255,255,255,.55)}
+#t{position:absolute;left:0;right:0;top:640px;text-align:center;font-family:MX;font-size:104px;color:#fff;letter-spacing:-1px}
+.lab{position:absolute;top:880px;font-family:SI;font-size:48px;color:#eee;text-align:center;white-space:nowrap;transform:translateX(-50%)}
+#l1{left:250px} #l2{left:647px}
+#track{position:absolute;left:110px;top:960px;width:860px;height:84px;border-radius:12px;background:rgba(255,255,255,.06);overflow:hidden}
+#a{position:absolute;left:0;top:0;height:100%;background:#d9d9d9}
+#b{position:absolute;top:0;height:100%;background:#B4EA10}
+.pc{position:absolute;top:1080px;font-family:MX;font-size:50px;color:#fff;text-align:center;transform:translateX(-50%)}
+#p1{left:217px} #p2{left:647px;color:#B4EA10}
+.f{position:absolute;left:0;right:0;bottom:360px;text-align:center;font-family:MS;font-size:26px;color:rgba(255,255,255,.35)}
+</style></head><body><div id="c">
+<div class="h" id="hd"><img src="file:///home/user/onfin-blog/social/reels/_meme/fonts/../logo/avatar-bolt.jpg"><span>@onfinkm</span></div>
+<div id="t">Trading is</div><div class="lab" id="l1"></div><div class="lab" id="l2"></div>
+<div id="track"><div id="a"></div><div id="b"></div></div>
+<div class="pc" id="p1">25%</div><div class="pc" id="p2">75%</div>
+<div class="f" id="ft">Our take. Not investment advice.</div></div>
+<script>
+const ease=x=>x<0?0:x>1?1:1-Math.pow(1-x,3);const k=(t,a,b)=>ease((t-a)/(b-a));
+window.setCard=(l1,l2)=>{document.getElementById('l1').textContent=l1;document.getElementById('l2').textContent=l2;};
+window.draw=t=>{const o=k(t,0,.6);const T=document.getElementById('t');T.style.opacity=o;T.style.transform='translateY('+(30*(1-o))+'px)';
+document.getElementById('hd').style.opacity=k(t,0,.6);
+const lo=k(t,.8,1.3);['l1','l2'].forEach(i=>document.getElementById(i).style.opacity=lo);
+document.getElementById('track').style.opacity=k(t,.8,1.2);
+const W=860;document.getElementById('a').style.width=(W*.25*k(t,1.3,2.0))+'px';
+const bw=W*.75*k(t,2.1,3.1);const B=document.getElementById('b');B.style.left=(W*.25)+'px';B.style.width=bw+'px';
+document.getElementById('p1').style.opacity=k(t,1.8,2.2);document.getElementById('p2').style.opacity=k(t,3.0,3.5);
+document.getElementById('ft').style.opacity=k(t,3.3,3.8)*1;};
+</script></body></html>
