@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:MX;src:url(file:///home/user/onfin-blog/social/reels/_meme/fonts/Montserrat-ExtraBold.ttf)}
+@font-face{font-family:MS;src:url(file:///home/user/onfin-blog/social/reels/_meme/fonts/Montserrat-SemiBold.ttf)}
+html,body{margin:0;width:1080px;height:1350px}
+#c{position:relative;width:1080px;height:1350px;font-family:MS}
+.top{position:absolute;left:0;top:0;width:1080px;height:675px;background:#f3f3ee}
+.bot{position:absolute;left:0;top:675px;width:1080px;height:675px;background:#0b0b0b}
+.tag{display:inline-block;padding:10px 22px;border-radius:999px;font-family:MX;font-size:26px;letter-spacing:.02em}
+.top .tag{background:#0b0b0b;color:#f3f3ee} .bot .tag{background:#B4EA10;color:#0b0b0b}
+.pad{position:absolute;left:70px;right:70px;top:120px}
+.bot .pad{top:80px}
+h2{margin:26px 0 0;font-family:MX;font-size:60px;line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
+.top h2{color:#0b0b0b} .bot h2{color:#fff}
+.sub{margin-top:22px;font-size:30px;line-height:1.35}
+.top .sub{color:#55574f} .bot .sub{color:rgba(255,255,255,.7)}
+.hd{position:absolute;left:70px;top:40px;display:flex;align-items:center;gap:12px;font-family:MS;font-size:24px;color:#55574f}
+.hd img{width:44px;height:44px;border-radius:50%}
+.risk{position:absolute;left:70px;right:70px;bottom:34px;font-size:18px;color:rgba(255,255,255,.45)}
+</style></head><body><div id="c">
+<div class="top"><div class="hd"><img src="file:///home/user/onfin-blog/social/reels/_meme/fonts/../logo/avatar-bolt.jpg"><span>@onfinkm</span></div>
+<div class="pad"><span class="tag" id="t1">What you think trading is</span><h2 id="e"></h2><div class="sub" id="es"></div></div></div>
+<div class="bot"><div class="pad"><span class="tag" id="t2">What trading actually is</span><h2 id="r"></h2><div class="sub" id="rs"></div></div>
+<div class="risk">Not investment advice. CFDs are high-risk; you may lose money.</div></div>
+</div><script>
+window.setCard=(c)=>{for(const k of ['e','es','r','rs','t1','t2']) if(c[k]!==undefined) document.getElementById(k).textContent=c[k];};
+</script></body></html>
