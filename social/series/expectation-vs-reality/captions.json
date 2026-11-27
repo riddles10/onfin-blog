@@ -1,0 +1,26 @@
+{
+ "curve": {
+  "en": "Expectation vs reality: your account.\n\nNobody posts the middle part. Real equity curves have drawdowns, flat weeks and bad days, which is why a stop loss and a sensible position size matter more than the perfect entry.",
+  "ms": "Jangkaan vs realiti: akaun anda.\n\nTiada siapa kongsi bahagian tengahnya. Lengkung ekuiti sebenar ada kejatuhan, minggu yang mendatar dan hari yang buruk, sebab itu stop loss dan saiz posisi yang munasabah lebih penting daripada kemasukan yang sempurna.",
+  "ru": "Ожидание и реальность: ваш счёт.\n\nСередину никто не показывает. В реальной кривой доходности есть просадки, пустые недели и плохие дни, поэтому стоп-лосс и разумный размер позиции важнее идеального входа.",
+  "es": "Expectativa vs realidad: tu cuenta.\n\nNadie publica la parte del medio. Las curvas de capital reales tienen caídas, semanas planas y días malos; por eso un stop loss y un tamaño de posición sensato importan más que la entrada perfecta."
+ },
+ "time": {
+  "en": "Expectation vs reality: a trader's day.\n\nThe click takes a second. The rest is waiting for a setup, checking the calendar and reviewing what went wrong. If you're clicking all day, that's usually the problem.",
+  "ms": "Jangkaan vs realiti: hari seorang pedagang.\n\nKlik hanya sesaat. Selebihnya menunggu setup, menyemak kalendar dan menilai apa yang silap. Jika anda klik sepanjang hari, itu biasanya masalahnya.",
+  "ru": "Ожидание и реальность: день трейдера.\n\nКлик занимает секунду. Всё остальное: ждать сетап, проверять календарь и разбирать ошибки. Если вы кликаете весь день, проблема обычно в этом.",
+  "es": "Expectativa vs realidad: el día de un trader.\n\nEl clic dura un segundo. El resto es esperar un setup, revisar el calendario y analizar qué salió mal. Si haces clic todo el día, ese suele ser el problema."
+ },
+ "wins": {
+  "en": "Expectation vs reality: every trade.\n\nLosing trades are part of the job. What matters is keeping them small, so one bad day can't undo a good month.",
+  "ms": "Jangkaan vs realiti: setiap dagangan.\n\nDagangan rugi ialah sebahagian daripada kerja. Yang penting ialah memastikannya kecil, supaya satu hari buruk tidak memadam bulan yang baik.",
+  "ru": "Ожидание и реальность: каждая сделка.\n\nУбыточные сделки часть работы. Главное, чтобы они были маленькими и один плохой день не перечёркивал хороший месяц.",
+  "es": "Expectativa vs realidad: cada operación.\n\nLas operaciones perdedoras son parte del trabajo. Lo importante es que sean pequeñas, para que un mal día no borre un buen mes."
+ },
+ "news": {
+  "en": "Expectation vs reality: trading the news.\n\nBig releases can whip price both ways in seconds while spreads widen, and stops can fill worse than set. Plenty of traders wait for things to settle first.",
+  "ms": "Jangkaan vs realiti: berdagang berita.\n\nBerita besar boleh menggerakkan harga ke dua arah dalam beberapa saat sementara spread melebar, dan stop boleh dilaksanakan lebih teruk daripada yang ditetapkan. Ramai pedagang menunggu keadaan reda dahulu.",
+  "ru": "Ожидание и реальность: торговля на новостях.\n\nКрупные новости могут за секунды бросать цену в обе стороны, спреды расширяются, а стопы могут исполниться хуже заданного уровня. Многие трейдеры сначала ждут, пока рынок успокоится.",
+  "es": "Expectativa vs realidad: operar noticias.\n\nLos datos importantes pueden mover el precio en ambas direcciones en segundos mientras los spreads se amplían, y los stops pueden ejecutarse peor de lo fijado. Muchos traders esperan a que todo se calme."
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "_uploads": {
+  "evr-01-curve.jpg": {
+   "id": "49d3b31e-9f62-4e9a-9096-b384b0c5c2d9",
+   "path": "https://uploads.postiz.com/JCaKi0jFkE.jpg"
+  },
+  "ig-academy/evr-01-curve.jpg": {
+   "id": "154bb00b-55a7-42d8-8371-704876c7f1bc",
+   "path": "https://uploads.postiz.com/eHdpyd2ciN.jpg"
+  },
+  "evr-02-time.jpg": {
+   "id": "9dbb5bb0-ade2-4d3d-a39c-fed22d87223f",
+   "path": "https://uploads.postiz.com/Hv06hQx0C2.jpg"
+  },
+  "ig-academy/evr-02-time.jpg": {
+   "id": "9f4f7e7c-6d73-4f50-b7ca-1fca3a88360e",
+   "path": "https://uploads.postiz.com/lcIO7yJj16.jpg"
+  },
+  "evr-03-wins.jpg": {
+   "id": "83967f4e-deca-4b86-ba07-bdda5f61569f",
+   "path": "https://uploads.postiz.com/3Ygj6Szr0p.jpg"
+  },
+  "ig-academy/evr-03-wins.jpg": {
+   "id": "f5862b75-ba48-440c-93d3-8cc9b1b31cf5",
+   "path": "https://uploads.postiz.com/UzCKk1cAcq.jpg"
+  },
+  "evr-04-news.jpg": {
+   "id": "d842e912-8c98-46b3-91b6-6d984622d8fb",
+   "path": "https://uploads.postiz.com/KDCMjvSbGc.jpg"
+  },
+  "ig-academy/evr-04-news.jpg": {
+   "id": "36c38f3f-13d9-40a2-a88f-d12d6dfdb8ca",
+   "path": "https://uploads.postiz.com/3GF6ublLem.jpg"
+  }
+ },
+ "curve:fb": {
+  "id": "cmwz6e1ml0es2nu087o7r50z5",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:ig-academy": {
+  "id": "cmwz6e2mc0es3nu08dclxsavj",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:tg-kh": {
+  "id": "cmwz6e2q00ot2oc07lcpkleir",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:tg-en": {
+  "id": "cmwz6e2wa0l0hnu073zymdyq9",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:tg-ms": {
+  "id": "cmwz6e3100ot4oc07uttwmooz",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:tg-ru": {
+  "id": "cmwz6e34f0ndkl107biwgdtop",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "curve:tg-es": {
+  "id": "cmwz6e3b10es4nu08idsjtc4k",
+  "date": "2026-11-28T12:00:00.000Z"
+ },
+ "time:fb": {
+  "id": "cmwz6e47b0l0knu07lsvftpse",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:ig-academy": {
+  "id": "cmwz6e53e0ndml107q2bmynaj",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:tg-kh": {
+  "id": "cmwz6e5740ot7oc078aicpq2c",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:tg-en": {
+  "id": "cmwz6e5bq0es6nu08ypp4w86d",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:tg-ms": {
+  "id": "cmwz6e5fu0es7nu08014akiei",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:tg-ru": {
+  "id": "cmwz6e5jb0l0mnu07d5wixjiw",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "time:tg-es": {
+  "id": "cmwz6e5n30ot8oc070bkf169s",
+  "date": "2026-12-05T12:00:00.000Z"
+ },
+ "wins:fb": {
+  "id": "cmwz6e6jc0ndnl107m1isxazc",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:ig-academy": {
+  "id": "cmwz6e7ku0es9nu08hutzgk4y",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:tg-kh": {
+  "id": "cmwz6e7ow0l0onu07n7jd2dqk",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:tg-en": {
+  "id": "cmwz6e7vo0l0pnu07w5lxel5m",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:tg-ms": {
+  "id": "cmwz6e7z70l0qnu072m90yg7b",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:tg-ru": {
+  "id": "cmwz6e82x0esanu08ldik0w4q",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "wins:tg-es": {
+  "id": "cmwz6e86z0escnu084r86hxbi",
+  "date": "2026-12-12T12:00:00.000Z"
+ },
+ "news:fb": {
+  "id": "cmwz6e95o0ndpl107epu54sn5",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:ig-academy": {
+  "id": "cmwz6ea4z0l0rnu07bn4dwf2q",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:tg-kh": {
+  "id": "cmwz6ea9p0l0snu0737uwuxme",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:tg-en": {
+  "id": "cmwz6eag80otcoc07js3jrfqb",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:tg-ms": {
+  "id": "cmwz6eajz0ndsl107yeekv2dl",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:tg-ru": {
+  "id": "cmwz6eao00ndul107fkqvmo8z",
+  "date": "2026-12-19T12:00:00.000Z"
+ },
+ "news:tg-es": {
+  "id": "cmwz6eart0otdoc07hpy60nem",
+  "date": "2026-12-19T12:00:00.000Z"
+ }
+}
